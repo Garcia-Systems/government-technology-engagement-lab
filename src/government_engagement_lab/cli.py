@@ -35,6 +35,8 @@ from .closed_integration import (assess_closed_integration,
                                  load_closed_fixture)
 from .incumbent import (assess_incumbent, compare_alternatives,
                         incumbent_scenarios, load_incumbent_fixture)
+from .acquisition import (acquisition_report, acquisition_reports, focused_scenarios,
+                          lost_deal_sensitivity)
 
 
 def _money(value: Decimal) -> str:
@@ -870,9 +872,45 @@ def show_alternatives() -> None:
         _show_alternative(assessment)
 
 
+
+def _show_acquisition_row(x) -> None:
+    print(f"\n{x.motion} [{x.evidence}]")
+    for category, (hours, cost) in x.by_category().items():
+        print(f"  {category.value:34} {hours:4} h  {_money(cost):>12}")
+    print(f"  TOTAL SELLER ACQUISITION          {x.seller_acquisition_hours:4} h  {_money(x.acquisition_labor_cost):>12}")
+    if x.partner_acquisition_hours or x.customer_acquisition_hours:
+        print(f"  Partner/customer-owned: {x.partner_acquisition_hours}/{x.customer_acquisition_hours} h; total work: {x.total_customer_acquisition_work} h")
+    print(f"  Seller revenue / customer contract: {_money(x.implementation_revenue)} / {_money(x.customer_contract_value)}")
+    print(f"  Delivery cost / contribution: {_money(x.delivery_labor_cost)} / {_money(x.delivery_contribution)}")
+    print(f"  Other direct costs: {_money(x.other_direct_costs)}")
+    print(f"  Acquisition-adjusted contribution: {_money(x.acquisition_adjusted_contribution)} ({x.sustainability})")
+    print(f"  Acq cost/revenue: {x.acquisition_cost_per_revenue:.2%}; acq h/$10k: {x.acquisition_hours_per_10000_revenue:.2f}; acq cost/value: {x.acquisition_cost_per_value:.2%}")
+    print(f"  Acq h/engineering h: {x.acquisition_hours_per_engineering_hour:.3f}; acq cost/delivery cost: {x.acquisition_cost_per_delivery_cost:.2%}")
+    print(f"  Elapsed cycle: {x.elapsed_days} modeled days (displayed, not monetized)")
+
+def show_acquisition() -> None:
+    print("CHAPTER 15 — ACQUISITION ECONOMICS\nWON-DEAL ECONOMICS; FICTIONAL MODELED ASSUMPTIONS, NOT MARKET BENCHMARKS")
+    _show_acquisition_row(acquisition_report())
+
+def show_acquisition_summary() -> None:
+    print("CHAPTER 15 — CROSS-MOTION ACQUISITION SUMMARY")
+    print(f"{'MOTION':31} {'HOURS':>5} {'ACQ COST':>12} {'REVENUE':>12} {'ACQ %':>7} {'DELIVERY':>12} {'DELIV CONTR':>13} {'ACQ-ADJ':>12} {'DAYS':>5}")
+    for x in acquisition_reports():
+        print(f"{x.motion:31} {x.seller_acquisition_hours:5} {_money(x.acquisition_labor_cost):>12} {_money(x.implementation_revenue):>12} {x.acquisition_cost_per_revenue:6.1%} {_money(x.delivery_labor_cost):>12} {_money(x.delivery_contribution):>13} {_money(x.acquisition_adjusted_contribution):>12} {x.elapsed_days:5}")
+
+def show_acquisition_scenarios() -> None:
+    print("CHAPTER 15 — FOCUSED ATTRIBUTION SCENARIOS")
+    for x in focused_scenarios(): _show_acquisition_row(x)
+    lost=lost_deal_sensitivity(); print(f"\nLOST-DEAL SENSITIVITY [{lost.evidence}]: revenue {_money(lost.implementation_revenue)}; retained acquisition cost {_money(lost.acquisition_cost_retained)}; opportunity contribution {_money(lost.opportunity_contribution)}")
+
+def show_contribution_waterfall() -> None:
+    print("CHAPTER 15 — CONTRIBUTION WATERFALLS (simplified modeled contribution, not profit)")
+    for x in acquisition_reports():
+        print(f"\n{x.motion}\n  Seller engagement revenue       {_money(x.implementation_revenue):>14}\n  Delivery labor cost            -{_money(x.delivery_labor_cost):>14}\n  DELIVERY CONTRIBUTION           {_money(x.delivery_contribution):>14}\n  Acquisition labor cost         -{_money(x.acquisition_labor_cost):>14}\n  Other direct costs             -{_money(x.other_direct_costs):>14}\n  ACQ.-ADJUSTED CONTRIBUTION      {_money(x.acquisition_adjusted_contribution):>14}")
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -896,5 +934,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall}[args.command]()
     return 0
