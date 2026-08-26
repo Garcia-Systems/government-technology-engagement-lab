@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–9 only**. Chapter 9 implements only the larger-contract experiment; Chapter 10 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–10 only**. Chapter 10 implements only the partner/prime-contractor motion; Chapter 11 and later experiments remain unimplemented.
 
 ## Architecture
 
-- `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
+- `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8's scope and break-even economics; and `larger_contract.py` implements Chapter 9's decomposable expansion, acquisition scaling, and price corridor.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -98,6 +98,14 @@ python -m government_engagement_lab small-engagement
 python -m government_engagement_lab small-engagement-economics
 python -m government_engagement_lab small-engagement-scenarios
 python -m government_engagement_lab contract-size
+python -m government_engagement_lab larger-contract
+python -m government_engagement_lab larger-contract-economics
+python -m government_engagement_lab larger-contract-scenarios
+python -m government_engagement_lab contract-size-comparison
+python -m government_engagement_lab partner
+python -m government_engagement_lab partner-economics
+python -m government_engagement_lab partner-scenarios
+python -m government_engagement_lab direct-vs-partner
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -196,7 +204,7 @@ python -m government_engagement_lab small-engagement-scenarios
 python -m government_engagement_lab contract-size
 ```
 
-Chapter 9's larger-contract experiment follows below; Chapter 10 remains unimplemented.
+Chapter 9's larger-contract experiment follows below; Chapter 10 then changes customer-access ownership.
 
 ## Chapter 9 larger-contract experiment
 
@@ -204,11 +212,32 @@ Chapter 9 tests the opposite of Chapter 8: a responsibly broader departmental co
 
 The fictional pricing corridor keeps the two sides independent. The **seller price floor** is delivery + acquisition + direct costs + the modeled minimum contribution; the **customer price ceiling** is addressed annual value less separately included support under the nonnegative first-year-value rule. The main case produces a **$47,555 floor**, **$72,681.176 ceiling**, and **$25,126.176 viable corridor** at a documented $65,000 price. Acquisition cost rises to $8,105 but falls as a share of implementation revenue from Chapter 8's 19.90% to 12.47%. Both gates pass, yielding the restrained `PROMISING — VALIDATE IN DISCOVERY`.
 
-That is not a universal optimal size. Price without value fails customer economics even when seller economics improve; transformation overreach produces a negative corridor and `NO DEAL`; clearer requirements/sponsor coordination tests semi-fixed work without assuming a contract vehicle. Thus supported larger scope **further complicates and weakens this fictional case's `POOR TARGET CUSTOMER` hypothesis**, but added delivery, governance, and support make scale conditional rather than automatically attractive. Chapter 10 remains unimplemented.
+That is not a universal optimal size. Price without value fails customer economics even when seller economics improve; transformation overreach produces a negative corridor and `NO DEAL`; clearer requirements/sponsor coordination tests semi-fixed work without assuming a contract vehicle. Thus supported larger scope **further complicates and weakens this fictional case's `POOR TARGET CUSTOMER` hypothesis**, but added delivery, governance, and support make scale conditional rather than automatically attractive. Chapter 10 tests a different commercial owner rather than more scope.
 
 ```bash
 python -m government_engagement_lab larger-contract
 python -m government_engagement_lab larger-contract-economics
 python -m government_engagement_lab larger-contract-scenarios
 python -m government_engagement_lab contract-size-comparison
+```
+
+## Chapter 10 partner / prime-contractor motion
+
+Chapter 10 introduces the wholly fictional **Harbor Civic Solutions** as a `MODELED ALTERNATIVE ASSUMPTION`. The partner owns the initial relationship, qualification, access, procurement coordination, prime contract, invoicing, some commercial project management, stakeholder coordination, and first-line support. The neutral technical seller remains responsible for discovery, design, configuration/custom work, testing, documentation, implementation, technical governance input, and escalation support.
+
+Stage ownership is explicit (`PARTNER`, `SELLER`, `CUSTOMER`, or `JOINT`) rather than achieved by deleting legitimate work. The comparable Formal RFP's 18 stages remain present, including security, accessibility, technical validation, customer IT, authorization, and acceptance. Deterministically calculated seller acquisition effort falls from **192 to 91 hours**, and acquisition cost falls from **$20,640 to $11,055**.
+
+The modeled customer contract and value do not change when revenue is split: first-year customer price remains **$102,000**, modeled value remains **$104,002.80**, and net customer value remains **$2,002.80**. The fictional partner share is **18% / $18,360**, leaving **$83,640 modeled seller engagement revenue**. After delivery, retained acquisition, retained project management, and escalation support costs, seller contribution is **$11,205 / 13.40%**. Acquisition-cost savings are **$9,585**, so the deliberately narrow net channel economic effect is **-$8,775**; access enablement, partner dependency, reduced customer ownership, and limited account control remain separate descriptive effects, not a score.
+
+Support flows `CUSTOMER → PARTNER FIRST-LINE → TECHNICAL SELLER ESCALATION`. Customer relationship ownership is `PARTNER_OWNED`, while the partner owns the prime contract. Renewal, expansion, account knowledge, cross-sell access, and reference ownership therefore remain explicit dependencies without invented dollar values.
+
+The baseline derives `PARTNER-LED TARGET`: project gates and the partner motion pass, while the comparable direct Formal RFP target still fails and direct access is `LIMITED`. This means only that this fictional customer category may warrant validation through this channel motion—not that government is a good target. A 35% fee causes `NO DEAL`; a high-value-access sensitivity changes access from `LIMITED` to `NO` without inventing technical value; and a partner-adds-little sensitivity preserves the fee while reducing acquisition benefit.
+
+The result **changes the interpretation** of the cookbook's `POOR TARGET CUSTOMER` hypothesis: the direct hypothesis remains supported for Formal RFP acquisition, but it is no longer the only modeled route. `PARTNER-LED TARGET` is supported only under the stated fictional economics and access condition. No real contractor, typical margin, channel performance, weighted score, purchasing vehicle, or Chapter 11 functionality is represented.
+
+```bash
+python -m government_engagement_lab partner
+python -m government_engagement_lab partner-economics
+python -m government_engagement_lab partner-scenarios
+python -m government_engagement_lab direct-vs-partner
 ```

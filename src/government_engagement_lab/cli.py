@@ -24,6 +24,7 @@ from .small_engagement import (assess_small_engagement,
                                assess_small_engagement_scenarios)
 from .larger_contract import (assess_larger_contract, assess_larger_contract_scenarios,
                               contract_size_comparison)
+from .partner import assess_partner, direct_vs_partner, partner_scenarios
 
 
 def _money(value: Decimal) -> str:
@@ -562,9 +563,71 @@ def show_contract_size_comparison() -> None:
         e=a.engagement; print(f"{e.name:31} {_money(e.value_addressed):12} {_money(e.implementation_price):11} {e.engineering_hours:3}h {e.acquisition_hours:3}h {_money(a.seller.acquisition_labor_cost):12} {_money(a.seller_price_floor):12} {_money(a.customer_price_ceiling):12} {_money(a.viable_price_corridor):12} {a.verdict}")
 
 
+def _show_partner_economics(a) -> None:
+    e = a.economics
+    print("CUSTOMER ECONOMICS")
+    print(f"  Value addressed / total first-year contract: {_money(e.customer_value_addressed)} / {_money(e.customer_contract_value)}")
+    print(f"  First-year net recoverable value: {_money(e.customer_first_year_net_value)}")
+    print("SELLER ECONOMICS")
+    print(f"  MODELED SELLER ENGAGEMENT REVENUE: {_money(e.seller_engagement_revenue)}")
+    print(f"  Delivery / acquisition / retained PM / support cost: {_money(e.seller_delivery_cost)} / {_money(e.seller_acquisition_cost)} / {_money(e.retained_project_management_cost)} / {_money(e.seller_support_cost)}")
+    print(f"  Acquisition-adjusted contribution: {_money(e.seller_contribution)} ({e.contribution_margin:.2%})")
+    print("CHANNEL LEVERAGE (not a score)")
+    print(f"  Seller acquisition: {e.seller_acquisition_hours} h; saved: {e.acquisition_hours_saved} h / {_money(e.acquisition_cost_saved)}")
+    print(f"  Channel cost: {_money(e.partner_share)}; net channel economic effect: {_money(e.net_channel_economic_effect)}")
+    print("  Access enablement and loss of control remain descriptive; labor savings alone do not decide access value.")
+
+
+def show_partner() -> None:
+    a = assess_partner(); m = a.motion
+    print("CHAPTER 10 — PARTNER / PRIME-CONTRACTOR MOTION\nFICTIONAL EDUCATIONAL MODEL")
+    print("FICTION NOTICE: " + m.fiction_notice)
+    print(f"PARTNER: {m.partner_name} ({m.identifier}; {m.partner_type}) [{m.evidence}]")
+    print(f"SELLER ROLE: {m.seller_role}")
+    print("\nPARTNER OWNS: " + "; ".join(m.partner_responsibilities))
+    print("SELLER RETAINS: " + "; ".join(m.seller_responsibilities))
+    print(f"CUSTOMER RELATIONSHIP: {m.customer_relationship_owner.value}; CONTRACT: {m.contract_owner.value}")
+    print("\nPARTNER-LED JOURNEY / PRIMARY OWNER / RETAINED SELLER HOURS")
+    for stage in m.stage_ownership:
+        print(f"  {stage.stage_id:31} {stage.primary_owner.value:8} {stage.seller_hours:3} h  ({', '.join(stage.stakeholder_ids)})")
+    print(f"\nPARTNER SHARE: {m.partner_share_rate:.0%} of first-year customer contract [{m.evidence}]")
+    _show_partner_economics(a)
+    print(f"SUPPORT: customer → {m.support.first_line_owner.value} first-line → {m.support.escalation_owner.value} escalation; seller support revenue {_money(m.support.seller_support_revenue)} / {m.support.seller_support_hours} h")
+    print("DEPENDENCIES: " + "; ".join(m.dependency_risks))
+    print("UNWEIGHTED CHANNEL EFFECTS: " + "; ".join(x.value for x in m.channel_effects))
+    print(f"DIRECT ACCESS: {m.direct_access.value}; PROJECT: {a.project_viability.value}; DIRECT TARGET: {a.direct_target_viability.value}; PARTNER TARGET: {a.target_viability.value}")
+    print(f"VERDICT: {a.verdict} [{a.evidence}]")
+
+
+def show_partner_economics() -> None:
+    print("CHAPTER 10 — CHANNEL ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_partner_economics(assess_partner())
+
+
+def show_partner_scenarios() -> None:
+    print("CHAPTER 10 — PARTNER SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':29} {'SHARE':7} {'ACCESS':8} {'ACQ H':6} {'CHANNEL':12} {'CONTRIB':12} VERDICT")
+    for a in partner_scenarios():
+        e, m = a.economics, a.motion
+        print(f"{m.identifier:29} {m.partner_share_rate:6.0%} {m.direct_access.value:8} {e.seller_acquisition_hours:4}h {_money(e.partner_share):12} {_money(e.seller_contribution):12} {a.verdict}")
+        for change in a.changed_assumptions: print(f"  [SENSITIVITY ASSUMPTION] {change}")
+
+
+def show_direct_vs_partner() -> None:
+    direct, partner = direct_vs_partner(); d, p = direct.seller_economics, partner.economics
+    print("FORMAL RFP DIRECT vs PARTNER / PRIME — SAME FICTIONAL TECHNICAL SCOPE")
+    print(f"{'MOTION':18} {'CUST PRICE':12} {'SELLER REV':12} {'ENG H':6} {'ACQ H':6} {'ACQ COST':11} {'CHANNEL':11} {'CONTRIB':11} {'ACCESS':8} VERDICT")
+    print(f"{'Direct RFP':18} {_money(direct.customer_economics.first_year_cost):12} {_money(d.implementation_revenue + direct.motion.annual_support):12} {direct.motion.engineering_hours:4}h {direct.motion.journey.total_effort_hours:4}h {_money(d.acquisition_labor_cost):11} {_money(Decimal()):11} {_money(d.acquisition_adjusted_contribution):11} {'LIMITED':8} {direct.verdict}")
+    print(f"{'Partner-led':18} {_money(p.customer_contract_value):12} {_money(p.seller_engagement_revenue):12} {p.engineering_hours:4}h {p.seller_acquisition_hours:4}h {_money(p.seller_acquisition_cost):11} {_money(p.partner_share):11} {_money(p.seller_contribution):11} {partner.motion.direct_access.value:8} {partner.verdict}")
+    print("\nOWNERSHIP")
+    print("  Direct: relationship= DIRECT; contract= SELLER; support= SELLER")
+    print(f"  Partner: relationship= {partner.motion.customer_relationship_owner.value}; contract= {partner.motion.contract_owner.value}; support= {partner.motion.support.first_line_owner.value} first-line / {partner.motion.support.escalation_owner.value} escalation")
+    print("Customer price and value are identical; splitting revenue does not improve customer economics.")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -582,5 +645,7 @@ def main(argv: list[str] | None = None) -> int:
      "small-engagement": show_small_engagement, "small-engagement-economics": show_small_engagement_economics,
      "small-engagement-scenarios": show_small_engagement_scenarios, "contract-size": show_contract_size,
      "larger-contract": show_larger_contract, "larger-contract-economics": show_larger_contract_economics,
-     "larger-contract-scenarios": show_larger_contract_scenarios, "contract-size-comparison": show_contract_size_comparison}[args.command]()
+     "larger-contract-scenarios": show_larger_contract_scenarios, "contract-size-comparison": show_contract_size_comparison,
+     "partner": show_partner, "partner-economics": show_partner_economics,
+     "partner-scenarios": show_partner_scenarios, "direct-vs-partner": show_direct_vs_partner}[args.command]()
     return 0
