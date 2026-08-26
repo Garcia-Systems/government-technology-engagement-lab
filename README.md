@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–4 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
+This repository currently contains **Chapters 0–5 only**. Chapter 5 implements only the cooperative paid-pilot motion; Chapter 6 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4 motion validation, seller economics, findings, and sensitivities.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; and `pilot.py` implements Chapter 5's bounded execution, acceptance, economics, sensitivities, and motion comparison.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -82,6 +82,10 @@ python -m government_engagement_lab stakeholder-scenarios
 python -m government_engagement_lab formal-rfp
 python -m government_engagement_lab formal-rfp-economics
 python -m government_engagement_lab formal-rfp-scenarios
+python -m government_engagement_lab pilot
+python -m government_engagement_lab pilot-economics
+python -m government_engagement_lab pilot-scenarios
+python -m government_engagement_lab compare-motions
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -129,4 +133,14 @@ Chapter 4 is the first complete engagement-motion experiment. `FORMAL_RFP` reuse
 
 Seller rates are `MODELED ASSUMPTION`s for fully loaded internal cost—not wages: sales **$85/hour**, solutions **$125/hour**, and engineering **$110/hour**. Given these inputs, `OBSERVED LAB RESULT`s are **$57,420 delivery labor cost**, **$20,640 acquisition labor cost**, and **-$60 acquisition-adjusted implementation contribution**. A fictional **$10,000 minimum contribution** is a transparent lab sustainability rule, not a business benchmark. Customer economics remain independently positive by **$2,002.80**, so the derived baseline is project `PASS`, target `FAIL`, and `POOR TARGET CUSTOMER`. No weighted RFP score or win-probability expected value is used.
 
-The sensitivities do not mutate the baseline. Halving stage effort produces 96 hours and repairs seller contribution; reducing delay leaves 192 hours and acquisition cost unchanged; increasing price to $90,000 repairs seller contribution but makes first-year customer value negative, yielding `NO DEAL`, not an assumed acceptable price. These are sensitivities, not claims that a buyer would accept them. No Chapter 5 pilot or later motion is implemented.
+The sensitivities do not mutate the baseline. Halving stage effort produces 96 hours and repairs seller contribution; reducing delay leaves 192 hours and acquisition cost unchanged; increasing price to $90,000 repairs seller contribution but makes first-year customer value negative, yielding `NO DEAL`, not an assumed acceptable price. These are sensitivities, not claims that a buyer would accept them.
+
+## Chapter 5 cooperative paid pilot
+
+Chapter 5 keeps the fictional department and core permitting-status burden recognizable while changing the engagement motion. The $36,000, 90-day pilot is paid, bounded to one team/eight modeled users/one workflow slice, measurable, time-limited, and explicit about exclusions and handoff. Synthetic reconciliation produces deterministic operational evidence; modeled time and labor assumptions remain separate from those observations.
+
+The baseline pilot uses 58 pre-authorization acquisition hours, 75 modeled days to authorization, and 140 engineering hours. Reusing Chapter 4's internal rates produces $15,400 delivery cost, $6,290 acquisition cost, $1,000 other direct cost, and $13,310 acquisition-adjusted contribution. The modeled customer side separates $52,000 annualized value potentially affected from both the $104,002.80 full opportunity and a $39,000 expected pilot benefit.
+
+All seven synthetic acceptance criteria pass, producing `PILOT_ACCEPTED`; project and target viability pass and the commercial verdict is `PILOT-FIRST TARGET`. Crucially, `full_implementation_authorized` remains false and the next step is only `VALIDATE EXPANSION`. Pilot acceptance does not approve production expansion or erase procurement, contracting, security, accessibility, access, alignment, or support work.
+
+Direct comparison shows the same fictional problem yields `POOR TARGET CUSTOMER` under `FORMAL_RFP` and `PILOT-FIRST TARGET` under `COOPERATIVE_PAID_PILOT`. Thus the cookbook hypothesis is **WEAKENED UNDER THIS FICTIONAL PILOT MOTION**—not disproved, and emphatically not evidence that government is generally a good customer. Too-small, too-broad, and weak-sponsor sensitivities each return to poor target conditions. No weighted score or real procurement rule is used, and Chapter 6's read-only experiment has not been implemented.
