@@ -44,6 +44,8 @@ from .throughput import (additional_capacity_sensitivity, load_seller_organizati
                          opportunity_cost, portfolio_scenarios)
 from .repeatability import (assess_repeat_department, department_one_reference,
                             repeat_department_scenarios)
+from .motion_economics import (conditional_findings, hypothesis_status,
+                               motion_comparisons)
 
 
 def _money(value: Decimal) -> str:
@@ -1047,9 +1049,54 @@ def show_repeatability_matrix() -> None:
         print(f"{x['level']:36} {x['engineering_hours']:5} {x['acquisition_hours']:5} {x['governance_hours']:5} {x['support_hours']:5} {x['elapsed_days']:5} {_money(x['contribution']):>14}")
     print("Raw artifact states remain available through repeat-government; no repeatability score exists.")
 
+def _na(value, formatter=str):
+    return "NOT_APPLICABLE" if value is None else formatter(value)
+
+def show_motions() -> None:
+    print("CHAPTER 19 — ENGAGEMENT MOTION ECONOMICS [OBSERVED IMPLEMENTATION STRUCTURE]")
+    print("No weighted score, universal winner, or best-to-worst ranking is produced.")
+    print(f"{'MOTION':29} {'VALUE':>13} {'ACQ HRS':>9} {'DAYS':>6} {'CUSTOMER':>10} {'SELLER':>10} {'ACCESS':>13}  VERDICT")
+    for x in motion_comparisons():
+        print(f"{x.name:29} {_money(x.customer_value_addressed):>13} {_na(x.seller_acquisition_hours):>9} {_na(x.elapsed_cycle_days):>6} {x.customer_economics_result:>10} {x.viability.delivery_economics.value:>10} {x.available_access_compatibility:>13}  {x.commercial_verdict}")
+    print("\nCONDITIONAL FINDINGS")
+    for finding in conditional_findings(): print("- "+finding)
+
+def show_motion_customer() -> None:
+    print("CHAPTER 19 — CUSTOMER COMPARISON")
+    print(f"{'MOTION':29} {'VALUE':>13} {'IMPLEMENT':>13} {'RECUR':>12} {'FIRST YEAR':>13} {'NET VALUE':>13} {'PAYBACK':>12} {'RESIDUAL':>13}")
+    for x in motion_comparisons():
+        payback=_na(x.payback_months,lambda v:f"{v:.2f} mo")
+        print(f"{x.name:29} {_money(x.customer_value_addressed):>13} {_money(x.customer_implementation_price):>13} {_money(x.recurring_customer_cost):>12} {_money(x.customer_first_year_cost):>13} {_money(x.customer_first_year_net_value):>13} {payback:>12} {_money(x.residual_value):>13}")
+
+def show_motion_seller() -> None:
+    print("CHAPTER 19 — SELLER COMPARISON (elapsed cycle is not monetized)")
+    print(f"{'MOTION':29} {'REVENUE':>14} {'DELIVERY':>14} {'ACQUISITION':>14} {'CONTRIBUTION':>14} {'MARGIN':>10} {'DAYS':>6} {'/YEAR':>6} {'ANNUALIZED':>14}")
+    for x in motion_comparisons():
+        t=x.throughput
+        print(f"{x.name:29} {_na(x.seller_engagement_revenue,_money):>14} {_na(x.seller_delivery_cost,_money):>14} {_na(x.seller_acquisition_cost,_money):>14} {_na(x.acquisition_adjusted_contribution,_money):>14} {_na(x.contribution_margin,lambda v:f'{v:.1%}'):>10} {_na(x.elapsed_cycle_days):>6} {_na(t.completed_engagements_per_year if t else None):>6} {_na(t.annualized_contribution if t else None,_money):>14}")
+
+def show_motion_structure() -> None:
+    print("CHAPTER 19 — STRUCTURAL COMPARISON")
+    for x in motion_comparisons():
+        g=x.governance
+        print(f"\n{x.identifier} — {x.commercial_verdict}")
+        print(f"  ACCESS: {x.technical_access_requirement} / {x.available_access_compatibility}; WRITE={x.write_authority}; READ-ONLY={x.read_only_capability}; NATIVE={x.native_configuration_possible}")
+        print(f"  PROCUREMENT: {x.procurement_path}; SPONSOR: {x.sponsor_requirement}")
+        print(f"  GOVERNANCE: {g.surface}; SELLER DELIVERY={_na(g.seller_delivery_hours)}h; APPROVAL={_na(g.seller_approval_acquisition_hours)}h; REVIEW={_na(g.elapsed_review_days)}d; {g.disposition}")
+        print(f"  SUPPORT: {x.support_owner}; {x.seller_support_obligation}; ESCALATION={x.escalation_model}")
+        print(f"  RELATIONSHIP: {x.customer_relationship_owner}; REPEATABILITY: {x.repeatability.value}")
+        print(f"  EVIDENCE: {', '.join(x.evidence_sources)}; RISKS: {', '.join(x.major_risks)}")
+
+def show_hypothesis_status() -> None:
+    status,reasons=hypothesis_status()
+    print("CHAPTER 19 — POOR TARGET CUSTOMER HYPOTHESIS STATUS")
+    print(f"STATUS: {status.value}")
+    for reason in reasons: print("- "+reason)
+    print("NOT A CHAPTER 20 FINAL VERDICT")
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline", "repeat-department", "repeat-department-summary", "repeat-department-scenarios", "reuse", "repeat-government", "repeat-government-summary", "repeat-government-scenarios", "repeatability-matrix"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline", "repeat-department", "repeat-department-summary", "repeat-department-scenarios", "reuse", "repeat-government", "repeat-government-summary", "repeat-government-scenarios", "repeatability-matrix", "motions", "motion-customer", "motion-seller", "motion-structure", "hypothesis-status"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -1073,5 +1120,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline, "repeat-department": show_repeat_department, "repeat-department-summary": show_repeat_department_summary, "repeat-department-scenarios": show_repeat_department_scenarios, "reuse": show_reuse, "repeat-government": show_repeat_government, "repeat-government-summary": show_repeat_government_summary, "repeat-government-scenarios": show_repeat_government_scenarios, "repeatability-matrix": show_repeatability_matrix}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline, "repeat-department": show_repeat_department, "repeat-department-summary": show_repeat_department_summary, "repeat-department-scenarios": show_repeat_department_scenarios, "reuse": show_reuse, "repeat-government": show_repeat_government, "repeat-government-summary": show_repeat_government_summary, "repeat-government-scenarios": show_repeat_government_scenarios, "repeatability-matrix": show_repeatability_matrix, "motions": show_motions, "motion-customer": show_motion_customer, "motion-seller": show_motion_seller, "motion-structure": show_motion_structure, "hypothesis-status": show_hypothesis_status}[args.command]()
     return 0

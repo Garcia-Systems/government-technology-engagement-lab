@@ -100,5 +100,5 @@ def test_no_capacity_score_probability_or_chapter_19():
     assert "score" not in {f.name for f in fields(type(portfolio_scenarios()[0]))}
     source=Path("src/government_engagement_lab/throughput.py").read_text().lower()
     assert "win_probability" not in source and "elapsed_days *" not in source
-    assert not Path("chapters/chapter-19-engagement-motion-economics.md").exists()
+    assert not Path("chapters/chapter-20-capstone.md").exists()
     assert all(isinstance(o.evidence,EvidenceLabel) for r in portfolio_scenarios() for o in r.opportunities)

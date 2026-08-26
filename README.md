@@ -380,3 +380,17 @@ Chapter 18 introduces wholly fictional **Blue Ridge County Development Services 
 The three-level repeatability matrix compares the first James River department, the second department in that same fictional government, and Blue Ridge County using raw hours, elapsed cycle, and contribution—never a repeatability score. The baseline saves substantial engineering effort yet derives **`INVESTIGATE`**, because acquisition and approvals reset. A friendly sensitivity reaches **`REPEATABLE PROJECT`** through explicit commercial mechanisms; a hard commercial reset and technical-variation case expose opposite failure modes. **Same-account repeatability is not cross-customer repeatability; technical repeatability is not market repeatability; cross-customer reuse is not a product.** Two fictional governments do not validate a real market.
 
 This clarifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: Chapter 17's same-account savings weaken it locally, but Chapter 18 shows those savings cannot be generalized when buyer access, purchasing authority, and approvals reset. Engagement-motion synthesis remains unresolved for Chapter 19 and is not implemented.
+
+## Chapter 19 engagement-motion economics
+
+Chapter 19 loads and normalizes Chapters 4–18 into one reusable comparison record covering Formal RFP, cooperative paid pilot, read-only edge, configuration-first, small departmental, justified larger contract, partner/channel, existing purchasing path, incumbent buy/configure, and no engagement. Separate **customer**, **seller**, and **structural** views keep price, value addressed, residual, acquisition, delivery, cycle, throughput, access, governance, support, relationship ownership, and repeatability visible.
+
+```bash
+python -m government_engagement_lab motions
+python -m government_engagement_lab motion-customer
+python -m government_engagement_lab motion-seller
+python -m government_engagement_lab motion-structure
+python -m government_engagement_lab hypothesis-status
+```
+
+The Chapter 19 hypothesis status is a conditional synthesis of motion evidence—not the Chapter 20 capstone verdict. No weighted score, universal winner, or best-to-worst ranking is assumed. See [`chapters/chapter-19-engagement-motion-economics.md`](chapters/chapter-19-engagement-motion-economics.md).
