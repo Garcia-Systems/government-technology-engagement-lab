@@ -32,6 +32,42 @@ class EngagementMotion(StrEnum):
     CONFIGURATION_FIRST = "CONFIGURATION_FIRST"
     SMALL_DEPARTMENTAL = "SMALL_DEPARTMENTAL"
     LARGER_CONTRACT = "LARGER_CONTRACT"
+    PARTNER_LED = "PARTNER_LED"
+
+
+class StageOwner(StrEnum):
+    PARTNER = "PARTNER"
+    SELLER = "SELLER"
+    CUSTOMER = "CUSTOMER"
+    JOINT = "JOINT"
+
+
+class DirectAccess(StrEnum):
+    YES = "YES"
+    LIMITED = "LIMITED"
+    NO = "NO"
+
+
+class CustomerRelationshipOwnership(StrEnum):
+    DIRECT = "DIRECT"
+    SHARED = "SHARED"
+    PARTNER_OWNED = "PARTNER_OWNED"
+
+
+class PartnerCompensationType(StrEnum):
+    PERCENT_OF_CONTRACT = "PERCENT_OF_CONTRACT"
+
+
+class ChannelEffect(StrEnum):
+    EXISTING_CUSTOMER_ACCESS = "EXISTING_CUSTOMER_ACCESS"
+    PRIMARY_CONTRACT_RELATIONSHIP = "PRIMARY_CONTRACT_RELATIONSHIP"
+    PROCUREMENT_COORDINATION_SHIFTED = "PROCUREMENT_COORDINATION_SHIFTED"
+    LOWER_PROSPECTING_BURDEN = "LOWER_PROSPECTING_BURDEN"
+    LOWER_CONTRACT_ADMINISTRATION_BURDEN = "LOWER_CONTRACT_ADMINISTRATION_BURDEN"
+    REDUCED_CUSTOMER_OWNERSHIP = "REDUCED_CUSTOMER_OWNERSHIP"
+    PARTNER_DEPENDENCY = "PARTNER_DEPENDENCY"
+    LOWER_DIRECT_MARGIN = "LOWER_DIRECT_MARGIN"
+    LIMITED_ACCOUNT_CONTROL = "LIMITED_ACCOUNT_CONTROL"
 
 
 class EngagementScale(StrEnum):
@@ -447,3 +483,80 @@ class FormalRFPScenario:
     assessment: FormalRFPAssessment
     changed_assumptions: tuple[str, ...]
     evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class PartnerStageOwnership:
+    stage_id: str
+    primary_owner: StageOwner
+    seller_hours: int
+    stakeholder_ids: tuple[str, ...]
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class SupportOwnership:
+    first_line_owner: StageOwner
+    escalation_owner: StageOwner
+    seller_support_revenue: Decimal
+    seller_support_hours: int
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class PartnerMotion:
+    identifier: str
+    partner_name: str
+    partner_type: str
+    fictional: bool
+    fiction_notice: str
+    seller_role: str
+    customer_relationship_owner: CustomerRelationshipOwnership
+    contract_owner: StageOwner
+    partner_responsibilities: tuple[str, ...]
+    seller_responsibilities: tuple[str, ...]
+    acquisition_effort_shifted: tuple[str, ...]
+    acquisition_effort_retained: tuple[str, ...]
+    project_management_effort_shifted: tuple[str, ...]
+    compensation_type: PartnerCompensationType
+    partner_share_rate: Decimal
+    direct_access: DirectAccess
+    stage_ownership: tuple[PartnerStageOwnership, ...]
+    support: SupportOwnership
+    dependency_risks: tuple[str, ...]
+    channel_effects: tuple[ChannelEffect, ...]
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class PartnerEconomics:
+    customer_contract_value: Decimal
+    customer_value_addressed: Decimal
+    customer_first_year_net_value: Decimal
+    partner_share: Decimal
+    seller_engagement_revenue: Decimal
+    seller_delivery_cost: Decimal
+    seller_acquisition_hours: int
+    seller_acquisition_cost: Decimal
+    retained_project_management_cost: Decimal
+    seller_support_cost: Decimal
+    seller_contribution: Decimal
+    contribution_margin: Decimal
+    acquisition_hours_saved: int
+    acquisition_cost_saved: Decimal
+    net_channel_economic_effect: Decimal
+    engineering_hours: int
+    cycle_days: int
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class PartnerAssessment:
+    motion: PartnerMotion
+    economics: PartnerEconomics
+    project_viability: GateStatus
+    direct_target_viability: GateStatus
+    target_viability: GateStatus
+    verdict: str
+    changed_assumptions: tuple[str, ...] = ()
+    evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
