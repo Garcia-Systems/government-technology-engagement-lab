@@ -27,6 +27,8 @@ from .larger_contract import (assess_larger_contract, assess_larger_contract_sce
 from .partner import assess_partner, direct_vs_partner, partner_scenarios
 from .existing_path import (assess_existing_path, existing_path_scenarios,
                             rfp_vs_existing_path)
+from .governance import (JOINT_SELLER_ATTRIBUTION, assess_governance,
+                         formal_rfp_trace, governance_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -686,9 +688,75 @@ def show_rfp_vs_existing_path() -> None:
     print(f"TOTAL                           {e.acquisition_hours_saved:11}h {e.elapsed_days_saved:10}d")
 
 
+def _show_governance_metrics(scenario) -> None:
+    m = scenario.metrics
+    print("\nGOVERNANCE ATTRIBUTION [OBSERVED LAB RESULT]")
+    print(f"  Seller delivery governance:       {m.seller_delivery_hours:3} h / {_money(m.seller_delivery_cost)}")
+    print(f"  Seller acquisition / approval:    {m.seller_acquisition_approval_hours:3} h / {_money(m.seller_acquisition_cost)}")
+    print(f"  Customer-only reviewer effort:    {m.customer_review_hours:3} h")
+    print(f"  Elapsed review time (not labor):   {m.elapsed_review_days:3} modeled days")
+    print(f"  Attribution rule: {JOINT_SELLER_ATTRIBUTION}")
+    print("\nCATEGORY TOTALS")
+    for category, hours in m.by_category:
+        print(f"  {category.value:34} {hours:3} h")
+    print("RESPONSIBILITY TOTALS")
+    for owner, hours in m.by_responsibility:
+        print(f"  {owner.value:34} {hours:3} h")
+    print(f"\nPROJECT VIABILITY: {scenario.project_viability.value}; TARGET ATTRACTIVENESS: {scenario.target_viability.value}")
+    print(f"VERDICT EFFECT: {scenario.verdict_effect}; EXISTING-GATE VERDICT: {scenario.verdict}")
+
+
+def show_governance() -> None:
+    scenario = assess_governance()
+    inventory_notice = "Wholly fictional educational assumptions; no real law, policy, jurisdiction, or compliance mandate is represented."
+    print("CHAPTER 12 — SECURITY, ACCESSIBILITY, AND GOVERNANCE SURFACE")
+    print("FICTION NOTICE: " + inventory_notice)
+    print(f"TECHNICAL SURFACE: {scenario.technical_surface} [{scenario.evidence}]")
+    print("\nWORK ITEMS")
+    for item in scenario.work_items:
+        print(f"  {item.identifier}")
+        print(f"    {item.classification.value} | {item.category.value} | {item.responsible_party.value} | required={item.required}")
+        print(f"    active={item.effort_hours} h; elapsed review={item.elapsed_days} d; origin={item.origin.value}")
+        print(f"    [{item.evidence}] {item.description}")
+    _show_governance_metrics(scenario)
+    print("\nChapter 12 distinguishes legitimate implementation from review mechanics; neither is labeled generic bureaucracy.")
+
+
+def show_governance_summary() -> None:
+    scenario = assess_governance()
+    print("CHAPTER 12 — GOVERNANCE SUMMARY\nFICTIONAL EDUCATIONAL MODEL")
+    print("DELIVERY WORK ≠ ACQUISITION / APPROVAL WORK; ELAPSED WAIT ≠ LABOR")
+    _show_governance_metrics(scenario)
+    print("\nFORMAL-RFP TRACE")
+    for target, items in formal_rfp_trace().items():
+        print(f"  Chapter 4 {target}: {', '.join(items)}")
+
+
+def show_governance_scenarios() -> None:
+    print("CHAPTER 12 — GOVERNANCE SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    for scenario in governance_scenarios():
+        print(f"\n{scenario.name} [{scenario.evidence}]")
+        print(f"  surface={scenario.technical_surface}; removed={', '.join(scenario.removed_work_ids) or 'none'}")
+        print(f"  shifted (not eliminated)={', '.join(scenario.shifted_work_ids) or 'none'}")
+        _show_governance_metrics(scenario)
+
+
+def show_governance_surfaces() -> None:
+    print("CHAPTER 12 — GOVERNANCE-SURFACE COMPARISON")
+    print("All quantities are fictional model inputs/results, not real compliance benchmarks.\n")
+    print(f"{'SURFACE':24} {'SELLER DELIVERY':16} {'SELLER APPROVAL':16} {'CUSTOMER REVIEW':17} {'REVIEW DAYS':12} EFFECT")
+    for s in governance_scenarios():
+        m = s.metrics
+        print(f"{s.key:24} {m.seller_delivery_hours:14}h {m.seller_acquisition_approval_hours:14}h {m.customer_review_hours:15}h {m.elapsed_review_days:10}d {s.verdict_effect}")
+    write, read, config, heavy = governance_scenarios()
+    print("\nWORK REMOVED BY READ-ONLY (authority-dependent only): " + ", ".join(read.removed_work_ids))
+    print("WORK SHIFTED TO INCUMBENT (requirements remain): " + ", ".join(config.shifted_work_ids))
+    print("DOCUMENTATION-HEAVY keeps the write-capable technical control surface and changes approval mechanics only.")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -710,5 +778,7 @@ def main(argv: list[str] | None = None) -> int:
      "partner": show_partner, "partner-economics": show_partner_economics,
      "partner-scenarios": show_partner_scenarios, "direct-vs-partner": show_direct_vs_partner,
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
-     "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path}[args.command]()
+     "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
+     "governance": show_governance, "governance-summary": show_governance_summary,
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces}[args.command]()
     return 0

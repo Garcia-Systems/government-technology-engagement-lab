@@ -1,0 +1,803 @@
+{
+  "customer_name": "James River County Permitting Department",
+  "fiction_notice": "Wholly fictional educational assumptions; no real law, policy, jurisdiction, or compliance mandate is represented.",
+  "evidence": "MODELED ASSUMPTION",
+  "seller_hourly_rates": {
+    "DELIVERY": "110.00",
+    "ACQUISITION_APPROVAL": "125.00"
+  },
+  "items": [
+    {
+      "id": "AUTHENTICATION_APPROACH",
+      "name": "Implement authentication approach",
+      "description": "Implement authentication approach for the fictional permitting engagement.",
+      "category": "SECURITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 12,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "LEAST_PRIVILEGE",
+      "name": "Configure least-privilege roles",
+      "description": "Configure least-privilege roles for the fictional permitting engagement.",
+      "category": "ACCESS_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 10,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "CREDENTIAL_HANDLING",
+      "name": "Implement credential handling",
+      "description": "Implement credential handling for the fictional permitting engagement.",
+      "category": "ACCESS_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "APPROVED_DATA_ACCESS",
+      "name": "Verify approved data access",
+      "description": "Verify approved data access for the fictional permitting engagement.",
+      "category": "ACCESS_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "AUDIT_LOGGING",
+      "name": "Implement audit logging and provenance",
+      "description": "Implement audit logging and provenance for the fictional permitting engagement.",
+      "category": "AUDITABILITY",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 14,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "ACCESS_REVOCATION",
+      "name": "Implement access revocation procedure",
+      "description": "Implement access revocation procedure for the fictional permitting engagement.",
+      "category": "ACCESS_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "ENVIRONMENT_RESTRICTIONS",
+      "name": "Configure environment and deployment restrictions",
+      "description": "Configure environment and deployment restrictions for the fictional permitting engagement.",
+      "category": "DEPLOYMENT_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 9,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "WRITE_AUTHORIZATION",
+      "name": "Implement authoritative-write authorization",
+      "description": "Implement authoritative-write authorization for the fictional permitting engagement.",
+      "category": "ACCESS_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 10,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "WRITE_ROLLBACK",
+      "name": "Implement rollback for authoritative writes",
+      "description": "Implement rollback for authoritative writes for the fictional permitting engagement.",
+      "category": "CHANGE_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 18,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "WRITE_AUDIT_DETAIL",
+      "name": "Implement expanded write audit detail",
+      "description": "Implement expanded write audit detail for the fictional permitting engagement.",
+      "category": "AUDITABILITY",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "PRODUCTION_CHANGE_CONTROL",
+      "name": "Implement production mutation change controls",
+      "description": "Implement production mutation change controls for the fictional permitting engagement.",
+      "category": "CHANGE_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 10,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "WRITE_RECONCILIATION",
+      "name": "Implement post-write reconciliation",
+      "description": "Implement post-write reconciliation for the fictional permitting engagement.",
+      "category": "AUDITABILITY",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "RETENTION_ASSUMPTIONS",
+      "name": "Define and implement retention behavior",
+      "description": "Define and implement retention behavior for the fictional permitting engagement.",
+      "category": "DATA_HANDLING",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "EXPORT_HANDLING",
+      "name": "Implement export handling",
+      "description": "Implement export handling for the fictional permitting engagement.",
+      "category": "DATA_HANDLING",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 7,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "TEMP_FILE_HANDLING",
+      "name": "Implement temporary-file cleanup",
+      "description": "Implement temporary-file cleanup for the fictional permitting engagement.",
+      "category": "DATA_HANDLING",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "DATA_PROVENANCE",
+      "name": "Preserve source provenance",
+      "description": "Preserve source provenance for the fictional permitting engagement.",
+      "category": "DATA_HANDLING",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 9,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "DELETION_CLEANUP",
+      "name": "Verify deletion and cleanup",
+      "description": "Verify deletion and cleanup for the fictional permitting engagement.",
+      "category": "DATA_HANDLING",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "KEYBOARD_INTERFACE",
+      "name": "Implement keyboard-operable interface",
+      "description": "Implement keyboard-operable interface for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "SEMANTIC_STRUCTURE",
+      "name": "Implement semantic output structure",
+      "description": "Implement semantic output structure for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 7,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "VISIBLE_LABELS",
+      "name": "Implement visible labels",
+      "description": "Implement visible labels for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "EXPORT_READABILITY",
+      "name": "Implement readable reports and exports",
+      "description": "Implement readable reports and exports for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 7,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "ACCESSIBILITY_VERIFICATION",
+      "name": "Verify user-facing accessibility",
+      "description": "Verify user-facing accessibility for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_IMPLEMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 9,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "ROLLBACK_PLAN_GENERAL",
+      "name": "Prepare executable deployment rollback plan",
+      "description": "Prepare executable deployment rollback plan for the fictional permitting engagement.",
+      "category": "DEPLOYMENT_CONTROL",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "SUPPORT_ESCALATION",
+      "name": "Define support and escalation ownership",
+      "description": "Define support and escalation ownership for the fictional permitting engagement.",
+      "category": "DOCUMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "OPERATIONAL_RESPONSIBILITY",
+      "name": "Establish operational responsibility",
+      "description": "Establish operational responsibility for the fictional permitting engagement.",
+      "category": "DOCUMENTATION",
+      "classification": "DELIVERY",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 4,
+      "elapsed_days": 0,
+      "origin": "INTRINSIC_TO_TECHNICAL_SURFACE",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "SECURITY_QUESTIONNAIRE",
+      "name": "Prepare security questionnaire response",
+      "description": "Prepare security questionnaire response for the fictional permitting engagement.",
+      "category": "SECURITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 16,
+      "elapsed_days": 0,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": [
+        "SECURITY_ACCESS_RESPONSE",
+        "SECURITY_QUESTIONNAIRE"
+      ]
+    },
+    {
+      "id": "SECURITY_REVIEW_MEETING",
+      "name": "Participate in security review",
+      "description": "Participate in security review for the fictional permitting engagement.",
+      "category": "SECURITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 7,
+      "elapsed_days": 12,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": [
+        "SECURITY_ACCESS_RESPONSE"
+      ]
+    },
+    {
+      "id": "CUSTOMER_SECURITY_REVIEW",
+      "name": "Review security materials",
+      "description": "Review security materials for the fictional permitting engagement.",
+      "category": "SECURITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "CUSTOMER_SECURITY",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "ACCESSIBILITY_CONFORMANCE",
+      "name": "Prepare accessibility conformance response",
+      "description": "Prepare accessibility conformance response for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 8,
+      "elapsed_days": 0,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": [
+        "ACCESSIBILITY_RESPONSE",
+        "ACCESSIBILITY_RESPONSE_ARTIFACT"
+      ]
+    },
+    {
+      "id": "CUSTOMER_ACCESSIBILITY_REVIEW",
+      "name": "Review accessibility evidence",
+      "description": "Review accessibility evidence for the fictional permitting engagement.",
+      "category": "ACCESSIBILITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "CUSTOMER_ACCESSIBILITY",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 8,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "CHANGE_CONTROL_DOCUMENTATION",
+      "name": "Prepare change-control documentation",
+      "description": "Prepare change-control documentation for the fictional permitting engagement.",
+      "category": "CHANGE_CONTROL",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 7,
+      "elapsed_days": 0,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "IMPLEMENTATION_APPROVAL",
+      "name": "Coordinate implementation approval",
+      "description": "Coordinate implementation approval for the fictional permitting engagement.",
+      "category": "APPROVAL_COORDINATION",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "JOINT",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 5,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": [
+        "IMPLEMENTATION_PLANNING"
+      ]
+    },
+    {
+      "id": "DEPLOYMENT_APPROVAL",
+      "name": "Coordinate deployment approval",
+      "description": "Coordinate deployment approval for the fictional permitting engagement.",
+      "category": "APPROVAL_COORDINATION",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "CUSTOMER_IT",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 6,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": [
+        "AUTHORIZATION"
+      ]
+    },
+    {
+      "id": "ACCEPTANCE_DOCUMENTATION",
+      "name": "Prepare acceptance documentation",
+      "description": "Prepare acceptance documentation for the fictional permitting engagement.",
+      "category": "DOCUMENTATION",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "SELLER",
+      "required": true,
+      "effort_hours": 6,
+      "elapsed_days": 0,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "OPERATIONS_ACCEPTANCE",
+      "name": "Review operational acceptance",
+      "description": "Review operational acceptance for the fictional permitting engagement.",
+      "category": "APPROVAL_COORDINATION",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION",
+        "READ_ONLY_REPORTING_EDGE",
+        "CONFIGURATION_FIRST"
+      ],
+      "responsible_party": "CUSTOMER_OPERATIONS",
+      "required": true,
+      "effort_hours": 4,
+      "elapsed_days": 4,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    },
+    {
+      "id": "WRITE_CHANGE_REVIEW",
+      "name": "Review production-write change",
+      "description": "Review production-write change for the fictional permitting engagement.",
+      "category": "SECURITY_REVIEW",
+      "classification": "ACQUISITION_APPROVAL",
+      "technical_surfaces": [
+        "WRITE_CAPABLE_INTEGRATION"
+      ],
+      "responsible_party": "CUSTOMER_SECURITY",
+      "required": true,
+      "effort_hours": 5,
+      "elapsed_days": 7,
+      "origin": "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS",
+      "evidence": "MODELED ASSUMPTION",
+      "assumptions": [
+        "Fictional educational allocation; not a real compliance benchmark."
+      ],
+      "trace_to": []
+    }
+  ]
+}
