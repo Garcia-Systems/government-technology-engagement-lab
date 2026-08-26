@@ -27,6 +27,7 @@ class EngagementMotion(StrEnum):
     """Context for an assessment, deliberately not a scored gate."""
 
     BASELINE_COOKBOOK_MOTION = "BASELINE_COOKBOOK_MOTION"
+    FORMAL_RFP = "FORMAL_RFP"
 
 
 class StageType(StrEnum):
@@ -109,6 +110,14 @@ class FindingCode(StrEnum):
     REQUIRED_ACCESS_UNAVAILABLE = "REQUIRED_ACCESS_UNAVAILABLE"
     INSUFFICIENT_CUSTOMER_VALUE = "INSUFFICIENT_CUSTOMER_VALUE"
     TARGET_ACCESS_CONDITIONS_IMPROVED = "TARGET_ACCESS_CONDITIONS_IMPROVED"
+    HIGH_ACQUISITION_EFFORT = "HIGH_ACQUISITION_EFFORT"
+    LONG_ELAPSED_CYCLE = "LONG_ELAPSED_CYCLE"
+    MULTIPLE_REQUIRED_APPROVALS = "MULTIPLE_REQUIRED_APPROVALS"
+    SIGNIFICANT_PRE_AWARD_TECHNICAL_WORK = "SIGNIFICANT_PRE_AWARD_TECHNICAL_WORK"
+    CONTRACT_COORDINATION_BURDEN = "CONTRACT_COORDINATION_BURDEN"
+    PROCUREMENT_DEPENDENCY = "PROCUREMENT_DEPENDENCY"
+    WEAK_DIRECT_BUYER_CONTROL = "WEAK_DIRECT_BUYER_CONTROL"
+    CONTRIBUTION_BELOW_MODELED_MINIMUM = "CONTRIBUTION_BELOW_MODELED_MINIMUM"
 
 
 @dataclass(frozen=True)
@@ -348,3 +357,75 @@ class StakeholderScenario:
     changed_assumptions: tuple[str, ...]
     evidence: EvidenceLabel
     verdict: str
+
+
+@dataclass(frozen=True)
+class LaborCostRate:
+    category: WorkCategory
+    hourly_cost: Decimal
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class ProposalArtifact:
+    identifier: str
+    name: str
+    stage_id: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class MotionStakeholderParticipation:
+    stage_id: str
+    stakeholder_id: str
+    responsibility: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class FormalRFPMotion:
+    identifier: str
+    name: str
+    description: str
+    journey: EngagementJourney
+    stakeholder_participation: tuple[MotionStakeholderParticipation, ...]
+    proposal_artifacts: tuple[ProposalArtifact, ...]
+    implementation_price: Decimal
+    annual_support: Decimal
+    engineering_hours: int
+    labor_rates: tuple[LaborCostRate, ...]
+    minimum_contribution: Decimal
+    major_risks: tuple[str, ...]
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class SellerEconomics:
+    implementation_revenue: Decimal
+    delivery_labor_cost: Decimal
+    acquisition_labor_cost: Decimal
+    other_direct_costs: Decimal
+    acquisition_adjusted_contribution: Decimal
+    contribution_margin: Decimal
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class FormalRFPAssessment:
+    motion: FormalRFPMotion
+    customer_economics: object
+    seller_economics: SellerEconomics
+    findings: tuple[FindingCode, ...]
+    project_viability: GateStatus
+    target_viability: GateStatus
+    verdict: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class FormalRFPScenario:
+    key: str
+    name: str
+    assessment: FormalRFPAssessment
+    changed_assumptions: tuple[str, ...]
+    evidence: EvidenceLabel
