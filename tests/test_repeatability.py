@@ -79,6 +79,6 @@ def test_interpretation_requires_multidimensional_reuse_and_is_not_product():
     assert not hasattr(baseline, "product_economics")
 
 
-def test_chapter_18_not_implemented():
+def test_chapter_19_not_implemented():
     import government_engagement_lab.cli as cli
-    assert not hasattr(cli, "show_repeat_government")
+    assert not hasattr(cli, "show_engagement_motion_economics")

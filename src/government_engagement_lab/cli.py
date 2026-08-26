@@ -35,6 +35,8 @@ from .closed_integration import (assess_closed_integration,
                                  load_closed_fixture)
 from .incumbent import (assess_incumbent, compare_alternatives,
                         incumbent_scenarios, load_incumbent_fixture)
+from .repeat_government import (assess_repeat_government, repeat_government_scenarios,
+                                three_level_comparison)
 from .acquisition import (acquisition_report, acquisition_reports, focused_scenarios,
                           lost_deal_sensitivity)
 from .throughput import (additional_capacity_sensitivity, load_seller_organization,
@@ -1002,9 +1004,52 @@ def show_repeat_department() -> None:
     print(f"Project: {a.project_verdict}; target: {a.target_verdict}; interpretation: {a.structural_interpretation}")
     print("Evidence: inputs [MODELED ASSUMPTION]; calculations [OBSERVED LAB RESULT]; artifact states [OBSERVED IMPLEMENTATION STRUCTURE]")
 
+def _government_row(a) -> None:
+    print(f"{a.key:32} eng={a.engineering_hours:3} acq={a.acquisition_hours:3} gov={a.governance_hours:2} support={a.support_hours:2} days={a.elapsed_days:3} contribution={_money(a.seller_contribution):>11} {a.verdict}")
+
+def show_repeat_government() -> None:
+    a=assess_repeat_government(); p=a.profile
+    print("CHAPTER 18 — REPEATABILITY ACROSS GOVERNMENTS")
+    print("FICTION NOTICE: "+p.fiction_notice)
+    print("Reference: James River County (fictional) — Department 1 and same-government Department 2")
+    print(f"New customer: {p.name}; department: {p.department_name}")
+    print("Workflow: " + " -> ".join(p.workflow))
+    print(f"Incumbent: {p.incumbent} (fictional); access: {p.access_mode}")
+    print("Stakeholder topology: " + ", ".join(f"{x}:{y}" for x,y in p.stakeholders))
+    print(f"Purchasing motion/path: {p.purchasing_motion} / {p.purchasing_path}")
+    print("Governance requirements: " + "; ".join(p.governance_requirements))
+    print("\nCROSS_CUSTOMER REUSE INVENTORY")
+    for x in a.artifacts: print(f"  {x.identifier:26} {x.state.value:12} required={x.adaptation_effort:2}h saved={x.hours_saved:2}h")
+    print(f"\nEngineering greenfield/reuse-adjusted/saved: {a.engineering_greenfield_hours}/{a.engineering_hours}/{a.engineering_saved_hours} h")
+    print(f"Discovery/acquisition/governance/support: {a.discovery_hours}/{a.acquisition_hours}/{a.governance_hours}/{a.support_hours} h")
+    print("Acquisition (Chapter 15 categories): " + ", ".join(f"{k}={v}h" for k,v in a.acquisition_by_category))
+    print("Procurement reset: PURCHASING_PATH=REBUILD; governance documents adapt while approvals rebuild")
+    print(f"Customer net value: {_money(a.customer_value)}; seller contribution: {_money(a.seller_contribution)}; elapsed: {a.elapsed_days} days")
+    print(f"Verdict: {a.verdict}")
+    print("SECOND DEPARTMENT SUCCESS ≠ REPEATABLE MARKET; CROSS-CUSTOMER REUSE ≠ PRODUCT")
+    print("Evidence: fixture [MODELED ALTERNATIVE ASSUMPTION]; calculations [OBSERVED LAB RESULT]; scope [OBSERVED IMPLEMENTATION STRUCTURE]")
+
+def show_repeat_government_summary() -> None:
+    print("CHAPTER 18 — CROSS-GOVERNMENT SUMMARY")
+    _government_row(assess_repeat_government())
+    print("Technical repeatability ≠ commercial repeatability ≠ market repeatability.")
+
+def show_repeat_government_scenarios() -> None:
+    print("CHAPTER 18 — CROSS-GOVERNMENT SCENARIOS [SENSITIVITY ASSUMPTION]")
+    for a in repeat_government_scenarios():
+        _government_row(a)
+        for x in a.changed_assumptions: print("  - "+x)
+
+def show_repeatability_matrix() -> None:
+    print("CHAPTER 18 — THREE-LEVEL REPEATABILITY MATRIX [OBSERVED LAB RESULT]")
+    print(f"{'LEVEL':36} {'ENG':>5} {'ACQ':>5} {'GOV':>5} {'SUP':>5} {'DAYS':>5} {'CONTRIBUTION':>14}")
+    for x in three_level_comparison():
+        print(f"{x['level']:36} {x['engineering_hours']:5} {x['acquisition_hours']:5} {x['governance_hours']:5} {x['support_hours']:5} {x['elapsed_days']:5} {_money(x['contribution']):>14}")
+    print("Raw artifact states remain available through repeat-government; no repeatability score exists.")
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline", "repeat-department", "repeat-department-summary", "repeat-department-scenarios", "reuse"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline", "repeat-department", "repeat-department-summary", "repeat-department-scenarios", "reuse", "repeat-government", "repeat-government-summary", "repeat-government-scenarios", "repeatability-matrix"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -1028,5 +1073,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline, "repeat-department": show_repeat_department, "repeat-department-summary": show_repeat_department_summary, "repeat-department-scenarios": show_repeat_department_scenarios, "reuse": show_reuse}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline, "repeat-department": show_repeat_department, "repeat-department-summary": show_repeat_department_summary, "repeat-department-scenarios": show_repeat_department_scenarios, "reuse": show_reuse, "repeat-government": show_repeat_government, "repeat-government-summary": show_repeat_government_summary, "repeat-government-scenarios": show_repeat_government_scenarios, "repeatability-matrix": show_repeatability_matrix}[args.command]()
     return 0
