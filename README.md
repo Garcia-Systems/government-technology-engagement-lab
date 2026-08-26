@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–11 only**. Chapter 11 implements only the fictional existing-purchasing-path experiment; Chapter 12 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–12 only**. Chapter 12 implements only the fictional security, accessibility, and governance-surface experiment; Chapter 13 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -110,6 +110,10 @@ python -m government_engagement_lab existing-path
 python -m government_engagement_lab existing-path-economics
 python -m government_engagement_lab existing-path-scenarios
 python -m government_engagement_lab rfp-vs-existing-path
+python -m government_engagement_lab governance
+python -m government_engagement_lab governance-summary
+python -m government_engagement_lab governance-scenarios
+python -m government_engagement_lab governance-surfaces
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -253,11 +257,24 @@ Chapter 11 introduces the wholly fictional **Blue Heron Technology Services Path
 
 The central comparison holds the fictional customer, technical scope, value, **$78,000 implementation price**, **$24,000 support**, **522 engineering hours**, and labor rates constant. Relative to Formal RFP direct, solicitation review, full proposal assembly, competitive submission, solicitation clarification, evaluation wait, and selection are omitted; technical documentation, pricing, contract review, and procurement coordination are reduced for explicit fictional reasons. Seller acquisition falls **192→114 hours**, acquisition labor **$20,640→$13,050**, and elapsed cycle **270→127 modeled days**. Contribution rises **-$60→$7,530**, while customer first-year cost (**$102,000**), net recoverable value (**$2,002.80**), and 9.00-month implementation-only payback remain unchanged.
 
-The primary result is project `PASS`, target `CONDITIONAL`, and `INVESTIGATE`: purchasing friction explains a material share of the Formal RFP burden, but procurement is not buyer access. The weak-access scenario remains `POOR TARGET CUSTOMER`; a nominal path removes little; and only the strong-path sensitivity combines enough simplification with credible access to reach the restrained `PROMISING — VALIDATE IN DISCOVERY`. Thus the cookbook hypothesis becomes **more conditional**, not disproved. No purchasing-path score, throughput model, real rule, or Chapter 12 security/accessibility/governance surface is implemented.
+The primary result is project `PASS`, target `CONDITIONAL`, and `INVESTIGATE`: purchasing friction explains a material share of the Formal RFP burden, but procurement is not buyer access. The weak-access scenario remains `POOR TARGET CUSTOMER`; a nominal path removes little; and only the strong-path sensitivity combines enough simplification with credible access to reach the restrained `PROMISING — VALIDATE IN DISCOVERY`. Thus the cookbook hypothesis becomes **more conditional**, not disproved. No purchasing-path score, throughput model, or real rule is used; Chapter 12 subsequently decomposes the security/accessibility/governance surface without changing Chapter 11 economics.
 
 ```bash
 python -m government_engagement_lab existing-path
 python -m government_engagement_lab existing-path-economics
 python -m government_engagement_lab existing-path-scenarios
 python -m government_engagement_lab rfp-vs-existing-path
+python -m government_engagement_lab governance
+python -m government_engagement_lab governance-summary
+python -m government_engagement_lab governance-scenarios
+python -m government_engagement_lab governance-surfaces
 ```
+
+
+## Chapter 12 security, accessibility, and governance surface
+
+Chapter 12 rejects “government bureaucracy” as an adequate economic bucket. Its fixture-backed governance inventory classifies every fictional activity as either `DELIVERY`—an intrinsic implementation, verification, or operational requirement—or `ACQUISITION_APPROVAL`—a questionnaire, review, meeting, conformance artifact, coordination task, or acceptance activity. Every item exposes its technical surface, responsible party, active effort, elapsed review, origin, evidence, assumptions, and Chapter 4 trace where applicable. No weighted governance/compliance score or real-law claim is made.
+
+The write-capable scenario attributes **205 seller delivery hours**, **49 seller acquisition/approval hours**, **28 customer-only review hours**, and **42 elapsed review days**. Read-only removes only six write-authority items and retains substantial security, accessibility, data, deployment, and approval work: **151 / 49 / 23 hours** and **35 days** respectively. Configuration-first shifts five requirements to fictional incumbent capability rather than declaring them eliminated, reducing seller delivery governance to **100 hours** while approval remains **49 hours**.
+
+The documentation-heavy `SENSITIVITY ASSUMPTION` keeps the write-capable delivery control set unchanged but raises seller approval work from **49 to 98 hours** and elapsed review from **42 to 57 days**. Under explicit fictional gate thresholds, project viability remains `PASS` while target attractiveness becomes `FAIL`. Thus Chapter 12 **clarifies** the cookbook's `POOR TARGET CUSTOMER` hypothesis: legitimate security/accessibility/governance implementation can remain economically supportable while approval mechanics independently make the target unattractive. This is a deterministic lab result from fictional allocations, not evidence about real governments. Chapter 13's closed-integration boundary remains unresolved and unimplemented.

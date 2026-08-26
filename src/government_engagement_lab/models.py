@@ -108,6 +108,41 @@ class WorkCategory(StrEnum):
     SECURITY_GOVERNANCE = "SECURITY_GOVERNANCE"
 
 
+class GovernanceCategory(StrEnum):
+    SECURITY_IMPLEMENTATION = "SECURITY_IMPLEMENTATION"
+    SECURITY_REVIEW = "SECURITY_REVIEW"
+    ACCESSIBILITY_IMPLEMENTATION = "ACCESSIBILITY_IMPLEMENTATION"
+    ACCESSIBILITY_REVIEW = "ACCESSIBILITY_REVIEW"
+    ACCESS_CONTROL = "ACCESS_CONTROL"
+    AUDITABILITY = "AUDITABILITY"
+    DATA_HANDLING = "DATA_HANDLING"
+    DEPLOYMENT_CONTROL = "DEPLOYMENT_CONTROL"
+    CHANGE_CONTROL = "CHANGE_CONTROL"
+    DOCUMENTATION = "DOCUMENTATION"
+    APPROVAL_COORDINATION = "APPROVAL_COORDINATION"
+
+
+class GovernanceClassification(StrEnum):
+    DELIVERY = "DELIVERY"
+    ACQUISITION_APPROVAL = "ACQUISITION_APPROVAL"
+
+
+class GovernanceResponsibility(StrEnum):
+    SELLER = "SELLER"
+    PARTNER = "PARTNER"
+    CUSTOMER_IT = "CUSTOMER_IT"
+    CUSTOMER_SECURITY = "CUSTOMER_SECURITY"
+    CUSTOMER_ACCESSIBILITY = "CUSTOMER_ACCESSIBILITY"
+    CUSTOMER_OPERATIONS = "CUSTOMER_OPERATIONS"
+    INCUMBENT_VENDOR = "INCUMBENT_VENDOR"
+    JOINT = "JOINT"
+
+
+class WorkOrigin(StrEnum):
+    INTRINSIC_TO_TECHNICAL_SURFACE = "INTRINSIC_TO_TECHNICAL_SURFACE"
+    CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS = "CREATED_BY_ENGAGEMENT_APPROVAL_PROCESS"
+
+
 class StakeholderRole(StrEnum):
     DECISION_MAKER = "DECISION_MAKER"
     INFLUENCER = "INFLUENCER"
@@ -668,3 +703,62 @@ class ExistingPathAssessment:
     verdict: str
     changed_assumptions: tuple[str, ...] = ()
     evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
+
+
+@dataclass(frozen=True)
+class GovernanceWorkItem:
+    identifier: str
+    name: str
+    description: str
+    category: GovernanceCategory
+    classification: GovernanceClassification
+    technical_surfaces: tuple[str, ...]
+    responsible_party: GovernanceResponsibility
+    required: bool
+    effort_hours: int
+    elapsed_days: int
+    origin: WorkOrigin
+    evidence: EvidenceLabel
+    assumptions: tuple[str, ...]
+    trace_to: tuple[str, ...] = ()
+    shifted_from_seller: bool = False
+
+
+@dataclass(frozen=True)
+class GovernanceInventory:
+    customer_name: str
+    fiction_notice: str
+    work_items: tuple[GovernanceWorkItem, ...]
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class GovernanceMetrics:
+    total_delivery_hours: int
+    total_acquisition_approval_hours: int
+    seller_delivery_hours: int
+    seller_acquisition_approval_hours: int
+    customer_review_hours: int
+    elapsed_review_days: int
+    seller_delivery_cost: Decimal
+    seller_acquisition_cost: Decimal
+    by_category: tuple[tuple[GovernanceCategory, int], ...]
+    by_responsibility: tuple[tuple[GovernanceResponsibility, int], ...]
+    evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
+
+
+@dataclass(frozen=True)
+class GovernanceScenario:
+    key: str
+    name: str
+    technical_surface: str
+    work_items: tuple[GovernanceWorkItem, ...]
+    removed_work_ids: tuple[str, ...]
+    shifted_work_ids: tuple[str, ...]
+    metrics: GovernanceMetrics
+    project_viability: GateStatus
+    target_viability: GateStatus
+    verdict: str
+    verdict_effect: str
+    evidence: EvidenceLabel
+    changed_assumptions: tuple[str, ...] = ()
