@@ -20,6 +20,8 @@ from .read_only import (assess_technical_scenario, read_only_scenarios,
 from .configuration import (BURDEN, assess_configuration_first,
                             configuration_scenarios, load_capability_fixture,
                             load_current_configuration)
+from .small_engagement import (assess_small_engagement,
+                               assess_small_engagement_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -456,9 +458,64 @@ def show_residual() -> None:
     print(f"Residual recoverable value       {_money(a.economics.residual_value)}\nResidual classification          {a.residual_classification.value}")
 
 
+def _show_small_economics(a) -> None:
+    e, c, s = a.engagement, a.customer, a.seller
+    print("\nCUSTOMER ECONOMICS")
+    print(f"  Annual value addressed: {_money(c.annual_value_addressed)} ({c.percent_original_value_addressed:.1f}% of original)")
+    print(f"  Price / support / first-year cost: {_money(e.implementation_price)} / {_money(e.annual_support_revenue)} / {_money(c.first_year_cost)}")
+    print(f"  Net recoverable value: {_money(c.net_recoverable_value)}; implementation payback: {c.implementation_payback_months:.2f} months")
+    print(f"  Modeled customer-supported price: {_money(c.customer_supported_price)} [OBSERVED LAB RESULT]")
+    print("SELLER ECONOMICS")
+    print(f"  Engineering: {e.engineering_hours} h / {_money(s.delivery_labor_cost)}")
+    print(f"  Acquisition: {e.acquisition_hours} h / {_money(s.acquisition_labor_cost)}")
+    print(f"  Support: {_money(e.annual_support_revenue)} revenue / {e.support_hours} h / {_money(a.support_cost)} cost")
+    print(f"  Other direct: {_money(s.other_direct_costs)}; contribution: {_money(s.acquisition_adjusted_contribution)} ({s.contribution_margin:.2%})")
+    print(f"  Seller break-even price: {_money(a.seller_break_even_price)} [OBSERVED LAB RESULT]")
+    print(f"  Acquisition h / $10k revenue: {a.ratios.acquisition_hours_per_implementation_revenue * Decimal(10000):.2f}")
+    print(f"  Acquisition cost / revenue: {a.ratios.acquisition_cost_per_implementation_revenue:.2%}; engineering h / $10k: {a.ratios.engineering_hours_per_implementation_revenue * Decimal(10000):.2f}")
+    print(f"  Value / price: {a.ratios.value_addressed_per_price:.2f}; contribution / price: {a.ratios.contribution_per_price:.2%}")
+
+
+def show_small_engagement() -> None:
+    a = assess_small_engagement(); e = a.engagement
+    print("CHAPTER 8 — SMALL DEPARTMENTAL ENGAGEMENT\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{e.customer_name}; scale={e.scale.value} [{e.evidence}]")
+    print(f"\nSCOPE: {e.scope.department_team}; {e.scope.user_count} users; {e.scope.workflow_slice}")
+    print(f"Authority: {e.scope.technical_authority}; duration: {e.scope.implementation_duration_days} days")
+    print("Included: " + "; ".join(e.scope.included_features)); print("Excluded: " + "; ".join(e.scope.excluded_features))
+    print("Data: " + "; ".join(e.scope.data_sources)); print("Support boundary: " + e.scope.support_boundary)
+    print("Acceptance boundary: " + e.scope.acceptance_boundary)
+    print("\nACQUISITION JOURNEY (the floor is the sum of explicit non-implementation stage work)")
+    for stage in e.journey.ordered_stages:
+        print(f"  {stage.display_name:32} {stage.effort_hours:2} h {stage.elapsed_days:3} d [{stage.evidence}]")
+    print(f"Total journey elapsed: {e.journey.total_elapsed_days} modeled days; acquisition effort: {e.acquisition_hours} h")
+    print("Stakeholders: " + ", ".join(e.stakeholder_ids))
+    _show_small_economics(a)
+    print(f"\nPROJECT VIABILITY: {a.project_viability.value}\nTARGET VIABILITY: {a.target_viability.value}\nCOMMERCIAL VERDICT: {a.verdict} [{a.evidence}]")
+    print("EASIER TO APPROVE ≠ ECONOMIC TO SELL")
+
+
+def show_small_engagement_economics() -> None:
+    print("CHAPTER 8 — SMALL-ENGAGEMENT ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_small_economics(assess_small_engagement())
+
+
+def show_small_engagement_scenarios() -> None:
+    print("CHAPTER 8 — CONTRACT-SIZE SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':29} {'VALUE':12} {'PRICE':11} {'ENG':5} {'ACQ':5} {'CONTRIB':12} {'BREAK-EVEN':12} {'SUPPORTED':12} VERDICT")
+    for a in assess_small_engagement_scenarios():
+        e, c, s = a.engagement, a.customer, a.seller
+        print(f"{e.name:29} {_money(c.annual_value_addressed):12} {_money(e.implementation_price):11} {e.engineering_hours:3}h {e.acquisition_hours:3}h {_money(s.acquisition_adjusted_contribution):12} {_money(a.seller_break_even_price):12} {_money(c.customer_supported_price):12} {a.verdict}")
+        for change in e.changed_assumptions: print(f"  [{e.evidence}] {change}")
+
+
+def show_contract_size() -> None:
+    show_small_engagement_scenarios()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -472,5 +529,7 @@ def main(argv: list[str] | None = None) -> int:
      "read-only-economics": show_read_only_economics, "read-only-scenarios": show_read_only_scenarios,
      "compare-technical-surfaces": show_read_only_scenarios,
      "configure-first": show_configure_first, "configure-first-economics": show_configure_first_economics,
-     "configure-first-scenarios": show_configure_first_scenarios, "residual": show_residual}[args.command]()
+     "configure-first-scenarios": show_configure_first_scenarios, "residual": show_residual,
+     "small-engagement": show_small_engagement, "small-engagement-economics": show_small_engagement_economics,
+     "small-engagement-scenarios": show_small_engagement_scenarios, "contract-size": show_contract_size}[args.command]()
     return 0

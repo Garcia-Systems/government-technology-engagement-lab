@@ -30,6 +30,14 @@ class EngagementMotion(StrEnum):
     FORMAL_RFP = "FORMAL_RFP"
     COOPERATIVE_PAID_PILOT = "COOPERATIVE_PAID_PILOT"
     CONFIGURATION_FIRST = "CONFIGURATION_FIRST"
+    SMALL_DEPARTMENTAL = "SMALL_DEPARTMENTAL"
+
+
+class EngagementScale(StrEnum):
+    """Named scope categories, not a numeric size score."""
+
+    BASELINE_FULL = "BASELINE_FULL"
+    SMALL_DEPARTMENTAL = "SMALL_DEPARTMENTAL"
 
 
 class PilotAcceptance(StrEnum):

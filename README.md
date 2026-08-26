@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–6 only**. Chapter 6 implements only the read-only-before-write-access experiment; Chapter 7 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–8 only**. Chapter 8 implements only the small-departmental contract-size experiment; Chapter 9 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; and `read_only.py` implements Chapter 6's technical-authority model, pure transform, provenance, economics, and sensitivities.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; and `small_engagement.py` implements Chapter 8's scope, acquisition-floor, support, break-even, and scenario economics.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -90,6 +90,14 @@ python -m government_engagement_lab read-only
 python -m government_engagement_lab read-only-economics
 python -m government_engagement_lab read-only-scenarios
 python -m government_engagement_lab compare-technical-surfaces
+python -m government_engagement_lab configure-first
+python -m government_engagement_lab configure-first-economics
+python -m government_engagement_lab configure-first-scenarios
+python -m government_engagement_lab residual
+python -m government_engagement_lab small-engagement
+python -m government_engagement_lab small-engagement-economics
+python -m government_engagement_lab small-engagement-scenarios
+python -m government_engagement_lab contract-size
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -173,4 +181,19 @@ python -m government_engagement_lab configure-first-scenarios
 python -m government_engagement_lab residual
 ```
 
-Chapter 8 remains unimplemented.
+## Chapter 8 small departmental engagement
+
+Chapter 8 changes contract size while retaining the same fictional customer and a bounded correction/resubmission reporting problem. The main scope has one correction-desk team, eight users, a read-only export plus configuration mapping, a standardized status view, exception report, management summary, provenance, 120 engineering hours, and bounded annual support. It addresses a modeled **42% / $43,681.18** of original recoverable value—not the whole problem.
+
+The **acquisition floor** emerges from required journey stages rather than a universal threshold. The baseline still consumes 58 acquisition hours and $5,970 acquisition labor against a $30,000 implementation. Its $9,830 acquisition-adjusted contribution misses the fictional $10,000 sustainability requirement by $170, while customer first-year economics remain positive. Seller break-even is **$30,170** and the independently derived customer-supported ceiling is **$39,681.18**, producing project `PASS`, target `FAIL`, and `POOR TARGET CUSTOMER` at the modeled price.
+
+The scenarios show why smaller is not a verdict. “Too small” preserves required acquisition work and becomes `NO DEAL`; “efficient small” reduces explicit stage mechanisms to 36 hours and becomes `PROMISING — VALIDATE IN DISCOVERY`; high recurring support becomes `NO DEAL` without changing delivery scope. The fixture therefore reveals a possible middle band and **complicates**, rather than universally confirms or disproves, the cookbook hypothesis. No minimum contract size, real willingness to pay, market price, or real procurement norm is claimed.
+
+```bash
+python -m government_engagement_lab small-engagement
+python -m government_engagement_lab small-engagement-economics
+python -m government_engagement_lab small-engagement-scenarios
+python -m government_engagement_lab contract-size
+```
+
+Chapter 9's larger-contract question remains unimplemented.
