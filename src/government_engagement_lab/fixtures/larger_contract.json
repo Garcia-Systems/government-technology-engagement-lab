@@ -1,0 +1,25 @@
+{
+  "evidence": "MODELED ASSUMPTION",
+  "opportunity_value": "104002.80",
+  "baseline_value": "43681.1760",
+  "acquisition_floor": [["sponsor and authorization", 18, "SALES"], ["bounded discovery and validation", 20, "SOLUTIONS"], ["procurement and contract coordination", 20, "SALES"]],
+  "minimum_contribution": "10000.00",
+  "fragile_corridor_threshold": "5000.00",
+  "scenarios": [
+    {
+      "key": "JUSTIFIED_LARGER", "name": "Justified larger contract", "price": "65000", "support_revenue": "8000", "support_hours": 55, "other_direct_cost": "2500", "cycle_days": 120, "users": 22,
+      "baseline_scope": "Chapter 8 correction/resubmission status reconciliation for one team",
+      "components": [
+        {"id":"SECOND_WORKFLOW", "description":"Second intake-to-review workflow slice", "burden_categories":["duplicate_entry","workflow_rework"], "incremental_value":"17000", "overlap":"0", "engineering":[["workflow configuration",35],["workflow testing",25]], "acquisition":[["workflow discovery",8,"SOLUTIONS"]], "governance":["second workflow owner","acceptance matrix"], "support":["second workflow mapping"]},
+        {"id":"MANAGEMENT_REPORTING", "description":"Management reporting and reconciliation categories", "burden_categories":["report_preparation","lookup_search"], "incremental_value":"12000", "overlap":"0", "engineering":[["report configuration",20],["reconciliation testing",15]], "acquisition":[["report requirements",5,"SOLUTIONS"]], "governance":["report owner approval"], "support":["report configurations","mapping changes"]},
+        {"id":"BOUNDED_RESIDUAL", "description":"Narrow read-only exception residual", "burden_categories":["correction_administration"], "incremental_value":"8000", "overlap":"0", "engineering":[["exception handling",18],["deployment documentation and training",12]], "acquisition":[["technical validation",6,"SOLUTIONS"]], "governance":["approved additional export","change control"], "support":["integration monitoring","exceptions"]}
+      ],
+      "baseline_engineering":[["Chapter 8 bounded delivery",120]], "additional_data_sources":["Approved intake export"], "changed_assumptions":[] , "evidence":"MODELED ASSUMPTION"
+    },
+    {"key":"PRICE_ONLY", "name":"Price increase without added value", "inherits":"JUSTIFIED_LARGER", "price":"50000", "support_revenue":"8000", "support_hours":55, "other_direct_cost":"1500", "cycle_days":92, "users":8, "components":[], "additional_data_sources":[], "changed_assumptions":["Implementation price and support increase without incremental customer value."], "evidence":"SENSITIVITY ASSUMPTION"},
+    {"key":"TRANSFORMATION_OVERREACH", "name":"Broad transformation overreach", "inherits":"JUSTIFIED_LARGER", "price":"85000", "support_revenue":"12000", "support_hours":120, "other_direct_cost":"6000", "cycle_days":190, "users":55,
+      "components":[{"id":"BROAD_TRANSFORMATION","description":"Weakly justified multi-team workflow redesign","burden_categories":["workflow_rework"],"incremental_value":"14000","overlap":"0","engineering":[["workflow redesign",180],["custom integration",140],["testing training deployment",90]],"acquisition":[["cross-team discovery",35,"SOLUTIONS"],["expanded proposal and governance",25,"SALES"]],"governance":["many workflow owners","expanded data access","complex acceptance","change-control board"],"support":["custom integration monitoring","multi-team questions","exception operations"]}],
+      "additional_data_sources":["Additional operational systems"], "changed_assumptions":["Scope, governance, delivery, and support expand faster than modeled value."], "evidence":"SENSITIVITY ASSUMPTION"},
+    {"key":"ACQUISITION_EFFICIENT", "name":"Acquisition-efficient larger contract", "inherits":"JUSTIFIED_LARGER", "acquisition_floor":[["coordinated sponsor and authorization",12,"SALES"],["pre-structured discovery and validation",14,"SOLUTIONS"],["coordinated proposal and contract",12,"SALES"]], "acquisition_factor":"0.60", "cycle_days":88, "changed_assumptions":["Clear requirements and sponsor coordination reduce duplicated acquisition work; no contract vehicle is assumed."], "evidence":"SENSITIVITY ASSUMPTION"}
+  ]
+}

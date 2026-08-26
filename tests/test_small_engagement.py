@@ -76,7 +76,7 @@ def test_small_does_not_hard_code_either_verdict_and_project_target_are_distinct
     assert high_support.verdict == "NO DEAL"
 
 
-def test_no_contract_size_score_or_chapter_nine_model_exists():
+def test_no_contract_size_score_and_chapter_nine_motion_is_available():
     assert "score" not in {field.name for field in fields(type(load_small_engagement()))}
     import government_engagement_lab.models as models
-    assert not hasattr(models.EngagementMotion, "LARGER_CONTRACT")
+    assert hasattr(models.EngagementMotion, "LARGER_CONTRACT")

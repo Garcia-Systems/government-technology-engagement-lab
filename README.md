@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–8 only**. Chapter 8 implements only the small-departmental contract-size experiment; Chapter 9 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–9 only**. Chapter 9 implements only the larger-contract experiment; Chapter 10 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; and `small_engagement.py` implements Chapter 8's scope, acquisition-floor, support, break-even, and scenario economics.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8's scope and break-even economics; and `larger_contract.py` implements Chapter 9's decomposable expansion, acquisition scaling, and price corridor.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -196,4 +196,19 @@ python -m government_engagement_lab small-engagement-scenarios
 python -m government_engagement_lab contract-size
 ```
 
-Chapter 9's larger-contract question remains unimplemented.
+Chapter 9's larger-contract experiment follows below; Chapter 10 remains unimplemented.
+
+## Chapter 9 larger-contract experiment
+
+Chapter 9 tests the opposite of Chapter 8: a responsibly broader departmental contract adds a second workflow slice, management reporting/reconciliation, and a bounded read-only residual only where the unchanged $104,002.80 opportunity supports incremental value. The explicit ladder grows modeled value addressed from **$43,681.176** to **$80,681.176**, while engineering grows from 120 to **245 hours**, acquisition from 58 to **77 hours**, and annual support to 55 hours / $8,000.
+
+The fictional pricing corridor keeps the two sides independent. The **seller price floor** is delivery + acquisition + direct costs + the modeled minimum contribution; the **customer price ceiling** is addressed annual value less separately included support under the nonnegative first-year-value rule. The main case produces a **$47,555 floor**, **$72,681.176 ceiling**, and **$25,126.176 viable corridor** at a documented $65,000 price. Acquisition cost rises to $8,105 but falls as a share of implementation revenue from Chapter 8's 19.90% to 12.47%. Both gates pass, yielding the restrained `PROMISING — VALIDATE IN DISCOVERY`.
+
+That is not a universal optimal size. Price without value fails customer economics even when seller economics improve; transformation overreach produces a negative corridor and `NO DEAL`; clearer requirements/sponsor coordination tests semi-fixed work without assuming a contract vehicle. Thus supported larger scope **further complicates and weakens this fictional case's `POOR TARGET CUSTOMER` hypothesis**, but added delivery, governance, and support make scale conditional rather than automatically attractive. Chapter 10 remains unimplemented.
+
+```bash
+python -m government_engagement_lab larger-contract
+python -m government_engagement_lab larger-contract-economics
+python -m government_engagement_lab larger-contract-scenarios
+python -m government_engagement_lab contract-size-comparison
+```
