@@ -1,0 +1,234 @@
+{
+  "fiction_notice": "CivicFlow, its Operations Module, all capabilities, prices, services, access, support, and roadmap statements are wholly fictional MODELED ALTERNATIVE ASSUMPTIONs; they describe no real vendor or product.",
+  "provider": "CivicFlow (fictional)",
+  "platform": "CivicFlow Permitting Suite (fictional)",
+  "adequacy": {
+    "minimum_percent": "0.75",
+    "maximum_residual": "25000.00",
+    "evidence": "MODELED ASSUMPTION"
+  },
+  "alternatives": [
+    {
+      "id": "DO_NOTHING",
+      "name": "Do nothing",
+      "type": "DO_NOTHING",
+      "provider": "Customer",
+      "implementation_model": "Retain current process",
+      "capabilities": [],
+      "limitations": [
+        "No modeled burden is removed"
+      ],
+      "categories": [],
+      "implementation_price": "0",
+      "recurring_fee": "0",
+      "customer_effort_hours": 0,
+      "provider_effort_hours": 0,
+      "duration_days": 0,
+      "technical_access": "NONE",
+      "governance_surface": "CURRENT_STATE",
+      "support_owner": "CUSTOMER",
+      "custom_ownership": false,
+      "supportable": true,
+      "acquisition_viable": true,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    },
+    {
+      "id": "CONFIGURE",
+      "name": "Configure existing platform",
+      "type": "CONFIGURATION",
+      "provider": "CivicFlow (fictional)",
+      "implementation_model": "Customer and supported configuration services",
+      "capabilities": [
+        "status standardization",
+        "required fields",
+        "saved queues",
+        "native reports",
+        "notifications",
+        "process standardization"
+      ],
+      "limitations": [
+        "Platform records only",
+        "No cross-source reconciliation",
+        "Requires adoption and training"
+      ],
+      "categories": [
+        "status_reconciliation",
+        "report_preparation",
+        "lookup_search",
+        "correction_administration",
+        "workflow_rework"
+      ],
+      "implementation_price": "44000",
+      "recurring_fee": "6000",
+      "customer_effort_hours": 54,
+      "provider_effort_hours": 132,
+      "duration_days": 70,
+      "technical_access": "NATIVE_CONFIGURATION",
+      "governance_surface": "CONFIGURATION_FIRST",
+      "support_owner": "INCUMBENT_VENDOR",
+      "custom_ownership": false,
+      "supportable": true,
+      "acquisition_viable": true,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    },
+    {
+      "id": "INCUMBENT_MODULE",
+      "name": "CivicFlow Operations Module (fictional)",
+      "type": "INCUMBENT_MODULE",
+      "provider": "CivicFlow (fictional)",
+      "implementation_model": "Supported native module plus standard implementation",
+      "capabilities": [
+        "improved status workflow",
+        "correction and resubmission tracking",
+        "configurable management dashboard",
+        "scheduled reports",
+        "work queues",
+        "notifications",
+        "duplicate warnings",
+        "supported export/API surface",
+        "vendor support"
+      ],
+      "limitations": [
+        "Limited cross-source reconciliation",
+        "Constrained reporting customization",
+        "No external workflow orchestration",
+        "Limited historical normalization",
+        "Fixed user experience",
+        "Vendor-controlled roadmap",
+        "Limited custom exception logic"
+      ],
+      "categories": [
+        "status_reconciliation",
+        "report_preparation",
+        "lookup_search",
+        "correction_administration",
+        "workflow_rework"
+      ],
+      "implementation_price": "32000",
+      "recurring_fee": "18000",
+      "customer_effort_hours": 72,
+      "provider_effort_hours": 120,
+      "duration_days": 60,
+      "technical_access": "SUPPORTED_NATIVE_ACCESS",
+      "governance_surface": "CONFIGURATION_FIRST",
+      "support_owner": "INCUMBENT_VENDOR",
+      "custom_ownership": false,
+      "supportable": true,
+      "acquisition_viable": true,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    },
+    {
+      "id": "INCUMBENT_SERVICES",
+      "name": "CivicFlow Module + Professional Services (fictional)",
+      "type": "INCUMBENT_SERVICES",
+      "provider": "CivicFlow (fictional)",
+      "implementation_model": "Module/license plus separately priced configuration, mapping, reporting, training, and supported integration setup",
+      "capabilities": [
+        "operations module",
+        "workflow setup",
+        "data mapping",
+        "custom report setup",
+        "training",
+        "supported integration setup"
+      ],
+      "limitations": [
+        "Supported interfaces only",
+        "Vendor-controlled roadmap",
+        "Cross-system exception logic remains constrained"
+      ],
+      "categories": [
+        "duplicate_entry",
+        "status_reconciliation",
+        "report_preparation",
+        "lookup_search",
+        "correction_administration",
+        "workflow_rework"
+      ],
+      "implementation_price": "58000",
+      "recurring_fee": "18000",
+      "customer_effort_hours": 96,
+      "provider_effort_hours": 240,
+      "duration_days": 100,
+      "technical_access": "SUPPORTED_NATIVE_ACCESS",
+      "governance_surface": "CONFIGURATION_FIRST",
+      "support_owner": "INCUMBENT_VENDOR",
+      "custom_ownership": false,
+      "supportable": true,
+      "acquisition_viable": true,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    },
+    {
+      "id": "NARROW_CUSTOM_EDGE",
+      "name": "Read-only narrow custom edge",
+      "type": "CUSTOM_EDGE",
+      "provider": "Custom seller",
+      "implementation_model": "Chapter 6 read-only export, normalization, reconciliation, and exception view",
+      "capabilities": [
+        "cross-source reconciliation",
+        "historical normalization",
+        "custom exception view"
+      ],
+      "limitations": [
+        "Approved export/API required",
+        "No authoritative writes",
+        "Custom support obligation"
+      ],
+      "categories": [
+        "duplicate_entry",
+        "status_reconciliation",
+        "lookup_search"
+      ],
+      "implementation_price": "36000",
+      "recurring_fee": "4000",
+      "customer_effort_hours": 58,
+      "provider_effort_hours": 110,
+      "duration_days": 90,
+      "technical_access": "APPROVED_EXPORT_OR_READ_ONLY_API",
+      "governance_surface": "READ_ONLY",
+      "support_owner": "CUSTOM_SELLER",
+      "custom_ownership": true,
+      "supportable": true,
+      "acquisition_viable": true,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    },
+    {
+      "id": "BROAD_CUSTOM",
+      "name": "Broader custom integration",
+      "type": "CUSTOM_INTEGRATION",
+      "provider": "Custom seller",
+      "implementation_model": "Chapter 0/4 broad custom reference",
+      "capabilities": [
+        "tailored workflow",
+        "cross-system reconciliation",
+        "custom reporting",
+        "custom exception logic"
+      ],
+      "limitations": [
+        "Custom support obligation",
+        "Integration dependency",
+        "Higher delivery risk",
+        "Custom governance surface"
+      ],
+      "categories": [
+        "duplicate_entry",
+        "status_reconciliation",
+        "report_preparation",
+        "lookup_search",
+        "correction_administration",
+        "workflow_rework"
+      ],
+      "implementation_price": "78000",
+      "recurring_fee": "24000",
+      "customer_effort_hours": 192,
+      "provider_effort_hours": 522,
+      "duration_days": 270,
+      "technical_access": "FULL_SUPPORTED_API",
+      "governance_surface": "WRITE_CAPABLE",
+      "support_owner": "CUSTOM_SELLER",
+      "custom_ownership": true,
+      "supportable": true,
+      "acquisition_viable": false,
+      "evidence": "MODELED ALTERNATIVE ASSUMPTION"
+    }
+  ]
+}
