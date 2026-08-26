@@ -29,7 +29,13 @@ def test_assessment_keeps_project_gates_separate_from_target_gate() -> None:
         "Target attractiveness": GateStatus.FAIL,
     }
     assert assessment.verdict == "POOR TARGET CUSTOMER"
-    assert set(assessment.findings) == set(FindingCode)
+    assert set(assessment.findings) == {
+        FindingCode.PROCUREMENT_DIFFICULTY,
+        FindingCode.STAKEHOLDER_FRICTION,
+        FindingCode.WEAK_BUYER_ACCESS,
+        FindingCode.LONG_SALES_CYCLE,
+        FindingCode.HIGH_SOLUTIONS_EFFORT,
+    }
 
 
 def test_verdict_uses_explicit_findings_without_weighted_score() -> None:
