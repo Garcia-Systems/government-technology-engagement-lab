@@ -1,0 +1,35 @@
+{
+  "customer_name": "James River County Permitting Department",
+  "evidence": "MODELED ASSUMPTION",
+  "modeled_days_per_month": 30,
+  "labor_rates": {"SALES": "85.00", "SOLUTIONS": "125.00", "ENGINEERING": "110.00"},
+  "minimum_contribution": "10000.00",
+  "customer_price_rule": "Maximum implementation price equals annual value addressed minus first-year support; this fictional rule requires nonnegative first-year net value.",
+  "scenarios": [
+    {
+      "key": "SMALL_BASELINE", "name": "Small departmental baseline", "scale": "SMALL_DEPARTMENTAL", "evidence": "MODELED ASSUMPTION",
+      "scope": {"department_team": "Permitting Operations correction desk", "user_count": 8, "workflow_slice": "Correction and resubmission status reconciliation", "data_sources": ["Approved read-only permitting export", "Configuration-first status mapping"], "technical_authority": "Read-only reporting edge; no authoritative writes", "included_features": ["Standardized status view", "Exception report", "Management summary", "Provenance trail"], "excluded_features": ["Authoritative writes", "Workflow replacement", "Enterprise rollout", "Consequential automated decisions", "Unlimited integrations"], "implementation_duration_days": 45, "support_boundary": "Annual bounded support for schema/access issues, mapping updates, report defects, configuration drift, and user questions", "acceptance_boundary": "Approved export processed; mappings reconciled; expected exceptions surfaced; summary delivered; source unchanged", "evidence": "MODELED ASSUMPTION"},
+      "value_fraction": "0.42", "implementation_price": "30000.00", "annual_support_revenue": "4000.00", "support_hours": 30, "other_direct_cost": "1000.00",
+      "engineering_work": [["export ingestion",18],["configuration mapping",16],["status reconciliation",22],["exception report",18],["management summary",14],["provenance and testing",20],["deployment and handoff",12]],
+      "stages": [["SPONSOR","Sponsor coordination",6,5,"SALES","ACCESS"],["BOUNDED_DISCOVERY","Bounded discovery",8,7,"SOLUTIONS","DISCOVERY"],["SCOPE_VALIDATION","Scope validation",6,6,"SOLUTIONS","COMMERCIAL"],["TECHNICAL_ACCESS_REVIEW","Technical / access review",8,10,"SOLUTIONS","GOVERNANCE"],["PURCHASING_AUTHORIZATION","Purchasing authorization",6,12,"SALES","PROCUREMENT"],["SHORT_PROPOSAL_SOW","Short proposal / SOW",7,7,"SALES","COMMERCIAL"],["CONTRACT","Contract coordination",7,12,"SALES","CONTRACTING"],["IMPLEMENTATION_AUTHORIZATION","Implementation authorization",6,6,"SALES","APPROVAL"],["IMPLEMENTATION","Implementation",4,45,"ENGINEERING","TECHNICAL"],["ACCEPTANCE","Acceptance",4,5,"SOLUTIONS","ACCEPTANCE"]],
+      "stakeholder_ids": ["OPERATIONS_MANAGER","PERMITTING_STAFF","DEPARTMENT_DIRECTOR","IT_REPRESENTATIVE","SECURITY_REVIEWER","PROCUREMENT_REPRESENTATIVE","LEGAL_CONTRACTS_REPRESENTATIVE"]
+    },
+    {
+      "key": "TOO_SMALL", "name": "Too small to sell sustainably", "scale": "SMALL_DEPARTMENTAL", "evidence": "SENSITIVITY ASSUMPTION",
+      "inherits": "SMALL_BASELINE", "value_fraction": "0.20", "implementation_price": "12000.00", "annual_support_revenue": "2500.00", "support_hours": 20,
+      "engineering_work": [["export ingestion",8],["configuration mapping",7],["status reconciliation",9],["exception report",8],["management summary",5],["provenance and testing",7],["deployment and handoff",4]],
+      "scope_changes": {"user_count": 3, "workflow_slice": "Correction status exception list only", "included_features": ["Standardized correction status view", "Exception list", "Provenance trail"]},
+      "changed_assumptions": ["Scope, users, value, price, engineering work, and bounded support are reduced; required acquisition stages remain." ]
+    },
+    {
+      "key": "EFFICIENT_SMALL", "name": "Efficient small engagement", "scale": "SMALL_DEPARTMENTAL", "evidence": "SENSITIVITY ASSUMPTION", "inherits": "SMALL_BASELINE",
+      "stage_effort_overrides": {"SPONSOR":4,"BOUNDED_DISCOVERY":6,"SCOPE_VALIDATION":4,"TECHNICAL_ACCESS_REVIEW":5,"PURCHASING_AUTHORIZATION":4,"SHORT_PROPOSAL_SOW":4,"CONTRACT":3,"IMPLEMENTATION_AUTHORIZATION":3,"IMPLEMENTATION":4,"ACCEPTANCE":3},
+      "stage_day_overrides": {"SPONSOR":3,"BOUNDED_DISCOVERY":5,"SCOPE_VALIDATION":4,"TECHNICAL_ACCESS_REVIEW":6,"PURCHASING_AUTHORIZATION":7,"SHORT_PROPOSAL_SOW":4,"CONTRACT":7,"IMPLEMENTATION_AUTHORIZATION":4,"IMPLEMENTATION":45,"ACCEPTANCE":4},
+      "changed_assumptions": ["Coordinated sponsor scheduling, pre-agreed scope, and narrower read-only review reduce named stage work; no contract vehicle is assumed."]
+    },
+    {
+      "key": "HIGH_SUPPORT", "name": "Small scope, high support burden", "scale": "SMALL_DEPARTMENTAL", "evidence": "SENSITIVITY ASSUMPTION", "inherits": "SMALL_BASELINE", "annual_support_revenue": "4000.00", "support_hours": 60,
+      "changed_assumptions": ["Monthly schema and mapping changes double support hours without changing delivery scope, price, engineering work, or acquisition journey."]
+    }
+  ]
+}
