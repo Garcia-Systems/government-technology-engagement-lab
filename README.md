@@ -47,7 +47,7 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–18 only**. Chapter 17 implements repeatability across departments within one fictional government; Chapter 18 tests what travels to a second wholly fictional government. Chapter 19 and later experiments remain unimplemented.
+This repository is complete through **Chapter 20**. Chapter 20 synthesizes—not replaces—the evidence from Chapters 0–19. No Chapter 21 is planned.
 
 ## Architecture
 
@@ -379,7 +379,7 @@ Chapter 18 introduces wholly fictional **Blue Ridge County Development Services 
 
 The three-level repeatability matrix compares the first James River department, the second department in that same fictional government, and Blue Ridge County using raw hours, elapsed cycle, and contribution—never a repeatability score. The baseline saves substantial engineering effort yet derives **`INVESTIGATE`**, because acquisition and approvals reset. A friendly sensitivity reaches **`REPEATABLE PROJECT`** through explicit commercial mechanisms; a hard commercial reset and technical-variation case expose opposite failure modes. **Same-account repeatability is not cross-customer repeatability; technical repeatability is not market repeatability; cross-customer reuse is not a product.** Two fictional governments do not validate a real market.
 
-This clarifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: Chapter 17's same-account savings weaken it locally, but Chapter 18 shows those savings cannot be generalized when buyer access, purchasing authority, and approvals reset. Engagement-motion synthesis remains unresolved for Chapter 19 and is not implemented.
+This clarifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: Chapter 17's same-account savings weaken it locally, but Chapter 18 shows those savings cannot be generalized when buyer access, purchasing authority, and approvals reset. Chapter 19 normalizes the motion evidence; Chapter 20 applies the final explicit precedence rules.
 
 ## Chapter 19 engagement-motion economics
 
@@ -393,4 +393,32 @@ python -m government_engagement_lab motion-structure
 python -m government_engagement_lab hypothesis-status
 ```
 
-The Chapter 19 hypothesis status is a conditional synthesis of motion evidence—not the Chapter 20 capstone verdict. No weighted score, universal winner, or best-to-worst ranking is assumed. See [`chapters/chapter-19-engagement-motion-economics.md`](chapters/chapter-19-engagement-motion-economics.md).
+The Chapter 19 hypothesis status is a conditional synthesis of motion evidence. No weighted score, universal winner, or best-to-worst ranking is assumed. See [`chapters/chapter-19-engagement-motion-economics.md`](chapters/chapter-19-engagement-motion-economics.md).
+
+## Chapter 20 capstone and complete roadmap
+
+```text
+0  Hypothesis                         11 Existing purchasing path
+1  Project vs customer                12 Security / accessibility / governance
+2  Buying journey                     13 Closed integration
+3  Stakeholder topology               14 Incumbent alternative
+4  Formal RFP                         15 Acquisition economics
+5  Cooperative paid pilot             16 Throughput / opportunity cost
+6  Read-only                          17 Repeatability across departments
+7  Configuration-first                18 Repeatability across governments
+8  Small engagement                   19 Engagement motion economics
+9  Larger contract                    20 Capstone
+10 Partner / prime
+```
+
+The baseline Formal RFP remains `POOR TARGET CUSTOMER`, so the cookbook was correct **for its baseline engagement motion**. Across all tested motions the hypothesis is **`CONDITIONAL`**, not a category-wide conclusion. The final solution verdict is **`BUY / CONFIGURE`** because the fictional supported incumbent adequately addresses the modeled problem and precedence does not permit attractive custom economics to override adequate lower-ownership capability.
+
+Recommended posture: do not target generic Formal RFPs; prefer supported incumbent configuration. Only validate a sponsored paid/read-only bounded edge, partner, or existing path if real discovery establishes a material residual. Reject closed access and unsupported writes. These are fictional lab conclusions, not claims about government buyers, laws, vendors, or markets.
+
+```bash
+python -m government_engagement_lab capstone
+python -m government_engagement_lab capstone-evidence
+python -m government_engagement_lab capstone-verdict
+```
+
+See [`chapters/chapter-20-capstone-poor-customer-or-poor-motion.md`](chapters/chapter-20-capstone-poor-customer-or-poor-motion.md).

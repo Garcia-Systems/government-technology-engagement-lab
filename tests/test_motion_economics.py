@@ -111,6 +111,6 @@ def test_hypothesis_status_derives_from_mixed_motion_evidence_not_capstone():
     assert any(x.target_viability is GateStatus.PASS for x in motion_comparisons())
     assert any(x.target_viability is GateStatus.FAIL for x in motion_comparisons())
 
-def test_chapter_20_has_not_been_created():
-    assert not list(Path("chapters").glob("chapter-20-*"))
-    assert not Path("src/government_engagement_lab/capstone.py").exists()
+def test_chapter_20_has_been_created_without_changing_normalization():
+    assert list(Path("chapters").glob("chapter-20-*"))
+    assert Path("src/government_engagement_lab/capstone.py").exists()
