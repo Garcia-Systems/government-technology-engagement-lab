@@ -126,7 +126,7 @@ def test_scenarios_do_not_mutate_fixture_and_no_real_law_claim_is_made():
     assert all(term not in text for term in ("legally required", "statute", "real procurement policy"))
 
 
-def test_chapter_19_is_not_implemented():
+def test_chapter_20_is_implemented_without_unrelated_acquisition_module():
     root = Path(__file__).parents[1]
-    assert not any((root / "chapters").glob("chapter-20-*"))
+    assert any((root / "chapters").glob("chapter-20-*"))
     assert not (root / "src/government_engagement_lab/acquisition_economics.py").exists()
