@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapter 0 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments.
+This repository currently contains **Chapters 0 and 1 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 1 adds gate-only counterfactuals; it does not implement the later experiments suggested by those historical names.
 
 ## Architecture
 
-- `models.py` contains immutable typed domain records and explicit gate/finding enums.
+- `models.py` contains immutable typed domain records and explicit gate, status, reason, and engagement-motion enums.
 - `fixtures/*.json` contains the fictional baseline and historical cookbook scenarios.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` loads fixtures and assesses gates through visible, unweighted acquisition findings.
+- `baseline.py` preserves the Chapter 0 reconstruction; `gates.py` independently evaluates project and target viability and applies narrow Chapter 1 verdict precedence.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -71,9 +71,11 @@ python -m pip install -e .
 pytest
 python -m government_engagement_lab baseline
 python -m government_engagement_lab scenarios
+python -m government_engagement_lab gates
+python -m government_engagement_lab gate-scenarios
 ```
 
-The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes.
+The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
 
 ## Chapter 0 calculation boundary
 
@@ -86,3 +88,13 @@ implementation-only payback = $78,000.00 / $104,002.80 × 12 ≈ 9.00 months
 ```
 
 The last measure excludes annual support and is deliberately not called full first-year payback. Positive modeled customer economics, technical feasibility, and support viability coexist with a target-attractiveness failure. Thus `POOR TARGET CUSTOMER` is the hypothesis subsequent experiments must attempt to break—not a repository-wide conclusion.
+
+## Chapter 1 gate framework
+
+Chapter 1 makes six dimensions independently inspectable: `PROBLEM_ATTRACTIVENESS`, `TECHNICAL_FEASIBILITY`, `CUSTOMER_ECONOMICS`, `DELIVERY_ECONOMICS`, `SUPPORT_ECONOMICS`, and `TARGET_ATTRACTIVENESS`. `ENGAGEMENT_MOTION` is separate context (`BASELINE_COOKBOOK_MOTION`), not a score. Statuses are limited to `PASS`, `FAIL`, `CONDITIONAL`, and `NOT_EVALUATED`; every result carries explicit evidence-labeled reasons.
+
+The first five gates determine project viability. The target gate separately determines target viability. Precedence is deliberately modest: a failed project is `NO DEAL`; a passing project with a failed target is `POOR TARGET CUSTOMER`; uncertainty is `INVESTIGATE`; and both passing yields the restrained `PROMISING — VALIDATE IN DISCOVERY`. There is no weighted or 0–100 opportunity score.
+
+The customer-economics rule is a fictional `MODELED ASSUMPTION`: first-year net recoverable value must be nonnegative. It exposes recoverable annual value, implementation price, annual support, first-year cost, net value, and implementation-only payback. It is not a universal purchasing benchmark. Delivery and support remain separate inherited viability assumptions because seller labor rates and support delivery costs are absent.
+
+The four Chapter 1 cases are: unchanged baseline (`PASS` project / `FAIL` target), unavailable required access (`FAIL` project / `NO DEAL`), reduced recoverable value (`FAIL` project / `NO DEAL`), and hypothetical improved target conditions (`PASS` / `PASS` / validate in discovery). Each changed fictional condition is a `SENSITIVITY ASSUMPTION`; each deterministic classification is an `OBSERVED LAB RESULT`. These substitutions demonstrate classification semantics only—not procurement stages, pilots, channels, security reviews, or any Chapter 2+ motion.
