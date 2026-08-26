@@ -96,9 +96,9 @@ def test_mixed_portfolio_and_results_do_not_mutate_prior_fixtures():
     assert acquisition_report()==before
 
 
-def test_no_capacity_score_probability_or_chapter_17():
+def test_no_capacity_score_probability_or_chapter_18():
     assert "score" not in {f.name for f in fields(type(portfolio_scenarios()[0]))}
     source=Path("src/government_engagement_lab/throughput.py").read_text().lower()
     assert "win_probability" not in source and "elapsed_days *" not in source
-    assert not Path("chapters/chapter-17-repeatability-across-departments.md").exists()
+    assert not Path("chapters/chapter-18-repeatability-across-governments.md").exists()
     assert all(isinstance(o.evidence,EvidenceLabel) for r in portfolio_scenarios() for o in r.opportunities)

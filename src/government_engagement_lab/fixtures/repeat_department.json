@@ -1,0 +1,31 @@
+{
+  "evidence": "MODELED ASSUMPTION",
+  "reference_motion": "COOPERATIVE_PAID_PILOT",
+  "reference_reason": "Chapter 5's paid, bounded motion produced a viable project and conditional target without assuming a formal RFP.",
+  "source_department": {"identifier": "JRC_PERMITTING", "name": "James River County Permitting Department", "fictional": true, "workflow": ["Application", "Review", "Correction", "Resubmission", "Decision", "Reporting"]},
+  "target_department": {"identifier": "JRC_INSPECTIONS", "name": "James River County Inspections Department", "fictional": true, "locality": "James River County (fictional)", "fiction_notice": "This department, county, workflow, people, systems, prices, and approvals are wholly fictional and represent no real locality or agency.", "workflow": ["Inspection Request", "Scheduling", "Assignment", "Site Visit", "Findings", "Correction", "Reinspection", "Closure", "Reporting"], "differences": ["field inspection scheduling and assignments", "mobile findings fields", "reinspection loop", "inspections budget owner", "department-specific security review"]},
+  "economics": {"implementation_price": "42000", "annual_support_revenue": "6000", "annual_recoverable_value": "60000", "other_direct_cost": "1500", "engineering_rate": "90", "engagement_rate": "85", "support_rate": "70", "elapsed_days": 105},
+  "department_1": {"engineering_hours": 152, "discovery_hours": 30, "acquisition_hours": 72, "governance_hours": 34, "support_hours": 32, "elapsed_days": 120, "implementation_price": "42000", "contribution": "13970"},
+  "artifacts": [
+    ["PROVENANCE_MODEL","ENGINEERING_REUSE","provenance model","REUSE_AS_IS",18,2,"Common lineage fields and immutable source references travel unchanged."],
+    ["NORMALIZATION_ENGINE","ENGINEERING_REUSE","normalization engine","REUSE_AS_IS",24,3,"The engine travels; department mappings do not."],
+    ["EXCEPTION_REPORT_SHELL","ENGINEERING_REUSE","exception report shell","ADAPT",18,7,"Layout travels but inspection metrics change."],
+    ["READ_ONLY_INGESTION","ENGINEERING_REUSE","read-only ingestion framework","ADAPT",22,10,"Framework travels; inspections export schema needs an adapter."],
+    ["STATUS_VOCABULARY","CONFIGURATION_REUSE","canonical status configuration","ADAPT",16,9,"Inspection, finding, correction, and reinspection states differ."],
+    ["DEPARTMENT_MAPPING","CONFIGURATION_REUSE","field and workflow mappings","REBUILD",14,14,"Permitting mappings do not describe inspection records."],
+    ["TEST_HARNESS","TEST_REUSE","test utilities","REUSE_AS_IS",14,2,"Deterministic fixture and reconciliation helpers travel."],
+    ["ACCEPTANCE_FIXTURES","TEST_REUSE","acceptance fixtures","ADAPT",12,6,"Assertions travel but records and expected findings change."],
+    ["INTERVIEW_TEMPLATE","DISCOVERY_REUSE","workflow interview template","ADAPT",12,7,"Question structure travels; interviews must occur again."],
+    ["BURDEN_TEMPLATE","DISCOVERY_REUSE","burden decomposition template","ADAPT",10,6,"Categories travel; inspection economics must be elicited."],
+    ["ACCESS_QUESTIONNAIRE","DISCOVERY_REUSE","access and configuration questionnaire","ADAPT",8,5,"Checklist travels; answers are department-specific."],
+    ["PROPOSAL_STRUCTURE","DOCUMENTATION_REUSE","proposal and SOW structure","ADAPT",10,4,"Terms and headings travel; scope and acceptance change."],
+    ["SPONSOR_ACCESS","SALES_MOTION_REUSE","account credibility and sponsor introduction","ADAPT",18,10,"Permitting sponsor can introduce, not authorize, inspections."],
+    ["QUALIFICATION","SALES_MOTION_REUSE","qualification process","ADAPT",12,7,"Known county reduces context work; buyer and budget are new."],
+    ["PURCHASING_PATH","PROCUREMENT_REUSE","existing purchasing path and master terms","REUSE_AS_IS",20,5,"Path and terms travel within the fictional county."],
+    ["DEPARTMENT_AUTHORIZATION","PROCUREMENT_REUSE","department scope, budget, work order, and acceptance authorization","REBUILD",16,16,"A new department must authorize its own project."],
+    ["SECURITY_NARRATIVE","SECURITY_GOVERNANCE_REUSE","architecture, data-flow, and control narrative","ADAPT",18,7,"Document shell travels; fields, users, and flow are updated."],
+    ["SECURITY_APPROVAL","SECURITY_GOVERNANCE_REUSE","department security and accessibility approval","REBUILD",16,16,"Document reuse does not confer approval."],
+    ["SUPPORT_RUNTIME","SUPPORT_REUSE","runtime, monitoring, deployment shell, and playbook","REUSE_AS_IS",18,4,"Shared infrastructure adds only incremental monitoring work."],
+    ["SUPPORT_CONFIGURATION","SUPPORT_REUSE","mappings, credentials, reports, and exception rules","ADAPT",14,10,"Department-specific operating surface remains."]
+  ]
+}
