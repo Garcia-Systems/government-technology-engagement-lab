@@ -7,6 +7,10 @@ from .baseline import assess_baseline, load_baseline, load_scenarios
 from .economics import calculate_customer_economics
 from .gates import baseline_gate_assessment, gate_scenarios
 from .models import GateDimension, GateStatus
+from .journey import (
+    effort_by_stage_type, effort_by_work_category, highest_effort_stage,
+    load_baseline_journey, load_journey_scenarios, longest_elapsed_stage,
+)
 
 
 def _money(value: Decimal) -> str:
@@ -101,9 +105,64 @@ def show_gate_scenarios() -> None:
             print(f"  {_gate_label(gate.dimension):28} {gate.status}")
 
 
+def show_journey() -> None:
+    journey = load_baseline_journey()
+    print("CHAPTER 2 — MAP THE GOVERNMENT BUYING JOURNEY")
+    print("FICTIONAL EDUCATIONAL MODEL")
+    print(journey.customer_name)
+    print(f"\n{journey.name} [{journey.evidence}]")
+    for stage in journey.ordered_stages:
+        print(f"\n{stage.sequence}. {stage.display_name} ({'required' if stage.required else 'optional'})")
+        print(f"   effort: {stage.effort_hours} h active work")
+        print(f"   elapsed: {stage.elapsed_days} modeled d")
+        print(f"   work: {stage.responsible_category}; type: {stage.stage_type}")
+        print(f"   purpose: {stage.description}")
+    print(f"\nTOTAL ACTIVE EFFORT\n{journey.total_effort_hours} h [{journey.result_evidence}]")
+    print(f"\nTOTAL ELAPSED CYCLE\n{journey.total_elapsed_days} modeled days ≈ {journey.modeled_months} modeled months [{journey.result_evidence}]")
+    print("\n192 HOURS OF EFFORT ≠ 9 MONTHS OF FULL-TIME LABOR")
+    print("EFFORT = human work consumed")
+    print("ELAPSED CYCLE = calendar time before authorization/closure")
+    print("The 30-day modeled month and all stage allocations are MODELED ASSUMPTIONs, not real procurement conventions.")
+
+
+def show_journey_summary() -> None:
+    journey = load_baseline_journey()
+    print("CHAPTER 2 — JOURNEY BURDEN SUMMARY")
+    print(f"Total active effort: {journey.total_effort_hours} h")
+    print(f"Total elapsed cycle: {journey.total_elapsed_days} modeled days ({journey.modeled_months} modeled months)")
+    print("\nEFFORT BY WORK CATEGORY")
+    for category, hours in effort_by_work_category(journey).items():
+        print(f"  {category.value:24} {hours:3} h")
+    print("\nEFFORT BY STAGE TYPE")
+    for stage_type, hours in effort_by_stage_type(journey).items():
+        print(f"  {stage_type.value:24} {hours:3} h")
+    high, long = highest_effort_stage(journey), longest_elapsed_stage(journey)
+    print(f"\nHighest-effort stage: {high.identifier} ({high.effort_hours} h)")
+    print(f"Longest-elapsed stage: {long.identifier} ({long.elapsed_days} modeled d)")
+    print("\nActive effort and elapsed calendar time are different constraints; no weighted journey score is calculated.")
+
+
+def show_journey_scenarios() -> None:
+    print("CHAPTER 2 — JOURNEY COMPOSITION SENSITIVITY")
+    print("Same underlying project + different journey composition = different effort and/or elapsed cycle.\n")
+    print(f"{'SCENARIO':28} {'EFFORT':10} ELAPSED")
+    for scenario in load_journey_scenarios():
+        journey = scenario.journey
+        print(f"{scenario.name:28} {journey.total_effort_hours:3} h      {journey.total_elapsed_days:3} modeled d")
+    print("\nCHANGES")
+    for scenario in load_journey_scenarios():
+        if scenario.changed_stage_ids:
+            print(f"[{scenario.evidence}] {scenario.name}: omitted {', '.join(scenario.changed_stage_ids)}")
+            for assumption in scenario.assumptions:
+                print(f"  - {assumption}")
+    print("This sensitivity is not a market verdict, named vehicle, or real procurement procedure.")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios"))
     args = parser.parse_args(argv)
-    {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates, "gate-scenarios": show_gate_scenarios}[args.command]()
+    {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
+     "gate-scenarios": show_gate_scenarios, "journey": show_journey,
+     "journey-summary": show_journey_summary, "journey-scenarios": show_journey_scenarios}[args.command]()
     return 0

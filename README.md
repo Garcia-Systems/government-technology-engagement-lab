@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0 and 1 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 1 adds gate-only counterfactuals; it does not implement the later experiments suggested by those historical names.
+This repository currently contains **Chapters 0–2 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
 
 ## Architecture
 
-- `models.py` contains immutable typed domain records and explicit gate, status, reason, and engagement-motion enums.
-- `fixtures/*.json` contains the fictional baseline and historical cookbook scenarios.
+- `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
+- `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves the Chapter 0 reconstruction; `gates.py` independently evaluates project and target viability and applies narrow Chapter 1 verdict precedence.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -73,6 +73,9 @@ python -m government_engagement_lab baseline
 python -m government_engagement_lab scenarios
 python -m government_engagement_lab gates
 python -m government_engagement_lab gate-scenarios
+python -m government_engagement_lab journey
+python -m government_engagement_lab journey-summary
+python -m government_engagement_lab journey-scenarios
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -98,3 +101,11 @@ The first five gates determine project viability. The target gate separately det
 The customer-economics rule is a fictional `MODELED ASSUMPTION`: first-year net recoverable value must be nonnegative. It exposes recoverable annual value, implementation price, annual support, first-year cost, net value, and implementation-only payback. It is not a universal purchasing benchmark. Delivery and support remain separate inherited viability assumptions because seller labor rates and support delivery costs are absent.
 
 The four Chapter 1 cases are: unchanged baseline (`PASS` project / `FAIL` target), unavailable required access (`FAIL` project / `NO DEAL`), reduced recoverable value (`FAIL` project / `NO DEAL`), and hypothetical improved target conditions (`PASS` / `PASS` / validate in discovery). Each changed fictional condition is a `SENSITIVITY ASSUMPTION`; each deterministic classification is an `OBSERVED LAB RESULT`. These substitutions demonstrate classification semantics only—not procurement stages, pilots, channels, security reviews, or any Chapter 2+ motion.
+
+## Chapter 2 buying journey
+
+Chapter 2 represents stage existence, active human effort, and elapsed calendar time separately. Ten sequential fixture-backed stages reconcile to **192 hours** and **270 modeled days**, using the explicit fictional convention **30 modeled days = one modeled month**. Thus `192 HOURS OF EFFORT ≠ 9 MONTHS OF FULL-TIME LABOR`: effort is work consumed; elapsed cycle is calendar time before authorization or closure.
+
+The original handoff supplied only the totals. Every stage allocation and the 30-day convention is therefore a new `MODELED ASSUMPTION`, not a real procurement convention. Deterministic summaries expose effort by work category and stage type, plus the highest-effort and longest-elapsed stages; no weighted journey score is used. Chapter 1's `HIGH_SOLUTIONS_EFFORT` and `LONG_SALES_CYCLE` reasons now trace to these totals while its `PASS` project / `FAIL` target / `POOR TARGET CUSTOMER` result remains unchanged.
+
+One narrow `SIMPLIFIED_APPROVAL_PATH` sensitivity omits `PROPOSAL`, producing 170 hours and 245 modeled days. It demonstrates composability only: it is not a contract vehicle, later engagement motion, real procedure, or market verdict. Stakeholder topology remains unresolved for Chapter 3.

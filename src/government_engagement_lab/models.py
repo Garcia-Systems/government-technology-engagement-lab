@@ -29,6 +29,29 @@ class EngagementMotion(StrEnum):
     BASELINE_COOKBOOK_MOTION = "BASELINE_COOKBOOK_MOTION"
 
 
+class StageType(StrEnum):
+    ACCESS = "ACCESS"
+    DISCOVERY = "DISCOVERY"
+    TECHNICAL = "TECHNICAL"
+    GOVERNANCE = "GOVERNANCE"
+    PROCUREMENT = "PROCUREMENT"
+    COMMERCIAL = "COMMERCIAL"
+    CONTRACTING = "CONTRACTING"
+    APPROVAL = "APPROVAL"
+    ACCEPTANCE = "ACCEPTANCE"
+
+
+class WorkCategory(StrEnum):
+    SALES = "SALES"
+    SOLUTIONS = "SOLUTIONS"
+    ENGINEERING = "ENGINEERING"
+    CUSTOMER_SPONSOR = "CUSTOMER_SPONSOR"
+    CUSTOMER_IT = "CUSTOMER_IT"
+    PROCUREMENT = "PROCUREMENT"
+    LEGAL_CONTRACTS = "LEGAL_CONTRACTS"
+    SECURITY_GOVERNANCE = "SECURITY_GOVERNANCE"
+
+
 class FindingCode(StrEnum):
     MEANINGFUL_ADMINISTRATIVE_BURDEN = "MEANINGFUL_ADMINISTRATIVE_BURDEN"
     TECHNICALLY_FEASIBLE_BOUNDED_INTERVENTION = "TECHNICALLY_FEASIBLE_BOUNDED_INTERVENTION"
@@ -148,3 +171,58 @@ class GateScenario:
     name: str
     assessment: GateAssessment
     changed_assumptions: tuple[GateReason, ...] = ()
+
+
+@dataclass(frozen=True)
+class EngagementStage:
+    identifier: str
+    display_name: str
+    description: str
+    sequence: int
+    required: bool
+    effort_hours: int
+    elapsed_days: int
+    responsible_category: WorkCategory
+    stage_type: StageType
+    evidence: EvidenceLabel
+    assumptions: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class EngagementJourney:
+    identifier: str
+    name: str
+    description: str
+    customer_name: str
+    engagement_motion: EngagementMotion
+    stages: tuple[EngagementStage, ...]
+    modeled_days_per_month: int
+    evidence: EvidenceLabel
+    result_evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
+
+    @property
+    def ordered_stages(self) -> tuple[EngagementStage, ...]:
+        return tuple(sorted(self.stages, key=lambda stage: stage.sequence))
+
+    @property
+    def total_effort_hours(self) -> int:
+        return sum(stage.effort_hours for stage in self.stages)
+
+    @property
+    def total_elapsed_days(self) -> int:
+        """Sum stage durations under Chapter 2's sequential-stage rule."""
+        return sum(stage.elapsed_days for stage in self.stages)
+
+    @property
+    def modeled_months(self) -> Decimal:
+        return Decimal(self.total_elapsed_days) / Decimal(self.modeled_days_per_month)
+
+
+@dataclass(frozen=True)
+class JourneyScenario:
+    key: str
+    name: str
+    journey: EngagementJourney
+    changed_stage_ids: tuple[str, ...]
+    assumptions: tuple[str, ...]
+    evidence: EvidenceLabel
