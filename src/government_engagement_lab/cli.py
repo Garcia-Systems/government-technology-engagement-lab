@@ -25,6 +25,8 @@ from .small_engagement import (assess_small_engagement,
 from .larger_contract import (assess_larger_contract, assess_larger_contract_scenarios,
                               contract_size_comparison)
 from .partner import assess_partner, direct_vs_partner, partner_scenarios
+from .existing_path import (assess_existing_path, existing_path_scenarios,
+                            rfp_vs_existing_path)
 
 
 def _money(value: Decimal) -> str:
@@ -625,9 +627,68 @@ def show_direct_vs_partner() -> None:
     print("Customer price and value are identical; splitting revenue does not improve customer economics.")
 
 
+def _show_existing_path_economics(a) -> None:
+    e, s = a.economics, a.economics.seller
+    print("CUSTOMER ECONOMICS (held constant with Formal RFP)")
+    print(f"  First-year cost / net recoverable value: {_money(a.customer_economics.first_year_cost)} / {_money(a.customer_economics.first_year_net_recoverable_value)}")
+    print(f"  Implementation-only payback: {a.customer_economics.implementation_only_payback_months:.2f} months")
+    print("SELLER ECONOMICS")
+    print(f"  Revenue / engineering effort / delivery cost: {_money(s.implementation_revenue)} / {a.motion.engineering_hours} h / {_money(s.delivery_labor_cost)}")
+    print(f"  Acquisition: {e.acquisition_hours} h / {_money(s.acquisition_labor_cost)}; contribution: {_money(s.acquisition_adjusted_contribution)} ({s.contribution_margin:.2%})")
+    print(f"  Acquisition cost / revenue: {e.acquisition_cost_percent_revenue:.2%}; acquisition h / $10,000 revenue: {e.acquisition_hours_per_10000_revenue:.2f}")
+    print(f"  SAVED: {e.acquisition_hours_saved} h / {_money(e.acquisition_cost_saved)} / {e.elapsed_days_saved} modeled days")
+
+
+def show_existing_path() -> None:
+    a=assess_existing_path(); m=a.motion; v=m.mechanism
+    print("CHAPTER 11 — EXISTING CONTRACT VEHICLE SCENARIO\nFICTIONAL EDUCATIONAL MODEL")
+    print("FICTION NOTICE: "+v.fiction_notice)
+    print(f"\nFICTIONAL PURCHASING MECHANISM: {v.fictional_name} ({v.identifier}) [{v.evidence}]")
+    print(f"Provider/holder: {v.provider_holder}\nSeller eligibility: {v.seller_eligibility}\nPricing: {v.pricing_mechanism}")
+    print("\nPRE-ESTABLISHED\n  - " + "\n  - ".join(v.pre_established))
+    print("\nSTILL PROJECT-SPECIFIC\n  - " + "\n  - ".join(v.customer_approvals_still_required))
+    print("\nJOURNEY")
+    for s in m.journey.ordered_stages: print(f"  {s.sequence:2}. {s.display_name:31} {s.effort_hours:3} h {s.elapsed_days:3} d")
+    print("\nCHANGES FROM FORMAL RFP [MODELED ALTERNATIVE ASSUMPTION]")
+    for c in m.stage_changes: print(f"  {c.stage_id:31} {c.baseline_hours:2}->{c.existing_path_hours:2} h {c.baseline_days:2}->{c.existing_path_days:2} d — {c.reason}")
+    _show_existing_path_economics(a)
+    print("\nACQUISITION ATTRIBUTION")
+    for x in a.attribution: print(f"  {x.bucket:30} {x.formal_rfp_hours:3} -> {x.existing_path_hours:3} h (saved {x.hours_saved:3})")
+    print("\nTARGET FINDINGS\n  - " + "\n  - ".join(x.value for x in a.findings))
+    print(f"\nBUYER ACCESS: {m.buyer_access.value}; PROJECT VIABILITY: {a.project_viability.value}; TARGET VIABILITY: {a.target_viability.value}")
+    print(f"VERDICT: {a.verdict} [{a.evidence}]")
+
+
+def show_existing_path_economics() -> None:
+    print("CHAPTER 11 — EXISTING-PATH ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_existing_path_economics(assess_existing_path())
+
+
+def show_existing_path_scenarios() -> None:
+    print("CHAPTER 11 — EXISTING-PATH SCENARIOS\nAll mechanisms are fictional; changed inputs are SENSITIVITY ASSUMPTIONs.")
+    print(f"{'SCENARIO':22} {'ACCESS':8} {'ACQ H':6} {'CYCLE':7} {'ACQ COST':12} {'CONTRIB':12} VERDICT")
+    for a in existing_path_scenarios():
+        e=a.economics
+        print(f"{a.key:22} {a.motion.buyer_access.value:8} {e.acquisition_hours:4}h {e.elapsed_days:4}d {_money(e.seller.acquisition_labor_cost):12} {_money(e.seller.acquisition_adjusted_contribution):12} {a.verdict}")
+        for x in a.changed_assumptions: print(f"  [SENSITIVITY ASSUMPTION] {x}")
+
+
+def show_rfp_vs_existing_path() -> None:
+    rfp, path=rfp_vs_existing_path(); e=path.economics
+    print("FORMAL RFP DIRECT vs DIRECT WITH EXISTING PURCHASING PATH")
+    print("Same customer, technical scope, value, price, support, engineering effort, and labor rates.")
+    print(f"{'MOTION':25} {'ACQ HRS':8} {'CYCLE':8} {'ACQ COST':12} {'CONTRIB.':12} {'BUYER ACCESS':13} {'PROCUREMENT':12} VERDICT")
+    print(f"{'Formal RFP':25} {rfp.motion.journey.total_effort_hours:6}h {rfp.motion.journey.total_elapsed_days:6}d {_money(rfp.seller_economics.acquisition_labor_cost):12} {_money(rfp.seller_economics.acquisition_adjusted_contribution):12} {'LIMITED':13} {'DIFFICULT':12} {rfp.verdict}")
+    print(f"{'Existing path':25} {e.acquisition_hours:6}h {e.elapsed_days:6}d {_money(e.seller.acquisition_labor_cost):12} {_money(e.seller.acquisition_adjusted_contribution):12} {path.motion.buyer_access.value:13} {'REDUCED':12} {path.verdict}")
+    print("\nSTAGE-LEVEL SAVINGS")
+    print(f"{'STAGE':31} {'HOURS SAVED':12} DAYS SAVED")
+    for c in path.motion.stage_changes: print(f"{c.stage_id:31} {c.hours_saved:11}h {c.days_saved:10}d")
+    print(f"TOTAL                           {e.acquisition_hours_saved:11}h {e.elapsed_days_saved:10}d")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -647,5 +708,7 @@ def main(argv: list[str] | None = None) -> int:
      "larger-contract": show_larger_contract, "larger-contract-economics": show_larger_contract_economics,
      "larger-contract-scenarios": show_larger_contract_scenarios, "contract-size-comparison": show_contract_size_comparison,
      "partner": show_partner, "partner-economics": show_partner_economics,
-     "partner-scenarios": show_partner_scenarios, "direct-vs-partner": show_direct_vs_partner}[args.command]()
+     "partner-scenarios": show_partner_scenarios, "direct-vs-partner": show_direct_vs_partner,
+     "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
+     "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path}[args.command]()
     return 0

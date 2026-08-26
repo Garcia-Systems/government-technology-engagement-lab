@@ -33,6 +33,7 @@ class EngagementMotion(StrEnum):
     SMALL_DEPARTMENTAL = "SMALL_DEPARTMENTAL"
     LARGER_CONTRACT = "LARGER_CONTRACT"
     PARTNER_LED = "PARTNER_LED"
+    EXISTING_PURCHASING_PATH = "EXISTING_PURCHASING_PATH"
 
 
 class StageOwner(StrEnum):
@@ -172,6 +173,15 @@ class FindingCode(StrEnum):
     PROCUREMENT_DEPENDENCY = "PROCUREMENT_DEPENDENCY"
     WEAK_DIRECT_BUYER_CONTROL = "WEAK_DIRECT_BUYER_CONTROL"
     CONTRIBUTION_BELOW_MODELED_MINIMUM = "CONTRIBUTION_BELOW_MODELED_MINIMUM"
+    STANDARD_TERMS_ALREADY_ESTABLISHED = "STANDARD_TERMS_ALREADY_ESTABLISHED"
+    REDUCED_PROCUREMENT_COORDINATION = "REDUCED_PROCUREMENT_COORDINATION"
+    REDUCED_PROPOSAL_ADMINISTRATION = "REDUCED_PROPOSAL_ADMINISTRATION"
+    REDUCED_CONTRACT_SETUP = "REDUCED_CONTRACT_SETUP"
+    SHORTER_ELAPSED_APPROVAL_PATH = "SHORTER_ELAPSED_APPROVAL_PATH"
+    PROJECT_SPECIFIC_APPROVAL_STILL_REQUIRED = "PROJECT_SPECIFIC_APPROVAL_STILL_REQUIRED"
+    BUYER_ACCESS_STILL_LIMITED = "BUYER_ACCESS_STILL_LIMITED"
+    SECURITY_REVIEW_STILL_REQUIRED = "SECURITY_REVIEW_STILL_REQUIRED"
+    TECHNICAL_VALIDATION_STILL_REQUIRED = "TECHNICAL_VALIDATION_STILL_REQUIRED"
 
 
 @dataclass(frozen=True)
@@ -556,6 +566,104 @@ class PartnerAssessment:
     economics: PartnerEconomics
     project_viability: GateStatus
     direct_target_viability: GateStatus
+    target_viability: GateStatus
+    verdict: str
+    changed_assumptions: tuple[str, ...] = ()
+    evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
+
+
+@dataclass(frozen=True)
+class PurchasingMechanism:
+    identifier: str
+    fictional_name: str
+    description: str
+    provider_holder: str
+    fictional: bool
+    fiction_notice: str
+    seller_eligibility: str
+    covered_service_categories: tuple[str, ...]
+    pricing_mechanism: str
+    statement_of_work_required: bool
+    additional_competition_required: bool
+    contract_negotiation_required: bool
+    standard_terms_established: bool
+    invoicing_path_established: bool
+    procurement_coordination_required: bool
+    pre_established: tuple[str, ...]
+    customer_approvals_still_required: tuple[str, ...]
+    assumptions_limitations: tuple[str, ...]
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class StageChange:
+    stage_id: str
+    baseline_hours: int
+    existing_path_hours: int
+    baseline_days: int
+    existing_path_days: int
+    reason: str
+    evidence: EvidenceLabel
+
+    @property
+    def hours_saved(self) -> int:
+        return self.baseline_hours - self.existing_path_hours
+
+    @property
+    def days_saved(self) -> int:
+        return self.baseline_days - self.existing_path_days
+
+
+@dataclass(frozen=True)
+class ExistingPathMotion:
+    identifier: str
+    name: str
+    mechanism: PurchasingMechanism
+    journey: EngagementJourney
+    stakeholder_participation: tuple[MotionStakeholderParticipation, ...]
+    stage_changes: tuple[StageChange, ...]
+    buyer_access: DirectAccess
+    implementation_price: Decimal
+    annual_support: Decimal
+    engineering_hours: int
+    labor_rates: tuple[LaborCostRate, ...]
+    minimum_contribution: Decimal
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class AcquisitionAttribution:
+    bucket: str
+    formal_rfp_hours: int
+    existing_path_hours: int
+
+    @property
+    def hours_saved(self) -> int:
+        return self.formal_rfp_hours - self.existing_path_hours
+
+
+@dataclass(frozen=True)
+class ExistingPathEconomics:
+    seller: SellerEconomics
+    acquisition_hours: int
+    acquisition_hours_saved: int
+    acquisition_cost_saved: Decimal
+    elapsed_days: int
+    elapsed_days_saved: int
+    acquisition_cost_percent_revenue: Decimal
+    acquisition_hours_per_10000_revenue: Decimal
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class ExistingPathAssessment:
+    key: str
+    motion: ExistingPathMotion
+    customer_economics: object
+    economics: ExistingPathEconomics
+    attribution: tuple[AcquisitionAttribution, ...]
+    findings: tuple[FindingCode, ...]
+    project_viability: GateStatus
     target_viability: GateStatus
     verdict: str
     changed_assumptions: tuple[str, ...] = ()

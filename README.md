@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–10 only**. Chapter 10 implements only the partner/prime-contractor motion; Chapter 11 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–11 only**. Chapter 11 implements only the fictional existing-purchasing-path experiment; Chapter 12 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -106,6 +106,10 @@ python -m government_engagement_lab partner
 python -m government_engagement_lab partner-economics
 python -m government_engagement_lab partner-scenarios
 python -m government_engagement_lab direct-vs-partner
+python -m government_engagement_lab existing-path
+python -m government_engagement_lab existing-path-economics
+python -m government_engagement_lab existing-path-scenarios
+python -m government_engagement_lab rfp-vs-existing-path
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -233,11 +237,27 @@ Support flows `CUSTOMER → PARTNER FIRST-LINE → TECHNICAL SELLER ESCALATION`.
 
 The baseline derives `PARTNER-LED TARGET`: project gates and the partner motion pass, while the comparable direct Formal RFP target still fails and direct access is `LIMITED`. This means only that this fictional customer category may warrant validation through this channel motion—not that government is a good target. A 35% fee causes `NO DEAL`; a high-value-access sensitivity changes access from `LIMITED` to `NO` without inventing technical value; and a partner-adds-little sensitivity preserves the fee while reducing acquisition benefit.
 
-The result **changes the interpretation** of the cookbook's `POOR TARGET CUSTOMER` hypothesis: the direct hypothesis remains supported for Formal RFP acquisition, but it is no longer the only modeled route. `PARTNER-LED TARGET` is supported only under the stated fictional economics and access condition. No real contractor, typical margin, channel performance, weighted score, purchasing vehicle, or Chapter 11 functionality is represented.
+The result **changes the interpretation** of the cookbook's `POOR TARGET CUSTOMER` hypothesis: the direct hypothesis remains supported for Formal RFP acquisition, but it is no longer the only modeled route. `PARTNER-LED TARGET` is supported only under the stated fictional economics and access condition. No real contractor, typical margin, channel performance, weighted score, or purchasing vehicle is represented.
 
 ```bash
 python -m government_engagement_lab partner
 python -m government_engagement_lab partner-economics
 python -m government_engagement_lab partner-scenarios
 python -m government_engagement_lab direct-vs-partner
+```
+
+
+## Chapter 11 existing purchasing path experiment
+
+Chapter 11 introduces the wholly fictional **Blue Heron Technology Services Path** as a `MODELED ALTERNATIVE ASSUMPTION`. It is not based on or asserted to resemble any real law, schedule, framework, cooperative, reseller contract, or government vehicle. The path assumes master commercial and insurance terms, standard payment language, general invoicing, basic seller eligibility, and some standard contract language already exist. It still requires a sponsor, scope, technical discovery, security/access review, relevant accessibility validation, a statement of work, project-specific price, funding and project authorization, implementation approval, and acceptance.
+
+The central comparison holds the fictional customer, technical scope, value, **$78,000 implementation price**, **$24,000 support**, **522 engineering hours**, and labor rates constant. Relative to Formal RFP direct, solicitation review, full proposal assembly, competitive submission, solicitation clarification, evaluation wait, and selection are omitted; technical documentation, pricing, contract review, and procurement coordination are reduced for explicit fictional reasons. Seller acquisition falls **192→114 hours**, acquisition labor **$20,640→$13,050**, and elapsed cycle **270→127 modeled days**. Contribution rises **-$60→$7,530**, while customer first-year cost (**$102,000**), net recoverable value (**$2,002.80**), and 9.00-month implementation-only payback remain unchanged.
+
+The primary result is project `PASS`, target `CONDITIONAL`, and `INVESTIGATE`: purchasing friction explains a material share of the Formal RFP burden, but procurement is not buyer access. The weak-access scenario remains `POOR TARGET CUSTOMER`; a nominal path removes little; and only the strong-path sensitivity combines enough simplification with credible access to reach the restrained `PROMISING — VALIDATE IN DISCOVERY`. Thus the cookbook hypothesis becomes **more conditional**, not disproved. No purchasing-path score, throughput model, real rule, or Chapter 12 security/accessibility/governance surface is implemented.
+
+```bash
+python -m government_engagement_lab existing-path
+python -m government_engagement_lab existing-path-economics
+python -m government_engagement_lab existing-path-scenarios
+python -m government_engagement_lab rfp-vs-existing-path
 ```
