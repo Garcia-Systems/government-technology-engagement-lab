@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "government-technology-engagement-lab"
+version = "0.1.0"
+description = "An executable laboratory testing a fictional government technology target verdict."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+government-engagement-lab = "government_engagement_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+government_engagement_lab = ["fixtures/*.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
