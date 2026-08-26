@@ -1,0 +1,16 @@
+{
+  "evidence": "MODELED ASSUMPTION",
+  "fiction_notice": "All content is fictional educational modeling and does not describe any real locality or government customer.",
+  "customer": {
+    "name": "James River County Permitting Department",
+    "organization_type": "fictional county-level government department",
+    "staff_count": 32,
+    "fiction_notice": "Wholly fictional; not James City County, Williamsburg, York County, Newport News, any actual Virginia locality, or any real government customer."
+  },
+  "workflow": ["Application", "Intake", "Validation", "Department Review", "Corrections / Resubmission", "Approval", "Status / Record", "Reporting"],
+  "operational_problems": ["duplicate entry", "status reconciliation", "report preparation", "document/status lookup", "correction administration", "management reporting", "avoidable administrative rework"],
+  "intervention_boundary": "A workflow and coordination layer; existing systems remain authoritative.",
+  "burden": {"annual_current_state": "201232.00", "annual_recoverable_value": "104002.80"},
+  "economics": {"implementation_price": "78000.00", "annual_support": "24000.00", "engineering_hours": 522, "solutions_sales_hours": 192, "sales_cycle_months": 9},
+  "conditions": {"technical_feasibility": true, "customer_payback_viability": true, "delivery_viability": true, "support_viability": true, "procurement_difficulty": true, "stakeholder_friction": true, "buyer_access": "weak", "sales_cycle_burden": true, "solutions_effort_burden": true}
+}
