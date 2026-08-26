@@ -47,11 +47,11 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–17 only**. Chapter 17 implements repeatability across departments within one fictional government; Chapter 18 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–18 only**. Chapter 17 implements repeatability across departments within one fictional government; Chapter 18 tests what travels to a second wholly fictional government. Chapter 19 and later experiments remain unimplemented.
 
 ## Architecture
 
-- `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records; `repeatability.py` adds Chapter 17 reuse artifacts, dimensions, states, scenarios, and marginal economics.
+- `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records; `repeatability.py` adds Chapter 17 reuse artifacts, dimensions, states, scenarios, and marginal economics; `repeat_government.py` extends those artifacts with explicit `CROSS_CUSTOMER` scope, resets, scenarios, and a three-level comparison.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
 - `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons; `closed_integration.py` implements Chapter 13's required-versus-available access engine and responsible fallback selection; `incumbent.py` implements Chapter 14 alternatives; and `acquisition.py` implements Chapter 15 work attribution, contribution waterfalls, and descriptive efficiency ratios.
@@ -128,6 +128,10 @@ python -m government_engagement_lab repeat-department
 python -m government_engagement_lab repeat-department-summary
 python -m government_engagement_lab repeat-department-scenarios
 python -m government_engagement_lab reuse
+python -m government_engagement_lab repeat-government
+python -m government_engagement_lab repeat-government-summary
+python -m government_engagement_lab repeat-government-scenarios
+python -m government_engagement_lab repeatability-matrix
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -366,4 +370,13 @@ The baseline produces 138 greenfield engineering hours versus 53 reuse-adjusted 
 
 Marginal second-department economics distinguish one-time reusable investment from per-department work without rewriting earlier contribution. Four scenarios show strong technical reuse, technical reuse with a commercial reset, commercial reuse with technical variation, and favorable multi-dimensional repeatability. The baseline earns the restrained structural interpretation **`REPEATABLE PROJECT`**, not a product: discovery, mapping, configuration, acceptance, and support variation remain.
 
-This result makes `POOR TARGET CUSTOMER` more conditional. Within-account technical, acquisition, governance-preparation, and support reuse can improve target attractiveness; code reuse alone cannot. One second department does **not** establish a repeatable market, empirical government reuse rate, transferable approval, or cross-government repeatability. That last question remains for Chapter 18, which is not implemented.
+This result makes `POOR TARGET CUSTOMER` more conditional. Within-account technical, acquisition, governance-preparation, and support reuse can improve target attractiveness; code reuse alone cannot. One second department does **not** establish a repeatable market, empirical government reuse rate, transferable approval, or cross-government repeatability. Chapter 18 now tests that last question explicitly; Chapter 17 alone makes no cross-government claim.
+
+
+## Chapter 18 repeatability across governments
+
+Chapter 18 introduces wholly fictional **Blue Ridge County Development Services Department** and the fictional **MunicipalWorks Development Platform**. Its read-only API, discipline-review workflow, centralized stakeholder topology, separate security/accessibility decisions, and fictional competitive-services solicitation differ explicitly from James River County. The cross-customer inventory distinguishes reusable technical and document shells from new mappings, actual discovery, buyer access, procurement authority, customer approvals, and support integration.
+
+The three-level repeatability matrix compares the first James River department, the second department in that same fictional government, and Blue Ridge County using raw hours, elapsed cycle, and contribution—never a repeatability score. The baseline saves substantial engineering effort yet derives **`INVESTIGATE`**, because acquisition and approvals reset. A friendly sensitivity reaches **`REPEATABLE PROJECT`** through explicit commercial mechanisms; a hard commercial reset and technical-variation case expose opposite failure modes. **Same-account repeatability is not cross-customer repeatability; technical repeatability is not market repeatability; cross-customer reuse is not a product.** Two fictional governments do not validate a real market.
+
+This clarifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: Chapter 17's same-account savings weaken it locally, but Chapter 18 shows those savings cannot be generalized when buyer access, purchasing authority, and approvals reset. Engagement-motion synthesis remains unresolved for Chapter 19 and is not implemented.
