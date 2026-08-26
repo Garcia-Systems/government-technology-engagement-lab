@@ -33,6 +33,8 @@ from .closed_integration import (assess_closed_integration,
                                  closed_integration_scenarios,
                                  evaluate_access, intervention_requirements,
                                  load_closed_fixture)
+from .incumbent import (assess_incumbent, compare_alternatives,
+                        incumbent_scenarios, load_incumbent_fixture)
 
 
 def _money(value: Decimal) -> str:
@@ -814,9 +816,63 @@ def show_access_matrix() -> None:
         print(f"{req.name:38} {required:34} {available:11} {result.status.value}")
 
 
+def _show_alternative(a) -> None:
+    x, e = a.alternative, a.economics
+    print(f"\n{x.display_name} ({x.identifier}) [{x.evidence}]")
+    print(f"  Type/provider/model: {x.alternative_type.value} / {x.provider} / {x.implementation_model}")
+    print("  Capabilities: " + (", ".join(x.capabilities) or "none"))
+    print("  Major limitations: " + ("; ".join(x.limitations) or "none"))
+    print(f"  Value addressed / residual: {_money(e.annual_value_addressed)} / {_money(e.residual_value)} ({e.percent_addressed:.2%} addressed)")
+    print(f"  Implementation / recurring / first-year cost: {_money(e.implementation_cost)} / {_money(e.recurring_cost)} / {_money(e.first_year_customer_cost)}")
+    print(f"  First-year net recoverable value: {_money(e.first_year_net_recoverable_value)}")
+    payback = "N/A" if e.implementation_payback_months is None else f"{e.implementation_payback_months:.2f} months implementation-only; {e.full_first_year_payback_months:.2f} months including recurring"
+    print(f"  Payback: {payback}")
+    print(f"  Technical access: {x.technical_access_required} -> {a.access_result}; feasible={a.feasible}")
+    print(f"  Governance/support: {x.governance_surface} / {x.support_owner}; custom ownership={x.custom_ownership_required}")
+    print("  Unweighted risk findings: " + (", ".join(r.value for r in x.risk_findings) or "none"))
+    if a.seller_economics:
+        print(f"  Custom seller contribution: {_money(a.seller_economics.acquisition_adjusted_contribution)}")
+    print(f"  Adequate: {a.adequate}; commercial result: {a.commercial_result} [{e.evidence}]")
+
+
+def show_incumbent() -> None:
+    scenario, fixture = assess_incumbent(), load_incumbent_fixture()
+    print("CHAPTER 14 — INCUMBENT VENDOR ALTERNATIVE")
+    print("FICTION NOTICE: " + fixture["fiction_notice"])
+    print("All product, price, access, implementation, licensing, service, support, and roadmap details are fictional.")
+    _show_alternative(next(x for x in scenario.assessments if x.alternative.identifier == "INCUMBENT_MODULE"))
+    print("\nCUSTOM REFERENCES")
+    for assessment in scenario.assessments:
+        if assessment.alternative.custom_ownership_required:
+            _show_alternative(assessment)
+    rule = fixture["adequacy"]
+    print(f"\nADEQUACY RULE [MODELED ASSUMPTION]: coverage >= {Decimal(rule['minimum_percent']):.0%} AND residual <= {_money(Decimal(rule['maximum_residual']))}")
+    print("Decision precedence: feasible -> customer economics -> adequate coverage -> supportable -> acquisition viable -> lower custom ownership.")
+    print(f"SELECTED COMMERCIAL RESULT: {scenario.selected_result} [OBSERVED LAB RESULT]")
+
+
+def show_incumbent_scenarios() -> None:
+    print("CHAPTER 14 — INCUMBENT SENSITIVITIES\nFICTIONAL EDUCATIONAL MODEL; no weighted alternative score exists.")
+    print(f"{'SCENARIO':26} {'COVERAGE':10} {'RESIDUAL':13} {'1Y COST':13} {'NET':13} RESULT")
+    for scenario in incumbent_scenarios():
+        a = next(x for x in scenario.assessments if x.alternative.identifier == "INCUMBENT_MODULE")
+        e = a.economics
+        print(f"{scenario.key:26} {e.percent_addressed:8.2%} {_money(e.residual_value):13} {_money(e.first_year_customer_cost):13} {_money(e.first_year_net_recoverable_value):13} {scenario.selected_result}")
+        for change in scenario.changed_assumptions:
+            print(f"  [SENSITIVITY ASSUMPTION] {change}")
+
+
+def show_alternatives() -> None:
+    print("CHAPTER 14 — SOLUTION ALTERNATIVE COMPARISON")
+    print("FICTION NOTICE: " + load_incumbent_fixture()["fiction_notice"])
+    print("Different line-item structures are normalized through first-year customer totals; they are not treated as identical products.")
+    for assessment in compare_alternatives():
+        _show_alternative(assessment)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -840,5 +896,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives}[args.command]()
     return 0
