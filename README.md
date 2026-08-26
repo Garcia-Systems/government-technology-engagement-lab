@@ -47,11 +47,11 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–16 only**. Chapter 16 implements throughput and opportunity-cost synthesis; Chapter 17 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–17 only**. Chapter 17 implements repeatability across departments within one fictional government; Chapter 18 and later experiments remain unimplemented.
 
 ## Architecture
 
-- `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
+- `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records; `repeatability.py` adds Chapter 17 reuse artifacts, dimensions, states, scenarios, and marginal economics.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
 - `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons; `closed_integration.py` implements Chapter 13's required-versus-available access engine and responsible fallback selection; `incumbent.py` implements Chapter 14 alternatives; and `acquisition.py` implements Chapter 15 work attribution, contribution waterfalls, and descriptive efficiency ratios.
@@ -124,6 +124,10 @@ python -m government_engagement_lab acquisition
 python -m government_engagement_lab acquisition-summary
 python -m government_engagement_lab acquisition-scenarios
 python -m government_engagement_lab contribution-waterfall
+python -m government_engagement_lab repeat-department
+python -m government_engagement_lab repeat-department-summary
+python -m government_engagement_lab repeat-department-scenarios
+python -m government_engagement_lab reuse
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -350,4 +354,16 @@ python -m government_engagement_lab throughput-scenarios
 python -m government_engagement_lab pipeline
 ```
 
-Chapter 17 repeatability across departments remains deliberately unimplemented.
+
+
+## Chapter 17: repeatability across departments
+
+Chapter 17 asks whether the second department becomes materially easier while holding the fictional locality constant. It adds the wholly fictional **James River County Inspections Department**, whose inspection-request-through-reporting workflow differs from the permitting baseline. The primary first-engagement reference is `COOPERATIVE_PAID_PILOT`, selected because the earlier bounded paid motion was plausibly viable rather than defaulting to Formal RFP.
+
+Reuse remains decomposed into `ENGINEERING_REUSE`, `DISCOVERY_REUSE`, `CONFIGURATION_REUSE`, `TEST_REUSE`, `DOCUMENTATION_REUSE`, `SALES_MOTION_REUSE`, `PROCUREMENT_REUSE`, `SECURITY_GOVERNANCE_REUSE`, and `SUPPORT_REUSE`. Each artifact is `REUSE_AS_IS`, `ADAPT`, `REBUILD`, or `NOT_APPLICABLE`, with greenfield effort, work still required, hours saved, reason, source/target department, and evidence. There is **no reuse score**.
+
+The baseline produces 138 greenfield engineering hours versus 53 reuse-adjusted hours. Discovery still takes 18 hours; acquisition 42; governance 23; incremental support 14. The purchasing path travels, but departmental authorization repeats. Security documentation adapts, but security/accessibility approval repeats. Shared support infrastructure does not eliminate department mappings, credentials, reports, exceptions, or workflow rules.
+
+Marginal second-department economics distinguish one-time reusable investment from per-department work without rewriting earlier contribution. Four scenarios show strong technical reuse, technical reuse with a commercial reset, commercial reuse with technical variation, and favorable multi-dimensional repeatability. The baseline earns the restrained structural interpretation **`REPEATABLE PROJECT`**, not a product: discovery, mapping, configuration, acceptance, and support variation remain.
+
+This result makes `POOR TARGET CUSTOMER` more conditional. Within-account technical, acquisition, governance-preparation, and support reuse can improve target attractiveness; code reuse alone cannot. One second department does **not** establish a repeatable market, empirical government reuse rate, transferable approval, or cross-government repeatability. That last question remains for Chapter 18, which is not implemented.

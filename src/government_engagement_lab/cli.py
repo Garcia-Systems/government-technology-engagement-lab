@@ -40,6 +40,8 @@ from .acquisition import (acquisition_report, acquisition_reports, focused_scena
 from .throughput import (additional_capacity_sensitivity, load_seller_organization,
                          lost_opportunity_sensitivity, mixed_portfolio,
                          opportunity_cost, portfolio_scenarios)
+from .repeatability import (assess_repeat_department, department_one_reference,
+                            repeat_department_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -952,9 +954,57 @@ def show_throughput_scenarios() -> None:
     lost=lost_opportunity_sensitivity(); print("\nONE FORMAL RFP LOST [SENSITIVITY ASSUMPTION]"); _throughput_row(lost)
     print(f"\nOpportunity cost of Formal-RFP-heavy versus pilot-first: {_money(opportunity_cost(results[0],results[1]))}; derived from unrealized portfolio contribution, not calendar-time pricing.")
 
+def _repeat_row(a) -> None:
+    print(f"{a.key:38} eng={a.engineering_hours:3} discovery={a.discovery_hours:2} acquisition={a.acquisition_hours:3} governance={a.governance_hours:2} support={a.support_hours:2} total={a.total_effort_hours:3} contribution={_money(a.economics.marginal_contribution)}")
+
+def show_reuse() -> None:
+    a=assess_repeat_department()
+    print("CHAPTER 17 — REUSE BY DIMENSION\nREUSABLE SOFTWARE ≠ REUSABLE ENGAGEMENT")
+    print(f"{'DIMENSION':30} {'GREENFIELD':>10} {'REQUIRED':>9} {'SAVED':>7}")
+    for x in a.summaries: print(f"{x.dimension.value:30} {x.greenfield_hours:10} {x.hours_required:9} {x.hours_saved:7} [{x.evidence}]")
+    print("\nARTIFACT INVENTORY")
+    for x in a.artifacts: print(f"  {x.identifier:26} {x.state.value:12} saved={x.hours_saved:2}h required={x.adaptation_effort:2}h — {x.reason}")
+
+def show_repeat_department_summary() -> None:
+    a=assess_repeat_department(); d1=department_one_reference()
+    print("CHAPTER 17 — FIRST DEPARTMENT VERSUS SECOND DEPARTMENT")
+    print(f"Reference motion: {a.reference_motion} — {a.reference_reason}")
+    print(f"{'DIMENSION':24} {'DEPT 1':>10} {'DEPT 2':>10}")
+    for label,k,v in (("Engineering hours","engineering_hours",a.engineering_hours),("Discovery hours","discovery_hours",a.discovery_hours),("Acquisition hours","acquisition_hours",a.acquisition_hours),("Governance hours","governance_hours",a.governance_hours),("Elapsed cycle (days)","elapsed_days",a.elapsed_days),("Support hours","support_hours",a.support_hours)):
+        print(f"{label:24} {d1[k]:10} {v:10}")
+    print(f"{'Implementation price':24} {_money(Decimal(d1['implementation_price'])):>10} {_money(a.economics.implementation_price):>10}")
+    print(f"{'Contribution':24} {_money(Decimal(d1['contribution'])):>10} {_money(a.economics.marginal_contribution):>10}")
+    print(f"\nEngineering greenfield / with reuse / saved: {a.engineering_greenfield_hours} / {a.engineering_hours} / {a.engineering_greenfield_hours-a.engineering_hours} h")
+    print(f"Project: {a.project_verdict}; target: {a.target_verdict}; interpretation: {a.structural_interpretation}")
+    print("REPEATABLE PROJECT ≠ PRODUCT")
+
+def show_repeat_department_scenarios() -> None:
+    print("CHAPTER 17 — REPEATABILITY SCENARIOS [SENSITIVITY ASSUMPTIONS]")
+    for a in repeat_department_scenarios():
+        _repeat_row(a)
+        for change in a.changed_assumptions: print("  - " + change)
+        print(f"  target={a.target_verdict}; structure={a.structural_interpretation}")
+
+def show_repeat_department() -> None:
+    a=assess_repeat_department()
+    print("CHAPTER 17 — REPEATABILITY ACROSS DEPARTMENTS")
+    print(f"FICTION NOTICE: {a.target.fiction_notice}")
+    print(f"First department: {a.source.name}\n  {' -> '.join(a.source.workflow)}")
+    print(f"Second department: {a.target.name}\n  {' -> '.join(a.target.workflow)}")
+    print(f"Reference: {a.reference_motion} — {a.reference_reason}")
+    show_reuse()
+    print("\nMARGINAL SECOND-DEPARTMENT ECONOMICS")
+    print(f"Engineering greenfield / reuse-adjusted / saved: {a.engineering_greenfield_hours} / {a.engineering_hours} / {a.engineering_greenfield_hours-a.engineering_hours} h")
+    print(f"Discovery / acquisition / governance / support: {a.discovery_hours} / {a.acquisition_hours} / {a.governance_hours} / {a.support_hours} h")
+    print(f"Customer first-year cost / net value: {_money(a.economics.first_year_customer_cost)} / {_money(a.economics.customer_net_value)}")
+    print(f"Seller marginal contribution: {_money(a.economics.marginal_contribution)}")
+    print("Findings: " + ", ".join(a.findings))
+    print(f"Project: {a.project_verdict}; target: {a.target_verdict}; interpretation: {a.structural_interpretation}")
+    print("Evidence: inputs [MODELED ASSUMPTION]; calculations [OBSERVED LAB RESULT]; artifact states [OBSERVED IMPLEMENTATION STRUCTURE]")
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline", "repeat-department", "repeat-department-summary", "repeat-department-scenarios", "reuse"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -978,5 +1028,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline, "repeat-department": show_repeat_department, "repeat-department-summary": show_repeat_department_summary, "repeat-department-scenarios": show_repeat_department_scenarios, "reuse": show_reuse}[args.command]()
     return 0
