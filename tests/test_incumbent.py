@@ -87,7 +87,7 @@ def test_governance_and_ownership_are_explicit_without_weighted_score():
     assert not hasattr(module, "score") and not hasattr(compare_alternatives()[0], "weighted_score")
 
 
-def test_chapter_15_is_not_implemented():
+def test_chapter_16_is_not_implemented():
     from pathlib import Path
-    assert not Path("chapters/chapter-15-acquisition-economics.md").exists()
+    assert not Path("chapters/chapter-16-throughput-and-opportunity-cost.md").exists()
     assert not Path("src/government_engagement_lab/acquisition_economics.py").exists()

@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–13 only**. Chapter 13 implements only the fictional closed-integration experiment; Chapter 14 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–15 only**. Chapter 15 implements acquisition-economics synthesis; Chapter 16 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons; `closed_integration.py` implements Chapter 13's required-versus-available access engine and responsible fallback selection.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons; `closed_integration.py` implements Chapter 13's required-versus-available access engine and responsible fallback selection; `incumbent.py` implements Chapter 14 alternatives; and `acquisition.py` implements Chapter 15 work attribution, contribution waterfalls, and descriptive efficiency ratios.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -117,6 +117,13 @@ python -m government_engagement_lab governance-surfaces
 python -m government_engagement_lab closed-integration
 python -m government_engagement_lab closed-integration-scenarios
 python -m government_engagement_lab access-matrix
+python -m government_engagement_lab incumbent
+python -m government_engagement_lab incumbent-scenarios
+python -m government_engagement_lab alternatives
+python -m government_engagement_lab acquisition
+python -m government_engagement_lab acquisition-summary
+python -m government_engagement_lab acquisition-scenarios
+python -m government_engagement_lab contribution-waterfall
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -302,10 +309,28 @@ The fictional adequacy rule requires at least **75%** recoverable-value coverage
 
 The strong and incumbent-only-supported-access sensitivities derive `BUY / CONFIGURE`; the weak-native sensitivity derives `NARROW CUSTOM EDGE`; the expensive-module sensitivity worsens only price and demonstrates that technical safety does not create economic superiority. Unsupported third-party access remains closed under Chapter 13, while Chapter 12 configuration-first governance shifts native control implementation to the incumbent without eliminating customer approval, accessibility acceptance, change authorization, and support planning. `NO DEAL` remains an executable outcome.
 
-Chapter 14 therefore further qualifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: the original custom opportunity may be a poor target because a supported native option already captures adequate value, not only because government acquisition is costly. A material responsible residual can still support a narrow edge, but custom ownership must earn its existence. Chapter 15 acquisition-economics synthesis—including alternative purchasing/renewal effects and opportunity cost—remains intentionally unresolved and unimplemented.
+Chapter 14 therefore further qualifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: the original custom opportunity may be a poor target because a supported native option already captures adequate value, not only because government acquisition is costly. A material responsible residual can still support a narrow edge, but custom ownership must earn its existence. Chapter 15 now synthesizes won-deal acquisition work; probability-weighted throughput and opportunity cost remain intentionally unresolved for Chapter 16.
 
 ```bash
 python -m government_engagement_lab incumbent
 python -m government_engagement_lab incumbent-scenarios
 python -m government_engagement_lab alternatives
 ```
+
+
+## Chapter 15 acquisition economics
+
+Chapter 15 defines acquisition cost as **seller-owned acquisition hours by work category × the existing fictional internal seller rate, plus explicit acquisition costs**. It never converts elapsed months into dollars. Delivery contribution (`seller revenue − delivery labor`) remains visible before acquisition-adjusted contribution (`revenue − delivery labor − acquisition labor − other direct costs`). These are simplified modeled contribution measures, not profit or market benchmarks.
+
+The cross-motion synthesis reports: Formal RFP **192 h / $20,640 / -$60 adjusted contribution**; cooperative pilot **58 h / $6,290 / $13,310**; configuration-first **54 h / $4,590 / $20,270**; small departmental **58 h / $5,970 / $9,830**; justified larger **77 h / $8,105 / $27,445**; partner-led **91 seller h / $11,055 / $11,205** using $83,640 seller revenue while retaining the $102,000 customer contract; and existing purchasing path **114 h / $13,050 / $7,530**. Ratios remain descriptive and customer value/cost remain separate.
+
+The synthesis clarifies `POOR TARGET CUSTOMER`: the Formal RFP is weak after attributable acquisition cost, but other motions change different mechanisms. A pilot narrows work and revenue; a partner shifts work while reducing seller revenue; an existing path reduces commercial effort without changing technical delivery; and supported scope can absorb a semi-fixed acquisition floor. Buyer access, cycle, feasibility, and hard constraints still prevent acquisition contribution from becoming a target score. A limited lost-deal sensitivity retains $20,640 acquisition cost with zero revenue; it is not a probability engine.
+
+```bash
+python -m government_engagement_lab acquisition
+python -m government_engagement_lab acquisition-summary
+python -m government_engagement_lab acquisition-scenarios
+python -m government_engagement_lab contribution-waterfall
+```
+
+Chapter 16 remains unimplemented: throughput, team capacity, probability-weighted pipeline economics, displaced opportunities, and portfolio opportunity cost are unresolved.
