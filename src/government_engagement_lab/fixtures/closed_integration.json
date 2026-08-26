@@ -1,0 +1,22 @@
+{
+  "customer_name": "James River County Permitting Department",
+  "system_name": "CivicFlow Permitting Suite (fictional)",
+  "fiction_notice": "Wholly fictional educational model; no access claim concerns a real vendor, product, or government.",
+  "evidence": "MODELED ASSUMPTION",
+  "baseline_recoverable_value": "104002.80",
+  "fallback_precedence": ["NATIVE_CONFIGURATION", "APPROVED_READ_ONLY_ACCESS", "APPROVED_AUTOMATED_EXPORT", "APPROVED_MANUAL_EXPORT", "HUMAN_ASSISTED_WORKFLOW", "NO_DEAL"],
+  "labor_rates": {"SALES": "85", "SOLUTIONS": "125", "ENGINEERING": "110"},
+  "interventions": [
+    {"id":"BROAD_WRITE_INTEGRATION","name":"Broad write integration","acceptable_modes":["FULL_SUPPORTED_API","VENDOR_MANAGED_INTERFACE"],"requires_write":true,"requires_automation":true,"required_fields":["permit_id","status","updated_at","assigned_team"],"minimum_freshness":"REAL_TIME"},
+    {"id":"NATIVE_CONFIGURATION","name":"Native configuration","acceptable_modes":[],"requires_write":false,"requires_automation":false,"required_fields":[],"minimum_freshness":"ON_DEMAND_MANUAL"},
+    {"id":"READ_ONLY_EDGE","name":"Approved read-only reporting edge","acceptable_modes":["READ_ONLY_API","APPROVED_EXPORT"],"requires_write":false,"requires_automation":true,"required_fields":["permit_id","status","updated_at","assigned_team"],"minimum_freshness":"DAILY"},
+    {"id":"MANUAL_ASSISTED_VIEW","name":"Human-assisted reconciliation view","acceptable_modes":["MANUAL_EXPORT"],"requires_write":false,"requires_automation":false,"required_fields":["permit_id","status","updated_at"],"minimum_freshness":"WEEKLY"}
+  ],
+  "scenarios": [
+    {"key":"CLOSED_WRITE","name":"Closed write integration","evidence":"MODELED ASSUMPTION","native_configuration_available":false,"capabilities":[{"mode":"APPROVED_EXPORT","reliability":"SUPPORTED_BUT_SCHEDULED","frequency":"DAILY","write_capability":false,"completeness":"COMPLETE","automation_compatible":true,"vendor_support":"SUPPORTED","fields":["permit_id","status","updated_at","assigned_team"],"limitations":["NO_SUPPORTED_API","NO_DIRECT_DATABASE_ACCESS","NO_WRITE_INTERFACE","INCUMBENT_CONTROLS_INTERFACE","EXPORT_ONLY_ACCESS","INTERFACE_CHANGE_DEPENDENCY"]}]},
+    {"key":"READ_ONLY_EXPORT","name":"Approved scheduled export","evidence":"MODELED ALTERNATIVE ASSUMPTION","native_configuration_available":false,"capabilities":[{"mode":"APPROVED_EXPORT","reliability":"SUPPORTED_BUT_SCHEDULED","frequency":"DAILY","write_capability":false,"completeness":"COMPLETE","automation_compatible":true,"vendor_support":"SUPPORTED","fields":["permit_id","status","updated_at","assigned_team"],"limitations":["EXPORT_ONLY_ACCESS","INTERFACE_CHANGE_DEPENDENCY"]}],"value_fraction":"0.58","implementation_price":"42000","annual_support":"7000","engineering_hours":190,"acquisition_hours":70,"support_hours":30},
+    {"key":"MANUAL_EXPORT_ONLY","name":"Approved manual export only","evidence":"SENSITIVITY ASSUMPTION","native_configuration_available":false,"capabilities":[{"mode":"MANUAL_EXPORT","reliability":"STAFF_DEPENDENT","frequency":"WEEKLY","write_capability":false,"completeness":"PARTIAL","automation_compatible":false,"vendor_support":"SUPPORTED","fields":["permit_id","status","updated_at"],"limitations":["MANUAL_REFRESH_REQUIRED","EXPORT_FREQUENCY_LIMITED","AUTHORIZED_HUMAN_HANDLING","FILE_RETENTION_AND_PROVENANCE_REQUIRED"]}],"value_fraction":"0.31","implementation_price":"30000","annual_support":"8000","engineering_hours":130,"acquisition_hours":60,"support_hours":55,"exports_per_year":52,"staff_minutes_per_export":30},
+    {"key":"CONFIGURATION_ONLY","name":"Configuration-only fallback","evidence":"MODELED ALTERNATIVE ASSUMPTION","native_configuration_available":true,"capabilities":[{"mode":"NO_SUPPORTED_ACCESS","reliability":"NOT_AVAILABLE","frequency":"ON_DEMAND_MANUAL","write_capability":false,"completeness":"INSUFFICIENT","automation_compatible":false,"vendor_support":"UNAVAILABLE","fields":[],"limitations":["SUPPORTED_INTERFACE_UNAVAILABLE"]}]},
+    {"key":"NO_USABLE_ACCESS","name":"No usable access","evidence":"SENSITIVITY ASSUMPTION","native_configuration_available":false,"capabilities":[{"mode":"NO_SUPPORTED_ACCESS","reliability":"NOT_AVAILABLE","frequency":"ON_DEMAND_MANUAL","write_capability":false,"completeness":"INSUFFICIENT","automation_compatible":false,"vendor_support":"UNAVAILABLE","fields":[],"limitations":["SUPPORTED_INTERFACE_UNAVAILABLE","NO_EXPORT","NO_WRITE_INTERFACE","VENDOR_APPROVAL_REQUIRED"]}]}
+  ]
+}

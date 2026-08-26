@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–12 only**. Chapter 12 implements only the fictional security, accessibility, and governance-surface experiment; Chapter 13 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–13 only**. Chapter 13 implements only the fictional closed-integration experiment; Chapter 14 and later experiments remain unimplemented.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages, journeys, stage ownership, customer ownership, and channel records.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4; `pilot.py` implements Chapter 5; `read_only.py` implements Chapter 6; `configuration.py` implements Chapter 7; `small_engagement.py` implements Chapter 8; `larger_contract.py` implements Chapter 9; and `partner.py` implements Chapter 10's partner/prime motion and direct comparison; `existing_path.py` implements Chapter 11's direct existing-path experiment and Formal RFP comparison; `governance.py` implements Chapter 12's delivery-versus-approval inventory, ownership, attribution, and surface comparisons; `closed_integration.py` implements Chapter 13's required-versus-available access engine and responsible fallback selection.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -114,9 +114,22 @@ python -m government_engagement_lab governance
 python -m government_engagement_lab governance-summary
 python -m government_engagement_lab governance-scenarios
 python -m government_engagement_lab governance-surfaces
+python -m government_engagement_lab closed-integration
+python -m government_engagement_lab closed-integration-scenarios
+python -m government_engagement_lab access-matrix
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
+
+## Chapter 13 closed integration
+
+Chapter 13 compares each intervention's explicit required access with modeled available access. Its capability vocabulary records access mode, reliability, freshness, write authority, field completeness, automation compatibility, support status, limitations, and evidence. The fictional CivicFlow baseline offers no supported write path or direct database access; an approved daily export can preserve a separate read-only edge.
+
+The repository decision rule evaluates **native configuration → approved read-only access → approved automated export → approved manual export → human-assisted workflow → no deal**. This precedence is a fictional lab rule, not universal advice. Unsupported capability is never invented: protected-system scraping, credential sharing, reverse-engineered endpoints, unauthorized database access, bypass automation, and hidden or unsupported writes are excluded.
+
+The modeled scenario results are: closed broad write integration `NOT_FEASIBLE`; approved scheduled export `NARROW CUSTOM EDGE`; manual weekly export `NO DEAL` after explicit value/support economics; configuration-only `BUY / CONFIGURE` by reuse of Chapter 7; and no usable access `NO DEAL` with economics not applicable. Daily versus weekly freshness and explicit required fields can constrain value or feasibility. Chapter 12 read-only governance remains, while manual handling adds transfer, retention, and provenance assumptions.
+
+This result **clarifies** rather than simply strengthens or weakens `POOR TARGET CUSTOMER`: acquisition attractiveness cannot rescue a technically impossible project, while a materially different feasible fallback must earn its own customer, seller, support, and target verdict.
 
 ## Chapter 0 calculation boundary
 

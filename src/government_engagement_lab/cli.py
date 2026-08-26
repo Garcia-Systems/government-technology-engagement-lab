@@ -29,6 +29,10 @@ from .existing_path import (assess_existing_path, existing_path_scenarios,
                             rfp_vs_existing_path)
 from .governance import (JOINT_SELLER_ATTRIBUTION, assess_governance,
                          formal_rfp_trace, governance_scenarios)
+from .closed_integration import (assess_closed_integration,
+                                 closed_integration_scenarios,
+                                 evaluate_access, intervention_requirements,
+                                 load_closed_fixture)
 
 
 def _money(value: Decimal) -> str:
@@ -754,9 +758,65 @@ def show_governance_surfaces() -> None:
     print("DOCUMENTATION-HEAVY keeps the write-capable technical control surface and changes approval mechanics only.")
 
 
+def _show_closed(a) -> None:
+    s, p = a.scenario, a.preferred_feasibility
+    print(f"\n{s.name} ({s.key}) [{s.evidence}]")
+    print(f"Preferred intervention: {a.preferred.name}")
+    print("Required access: " + ", ".join(x.value for x in a.preferred.acceptable_modes) + "; supported write required")
+    print("Available access: " + ", ".join(x.mode.value for x in s.capabilities))
+    print(f"Preferred feasibility: {p.status.value}")
+    print("Reasons: " + ", ".join(p.reasons))
+    print("Fallback ladder: " + " -> ".join(a.fallback_ladder))
+    print("Selected fallback: " + (a.selected_fallback.name if a.selected_fallback else "NO DEAL"))
+    if a.fallback_feasibility:
+        print(f"Fallback feasibility: {a.fallback_feasibility.status.value}")
+        cap = a.fallback_feasibility.capability
+        print(f"Freshness: {cap.frequency.name if cap else 'NATIVE'}; completeness: {cap.completeness.value if cap else 'NATIVE'}")
+    if a.economics is None:
+        print("Customer economics: NOT APPLICABLE — TECHNICAL FEASIBILITY FAILED")
+        print("Seller economics: NOT APPLICABLE — TECHNICAL FEASIBILITY FAILED")
+    else:
+        e = a.economics
+        print(f"Value addressed / lost: {_money(e.value_addressed)} / {_money(e.value_lost)}")
+        print(f"Customer first-year cost / net: {_money(e.first_year_cost)} / {_money(e.customer_net_value)}")
+        print(f"Seller delivery / acquisition / support: {_money(e.delivery_cost)} / {_money(e.acquisition_cost)} / {_money(e.support_cost)}")
+        print(f"Seller implementation contribution: {_money(e.seller_contribution)}")
+        print(f"Manual handling: {e.annual_manual_hours} staff h/year")
+    print("Governance implications: " + (", ".join(a.governance_implications) or "NOT EVALUATED"))
+    print(f"Project viability: {a.project_viability.value}; target viability: {a.target_viability.value}")
+    print(f"Commercial verdict: {a.verdict} [{a.evidence}]")
+
+
+def show_closed_integration() -> None:
+    print("CHAPTER 13 — CLOSED INTEGRATION SCENARIO")
+    print("FICTION NOTICE: " + load_closed_fixture()["fiction_notice"])
+    _show_closed(assess_closed_integration())
+
+
+def show_closed_integration_scenarios() -> None:
+    print("CHAPTER 13 — CLOSED-INTEGRATION SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    for assessment in closed_integration_scenarios():
+        _show_closed(assessment)
+
+
+def show_access_matrix() -> None:
+    scenarios = {a.scenario.key: a.scenario for a in closed_integration_scenarios()}
+    scenario_for = {"BROAD_WRITE_INTEGRATION": "CLOSED_WRITE", "NATIVE_CONFIGURATION": "CONFIGURATION_ONLY",
+                    "READ_ONLY_EDGE": "READ_ONLY_EXPORT", "MANUAL_ASSISTED_VIEW": "MANUAL_EXPORT_ONLY"}
+    print("CHAPTER 13 — REQUIRED ACCESS / AVAILABLE ACCESS MATRIX")
+    print("FICTIONAL LAB DECISION RULE; NOT A UNIVERSAL INTEGRATION STANDARD\n")
+    print(f"{'INTERVENTION':38} {'REQUIRED ACCESS':34} {'AVAILABLE?':11} FEASIBILITY")
+    for req in intervention_requirements():
+        modeled = scenarios[scenario_for[req.identifier]]
+        result = evaluate_access(req, modeled.capabilities, modeled.native_configuration_available)
+        required = "native capability" if not req.acceptable_modes else "/".join(x.value for x in req.acceptable_modes)
+        available = "yes" if result.status.value != "NOT_FEASIBLE" else "no"
+        print(f"{req.name:38} {required:34} {available:11} {result.status.value}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -780,5 +840,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix}[args.command]()
     return 0
