@@ -22,6 +22,8 @@ from .configuration import (BURDEN, assess_configuration_first,
                             load_current_configuration)
 from .small_engagement import (assess_small_engagement,
                                assess_small_engagement_scenarios)
+from .larger_contract import (assess_larger_contract, assess_larger_contract_scenarios,
+                              contract_size_comparison)
 
 
 def _money(value: Decimal) -> str:
@@ -512,10 +514,57 @@ def show_small_engagement_scenarios() -> None:
 def show_contract_size() -> None:
     show_small_engagement_scenarios()
 
+def _show_larger_economics(a) -> None:
+    e=a.engagement; s=a.seller
+    print(f"  Value addressed / residual: {_money(e.value_addressed)} / {_money(e.residual_value)}")
+    print(f"  Price / support / first-year cost: {_money(e.implementation_price)} / {_money(e.annual_support_revenue)} / {_money(a.first_year_cost)}")
+    print(f"  Customer net / payback: {_money(a.net_customer_value)} / {a.payback_months:.2f} months")
+    print(f"  Engineering: {e.engineering_hours} h; acquisition: {e.acquisition_floor_hours} h floor + {e.acquisition_hours-e.acquisition_floor_hours} h incremental = {e.acquisition_hours} h; cycle: {e.cycle_days} d")
+    print(f"  Support: {e.support_hours} h / {_money(a.support_cost)} cost / {_money(e.annual_support_revenue)} revenue")
+    print(f"  Seller contribution: {_money(s.acquisition_adjusted_contribution)} ({s.contribution_margin:.2%})")
+    print(f"  SELLER PRICE FLOOR: {_money(a.seller_price_floor)}; CUSTOMER PRICE CEILING: {_money(a.customer_price_ceiling)}")
+    print(f"  VIABLE PRICE CORRIDOR: {_money(a.viable_price_corridor)} ({a.corridor_class.value})")
+    print(f"  Acquisition cost / revenue: {a.acquisition_cost_percent_revenue:.2%}; acquisition h / $10k: {a.acquisition_hours_per_10000_revenue:.2f}")
+
+def show_larger_contract() -> None:
+    a=assess_larger_contract(); e=a.engagement
+    print("CHAPTER 9 — LARGER CONTRACT EXPERIMENT\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"BASELINE SCOPE: {e.baseline_scope}; users: {e.users}; added data: {', '.join(e.additional_data_sources)}")
+    print("\nVALUE LADDER / DECOMPOSABLE ADDED SCOPE")
+    print(f"  Chapter 8 baseline: {_money(e.baseline_value)}")
+    remaining=e.opportunity_value-e.baseline_value
+    for c in e.components:
+        remaining-=c.incremental_value-c.overlap
+        print(f"  + {c.identifier}: {_money(c.incremental_value)}; overlap {_money(c.overlap)}; residual {_money(remaining)} [{c.evidence}]")
+        print(f"    burden={', '.join(c.burden_categories)}; engineering={sum(x.hours for x in c.engineering)} h; acquisition={sum(x.hours for x in c.acquisition)} h")
+        print(f"    governance={'; '.join(c.governance_surface)}; support={'; '.join(c.support_surface)}")
+    print("\nECONOMICS [OBSERVED LAB RESULT]"); _show_larger_economics(a)
+    print(f"PROJECT VIABILITY: {a.project_viability.value}; TARGET VIABILITY: {a.target_viability.value}; VERDICT: {a.verdict}")
+    print("MORE REVENUE ≠ MORE CONTRIBUTION; BIGGER DEAL ≠ BETTER DEAL")
+
+def show_larger_contract_economics() -> None:
+    print("CHAPTER 9 — LARGER-CONTRACT ECONOMICS\nFICTIONAL EDUCATIONAL MODEL"); _show_larger_economics(assess_larger_contract())
+
+def show_larger_contract_scenarios() -> None:
+    print("CHAPTER 9 — LARGER-CONTRACT SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':31} {'VALUE':12} {'PRICE':11} {'ENG':5} {'ACQ':5} {'FLOOR':12} {'CEILING':12} {'CORRIDOR':12} VERDICT")
+    for a in assess_larger_contract_scenarios():
+        e=a.engagement
+        print(f"{e.name:31} {_money(e.value_addressed):12} {_money(e.implementation_price):11} {e.engineering_hours:3}h {e.acquisition_hours:3}h {_money(a.seller_price_floor):12} {_money(a.customer_price_ceiling):12} {_money(a.viable_price_corridor):12} {a.verdict}")
+        for change in e.changed_assumptions: print(f"  [{e.evidence}] {change}")
+
+def show_contract_size_comparison() -> None:
+    print("SMALL DEPARTMENTAL VS CHAPTER 9 LARGER CONTRACTS")
+    small,*larger=contract_size_comparison()
+    print(f"{'SCENARIO':31} {'VALUE':12} {'PRICE':11} {'ENG':5} {'ACQ':5} {'ACQ COST':12} {'FLOOR':12} {'CEILING':12} {'CORRIDOR':12} VERDICT")
+    e=small.engagement; print(f"{'Small departmental':31} {_money(small.customer.annual_value_addressed):12} {_money(e.implementation_price):11} {e.engineering_hours:3}h {e.acquisition_hours:3}h {_money(small.seller.acquisition_labor_cost):12} {_money(small.seller_break_even_price):12} {_money(small.customer.customer_supported_price):12} {_money(small.customer.customer_supported_price-small.seller_break_even_price):12} {small.verdict}")
+    for a in larger:
+        e=a.engagement; print(f"{e.name:31} {_money(e.value_addressed):12} {_money(e.implementation_price):11} {e.engineering_hours:3}h {e.acquisition_hours:3}h {_money(a.seller.acquisition_labor_cost):12} {_money(a.seller_price_floor):12} {_money(a.customer_price_ceiling):12} {_money(a.viable_price_corridor):12} {a.verdict}")
+
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -531,5 +580,7 @@ def main(argv: list[str] | None = None) -> int:
      "configure-first": show_configure_first, "configure-first-economics": show_configure_first_economics,
      "configure-first-scenarios": show_configure_first_scenarios, "residual": show_residual,
      "small-engagement": show_small_engagement, "small-engagement-economics": show_small_engagement_economics,
-     "small-engagement-scenarios": show_small_engagement_scenarios, "contract-size": show_contract_size}[args.command]()
+     "small-engagement-scenarios": show_small_engagement_scenarios, "contract-size": show_contract_size,
+     "larger-contract": show_larger_contract, "larger-contract-economics": show_larger_contract_economics,
+     "larger-contract-scenarios": show_larger_contract_scenarios, "contract-size-comparison": show_contract_size_comparison}[args.command]()
     return 0
