@@ -11,6 +11,7 @@ from .journey import (
     effort_by_stage_type, effort_by_work_category, highest_effort_stage,
     load_baseline_journey, load_journey_scenarios, longest_elapsed_stage,
 )
+from .stakeholders import load_baseline_topology, load_stakeholder_scenarios, summarize_topology
 
 
 def _money(value: Decimal) -> str:
@@ -158,11 +159,68 @@ def show_journey_scenarios() -> None:
     print("This sensitivity is not a market verdict, named vehicle, or real procurement procedure.")
 
 
+def show_stakeholders() -> None:
+    topology = load_baseline_topology()
+    print("CHAPTER 3 — STAKEHOLDER TOPOLOGY\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{topology.customer_name} [{topology.evidence}]")
+    print("Every role and relationship is a fictional MODELED ASSUMPTION.\n")
+    for person in topology.stakeholders:
+        print(person.display_name)
+        print(f"  Function: {person.organizational_function}")
+        print(f"  Roles: {', '.join(role.value for role in person.roles)}")
+        print(f"  Participates: {', '.join(person.journey_stage_ids)}")
+        print(f"  Approval authority: {', '.join(x.value for x in person.approval_authority) or 'none'}")
+        print(f"  Blocking authority: {', '.join(x.value for x in person.blocking_authority) or 'none'}")
+        print(f"  Access/control: {person.access_control_domain or 'none'}\n")
+    print("RELATIONSHIPS")
+    for relation in topology.relationships:
+        print(f"  {relation.source_id} —{relation.relationship_type}→ {relation.target_id} ({', '.join(relation.stage_ids)})")
+    print("\nSTAGE LINKAGE")
+    for stage in topology.stages:
+        print(f"  {stage.stage_id}: primary={stage.primary_responsible_id}; participants={', '.join(stage.participant_ids)}")
+        print(f"    approvers={', '.join(stage.approver_ids) or 'none'}; blockers={', '.join(stage.blocker_ids) or 'none'}; access owners={', '.join(stage.technical_gatekeeper_ids) or 'none'}")
+
+
+def show_stakeholder_summary() -> None:
+    topology = load_baseline_topology()
+    summary = summarize_topology(topology)
+    print("CHAPTER 3 — DESCRIPTIVE STAKEHOLDER BURDEN")
+    print("FICTIONAL EDUCATIONAL MODEL — counts are not a score or verdict")
+    print(f"Stakeholders: {summary.stakeholder_count}")
+    print(f"Role assignments: {summary.role_assignment_count}")
+    print(f"Approval dependencies: {summary.approval_dependency_count}")
+    print(f"Blocking dependencies: {summary.blocking_dependency_count}")
+    print(f"Technical-access dependencies: {summary.technical_access_dependency_count}")
+    print(f"Most involved stakeholder(s): {', '.join(summary.most_involved_stakeholder_ids)}")
+    print(f"Highest-participation stage(s): {', '.join(summary.highest_participation_stage_ids)}")
+    print("Participants per stage:")
+    for stage, count in summary.participants_per_stage:
+        print(f"  {stage}: {count}")
+
+
+def show_stakeholder_scenarios() -> None:
+    print("CHAPTER 3 — STAKEHOLDER AUTHORITY SENSITIVITY")
+    print("Descriptive mechanisms only; this is not a score or a real-government claim.\n")
+    print(f"{'SCENARIO':24} {'APPROVALS':10} {'BLOCKING':10} SPONSOR")
+    scenarios = load_stakeholder_scenarios()
+    for scenario in scenarios:
+        summary = summarize_topology(scenario.topology)
+        print(f"{scenario.key:24} {summary.approval_dependency_count:<10} {summary.blocking_dependency_count:<10} {scenario.topology.sponsor_strength}")
+    print("\nMECHANISM CHANGES")
+    for scenario in scenarios:
+        print(f"{scenario.key}: {scenario.verdict}")
+        for change in scenario.changed_assumptions or ("MODELED ASSUMPTION: unchanged baseline topology.",):
+            print(f"  - {change}")
+        print("  - controls: " + ", ".join(sorted({x.value for f in scenario.topology.findings for x in (f.reason,)})))
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
-     "journey-summary": show_journey_summary, "journey-scenarios": show_journey_scenarios}[args.command]()
+     "journey-summary": show_journey_summary, "journey-scenarios": show_journey_scenarios,
+     "stakeholders": show_stakeholders, "stakeholder-summary": show_stakeholder_summary,
+     "stakeholder-scenarios": show_stakeholder_scenarios}[args.command]()
     return 0

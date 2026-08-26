@@ -52,6 +52,49 @@ class WorkCategory(StrEnum):
     SECURITY_GOVERNANCE = "SECURITY_GOVERNANCE"
 
 
+class StakeholderRole(StrEnum):
+    DECISION_MAKER = "DECISION_MAKER"
+    INFLUENCER = "INFLUENCER"
+    APPROVER = "APPROVER"
+    BLOCKER = "BLOCKER"
+    USER = "USER"
+    TECHNICAL_GATEKEEPER = "TECHNICAL_GATEKEEPER"
+    SPONSOR = "SPONSOR"
+
+
+class AuthorityDomain(StrEnum):
+    PROBLEM_OWNER = "PROBLEM_OWNER"
+    PURCHASE_APPROVER = "PURCHASE_APPROVER"
+    TECHNICAL_ACCESS_OWNER = "TECHNICAL_ACCESS_OWNER"
+    CONTRACT_APPROVER = "CONTRACT_APPROVER"
+    IMPLEMENTATION_ACCEPTOR = "IMPLEMENTATION_ACCEPTOR"
+
+
+class RelationshipType(StrEnum):
+    REPORTS_TO = "REPORTS_TO"
+    REQUIRES_APPROVAL_FROM = "REQUIRES_APPROVAL_FROM"
+    DEPENDS_ON = "DEPENDS_ON"
+    CONTROLS_ACCESS_FOR = "CONTROLS_ACCESS_FOR"
+    ADVISES = "ADVISES"
+    SUPPLIES_INFORMATION_TO = "SUPPLIES_INFORMATION_TO"
+    ACCEPTANCE_REQUIRED_FROM = "ACCEPTANCE_REQUIRED_FROM"
+
+
+class SponsorStrength(StrEnum):
+    STRONG = "STRONG"
+    LIMITED = "LIMITED"
+    ABSENT = "ABSENT"
+
+
+class FrictionReason(StrEnum):
+    MULTIPLE_REQUIRED_APPROVALS = "MULTIPLE_REQUIRED_APPROVALS"
+    UNCLEAR_DECISION_AUTHORITY = "UNCLEAR_DECISION_AUTHORITY"
+    ACCESS_CONTROL_DEPENDENCY = "ACCESS_CONTROL_DEPENDENCY"
+    SEQUENTIAL_APPROVAL_DEPENDENCY = "SEQUENTIAL_APPROVAL_DEPENDENCY"
+    INCUMBENT_VENDOR_DEPENDENCY = "INCUMBENT_VENDOR_DEPENDENCY"
+    CROSS_FUNCTIONAL_COORDINATION = "CROSS_FUNCTIONAL_COORDINATION"
+
+
 class FindingCode(StrEnum):
     MEANINGFUL_ADMINISTRATIVE_BURDEN = "MEANINGFUL_ADMINISTRATIVE_BURDEN"
     TECHNICALLY_FEASIBLE_BOUNDED_INTERVENTION = "TECHNICALLY_FEASIBLE_BOUNDED_INTERVENTION"
@@ -226,3 +269,82 @@ class JourneyScenario:
     changed_stage_ids: tuple[str, ...]
     assumptions: tuple[str, ...]
     evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class Stakeholder:
+    identifier: str
+    display_name: str
+    organizational_function: str
+    roles: tuple[StakeholderRole, ...]
+    journey_stage_ids: tuple[str, ...]
+    approval_authority: tuple[AuthorityDomain, ...]
+    blocking_authority: tuple[AuthorityDomain, ...]
+    access_control_domain: str | None
+    evidence: EvidenceLabel
+    notes: str
+
+
+@dataclass(frozen=True)
+class StakeholderRelationship:
+    source_id: str
+    target_id: str
+    relationship_type: RelationshipType
+    stage_ids: tuple[str, ...]
+    explanation: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class StageStakeholders:
+    stage_id: str
+    primary_responsible_id: str
+    participant_ids: tuple[str, ...]
+    approver_ids: tuple[str, ...]
+    blocker_ids: tuple[str, ...]
+    technical_gatekeeper_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class StakeholderFrictionFinding:
+    reason: FrictionReason
+    stakeholder_ids: tuple[str, ...]
+    stage_ids: tuple[str, ...]
+    explanation: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class StakeholderTopology:
+    identifier: str
+    customer_name: str
+    stakeholders: tuple[Stakeholder, ...]
+    relationships: tuple[StakeholderRelationship, ...]
+    stages: tuple[StageStakeholders, ...]
+    findings: tuple[StakeholderFrictionFinding, ...]
+    sponsor_strength: SponsorStrength
+    technical_project_identifier: str
+    evidence: EvidenceLabel
+
+
+@dataclass(frozen=True)
+class StakeholderSummary:
+    stakeholder_count: int
+    role_assignment_count: int
+    participants_per_stage: tuple[tuple[str, int], ...]
+    approval_dependency_count: int
+    blocking_dependency_count: int
+    technical_access_dependency_count: int
+    most_involved_stakeholder_ids: tuple[str, ...]
+    highest_participation_stage_ids: tuple[str, ...]
+    evidence: EvidenceLabel = EvidenceLabel.OBSERVED_LAB_RESULT
+
+
+@dataclass(frozen=True)
+class StakeholderScenario:
+    key: str
+    name: str
+    topology: StakeholderTopology
+    changed_assumptions: tuple[str, ...]
+    evidence: EvidenceLabel
+    verdict: str
