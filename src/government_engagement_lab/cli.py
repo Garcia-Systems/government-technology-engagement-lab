@@ -17,6 +17,9 @@ from .formal_rfp import (acquisition_effort_by_category, assess_formal_rfp,
 from .pilot import assess_pilot, motion_comparison, pilot_scenarios
 from .read_only import (assess_technical_scenario, read_only_scenarios,
                         technical_scenarios)
+from .configuration import (BURDEN, assess_configuration_first,
+                            configuration_scenarios, load_capability_fixture,
+                            load_current_configuration)
 
 
 def _money(value: Decimal) -> str:
@@ -407,9 +410,55 @@ def show_read_only_scenarios() -> None:
         for change in a.scenario.changed_assumptions: print(f"  [{a.scenario.evidence}] {change}")
 
 
+def _configuration_economics(a) -> None:
+    e=a.economics; s=e.seller
+    print(f"  Value addressed: {_money(e.value_addressed)} ({e.percent_addressed:.1%}); residual: {_money(e.residual_value)}")
+    print(f"  Price: {_money(e.implementation_price)}; support: {_money(e.annual_support)}; first-year cost: {_money(e.first_year_cost)}")
+    print(f"  Net first-year recoverable value: {_money(e.net_first_year_recoverable_value)}; implementation payback: {e.payback_months:.2f} months")
+    print(f"  Configuration: {e.configuration_hours} h; engineering: {e.engineering_hours} h; acquisition: {e.acquisition_hours} h / {e.elapsed_days} d")
+    print(f"  Delivery labor: {_money(s.delivery_labor_cost)}; acquisition labor: {_money(s.acquisition_labor_cost)}; contribution: {_money(s.acquisition_adjusted_contribution)}")
+
+
+def show_configure_first() -> None:
+    a=assess_configuration_first(); fixture=load_capability_fixture()
+    print("CHAPTER 7 — CONFIGURATION-FIRST GOVERNMENT ENGAGEMENT\nFICTIONAL EDUCATIONAL MODEL")
+    print("FICTION NOTICE: "+fixture["fiction_notice"]); print(f"INCUMBENT: {fixture['system_name']} [{fixture['evidence']}]")
+    print("\nCAPABILITIES")
+    for c in a.capabilities: print(f"  {c.identifier}: {c.support.value}; enabled={c.enabled}; {c.effort_hours} h; [{c.evidence}] — {c.limitations}")
+    before=load_current_configuration()
+    print(f"\nCURRENT GAPS [MODELED ASSUMPTION]: {len(before['statuses'])} inconsistent statuses; required fields, queues, reports, and notifications unconfigured; correction work partly outside the system.")
+    print("\nSEQUENTIAL RESIDUAL FUNNEL")
+    for step in a.steps: print(f"  {step.stage:30} {step.intervention_id:26} addressed {_money(step.addressed):>12}; remaining {_money(step.remaining)}")
+    print(f"RESIDUAL: {_money(a.economics.residual_value)} — {a.residual_classification.value} [thresholds: MODELED ASSUMPTION]")
+    print("\nECONOMICS"); _configuration_economics(a)
+    if a.custom_residual_candidate: print("CUSTOM RESIDUAL CANDIDATE: "+a.custom_residual_candidate)
+    print(f"PROJECT VIABILITY: {a.project_viability.value}; TARGET VIABILITY: {a.target_viability.value}; VERDICT: {a.verdict}")
+    print("EVIDENCE: fictional capabilities=MODELED ALTERNATIVE ASSUMPTION; allocations/effort=MODELED ASSUMPTION; calculations=OBSERVED LAB RESULT; unsupported guard=OBSERVED IMPLEMENTATION STRUCTURE")
+
+
+def show_configure_first_economics() -> None:
+    print("CHAPTER 7 — CONFIGURATION-FIRST ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _configuration_economics(assess_configuration_first())
+
+
+def show_configure_first_scenarios() -> None:
+    print("CHAPTER 7 — CONFIGURATION-FIRST SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':28} {'ADDRESSED':12} {'RESIDUAL':12} {'CLASS':10} {'CFG H':6} {'ACQ H':6} VERDICT / OPERATION")
+    for a in configuration_scenarios():
+        e=a.economics
+        print(f"{a.name:28} {_money(e.value_addressed):12} {_money(e.residual_value):12} {a.residual_classification.value:10} {e.configuration_hours:4}h {e.acquisition_hours:4}h {a.verdict} / {a.operational_recommendation} [{a.assumption_evidence}]")
+
+
+def show_residual() -> None:
+    a=assess_configuration_first(); print("CHAPTER 7 — RESIDUAL FUNNEL")
+    print(f"Original recoverable value       {_money(sum(v for _,v in BURDEN))}")
+    for step in a.steps: print(f"After {step.intervention_id.lower().replace('_',' '):29} {_money(step.remaining)}")
+    print(f"Residual recoverable value       {_money(a.economics.residual_value)}\nResidual classification          {a.residual_classification.value}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -421,5 +470,7 @@ def main(argv: list[str] | None = None) -> int:
      "pilot-economics": show_pilot_economics, "pilot-scenarios": show_pilot_scenarios,
      "compare-motions": show_motion_comparison, "read-only": show_read_only,
      "read-only-economics": show_read_only_economics, "read-only-scenarios": show_read_only_scenarios,
-     "compare-technical-surfaces": show_read_only_scenarios}[args.command]()
+     "compare-technical-surfaces": show_read_only_scenarios,
+     "configure-first": show_configure_first, "configure-first-economics": show_configure_first_economics,
+     "configure-first-scenarios": show_configure_first_scenarios, "residual": show_residual}[args.command]()
     return 0
