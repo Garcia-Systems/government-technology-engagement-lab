@@ -19,11 +19,11 @@ SAME CUSTOMER PROBLEM
       +--> CONFIGURE ---------> LOWER CUSTOM SURFACE
       +--> PARTNER -----------> MOTION-DEPENDENT POSSIBILITY
       +--> EXISTING PATH -----> LESS PROCUREMENT WORK
-      +--> INCUMBENT ---------> BUY / CONFIGURE
+      +--> INCUMBENT ---------> CONFIGURE / BUY
       v
 MOTION-DEPENDENT EVIDENCE
       v
-FINAL VERDICT: BUY / CONFIGURE
+FINAL VERDICT: CONFIGURE / BUY
 ```
 
 The original modeled rejection attributed the result to procurement difficulty, stakeholder friction, weak buyer access, a long cycle, and high solutions effort. Technical feasibility, customer payback, and support coverage were not its main rejection reasons. Chapter 20 preserves that result rather than rewriting it.
@@ -50,7 +50,7 @@ Read-only access removed authoritative-write work and reduced governance surface
 
 ## 7. Configuration/incumbent result
 
-Configuration solves much of the burden with lower custom ownership. More importantly, Chapter 14's adequate supported incumbent module wins the existing feasibility → economics → adequacy → ownership comparison. Custom software did **not** beat that supported alternative in the baseline; therefore the capstone is `BUY / CONFIGURE`, even though custom motions can be sellable. A custom edge is justified only if discovery proves a bounded material residual with supported access. `[MODELED ALTERNATIVE ASSUMPTION and OBSERVED LAB RESULT: Chapters 7, 14]`
+Configuration solves much of the burden with lower custom ownership. More importantly, Chapter 14's adequate supported incumbent module wins the existing feasibility → economics → adequacy → ownership comparison. Custom software did **not** beat that supported alternative in the baseline; therefore the capstone is `CONFIGURE / BUY`, even though custom motions can be sellable. A custom edge is justified only if discovery proves a bounded material residual with supported access. `[MODELED ALTERNATIVE ASSUMPTION and OBSERVED LAB RESULT: Chapters 7, 14]`
 
 ## 8. Small-versus-large contract result
 
@@ -136,7 +136,7 @@ This table is a presentation of Chapter 19 fields, not a capstone recalculation.
 | Configuration-first | PASS | PASS | $56,431.54 | PASS | PASS | 54 | 70 | COMPATIBLE | CROSS-CUSTOMER CONDITIONAL | CONDITIONAL ON RESIDUAL |
 | Partner-led | FAIL under Ch.13 closed access | FAIL | $104,002.80 | PASS | PASS | 91 | 225 | INCOMPATIBLE | CROSS-CUSTOMER CONDITIONAL | TECHNICALLY INFEASIBLE |
 | Existing purchasing path | FAIL under Ch.13 closed access | FAIL | $104,002.80 | PASS | FAIL | 114 | 127 | INCOMPATIBLE | CROSS-CUSTOMER CONDITIONAL | TECHNICALLY INFEASIBLE |
-| Incumbent buy/configure | PASS | PASS | $86,002.80 | PASS | N/A | N/A | 60 | COMPATIBLE | N/A | BUY / CONFIGURE |
+| Incumbent configure/buy | PASS | PASS | $86,002.80 | PASS | N/A | N/A | 60 | COMPATIBLE | N/A | CONFIGURE / BUY |
 | No engagement | N/A | N/A | $0 | BASELINE | N/A | 0 | 0 | N/A | N/A | ACTION MUST BE JUSTIFIED |
 
 The unchanged Chapter 4 Formal RFP assessment is `project PASS / target FAIL / POOR TARGET CUSTOMER`; the table additionally carries Chapter 13's later closed-access evidence. That distinction preserves the baseline answer while allowing foundational access precedence in the final synthesis.
@@ -147,7 +147,7 @@ The unchanged Chapter 4 Formal RFP assessment is `project PASS / target FAIL / P
 START WITH BUSINESS PROBLEM
         ↓
 EXISTING / INCUMBENT CAPABILITY ADEQUATE?
-        ├── YES → BUY / CONFIGURE
+        ├── YES → CONFIGURE / BUY
         └── NO  → SUPPORTED ACCESS AVAILABLE?
                        ├── NO → CONFIGURE / READ-ONLY / MANUAL / INCUMBENT
                        │         └── NO RESPONSIBLE FALLBACK → NO DEAL
@@ -162,13 +162,13 @@ EXISTING / INCUMBENT CAPABILITY ADEQUATE?
                                            └── NO  → POOR TARGET CUSTOMER
 ```
 
-The deterministic engine stops at the first applicable rule: (1) foundational failure → `NO DEAL`; (2) adequate native/incumbent and immaterial residual → `BUY / CONFIGURE`; (3) bounded material supported residual → `NARROW CUSTOM EDGE`; (4) direct failure plus viable partner → `PARTNER-LED TARGET`; (5) direct failure plus viable paid pilot → `PILOT-FIRST TARGET`; (6) multi-dimensional multi-engagement reuse → `REPEATABLE PROJECT`; (7) passing project and credible motion → `PROMISING — VALIDATE IN DISCOVERY`; (8) passing project but all credible motions fail → `POOR TARGET CUSTOMER`; (9) otherwise → `INVESTIGATE`.
+The deterministic engine stops at the first applicable rule: (1) foundational failure → `NO DEAL`; (2) adequate native/incumbent and immaterial residual → `CONFIGURE / BUY`; (3) bounded material supported residual → `NARROW CUSTOM EDGE`; (4) direct failure plus viable partner → `PARTNER-LED TARGET`; (5) direct failure plus viable paid pilot → `PILOT-FIRST TARGET`; (6) multi-dimensional multi-engagement reuse → `REPEATABLE PROJECT`; (7) passing project and credible motion → `PROMISING — VALIDATE IN DISCOVERY`; (8) passing project but all credible motions fail → `POOR TARGET CUSTOMER`; (9) otherwise → `INVESTIGATE`.
 
 This ordering prevents repeatability from overriding an adequate incumbent and prevents a commercial motion from overriding technical failure. It has no score and no hidden motion ranking.
 
 ## 20. Final verdict
 
-The final verdict is **`BUY / CONFIGURE`**, triggered by rule 2. The evidence posture is **strong within the lab; conditional outside it**. This solution verdict coexists with the motion conclusion: Formal RFP is a poor target motion, while the category-level hypothesis is conditional.
+The final verdict is **`CONFIGURE / BUY`**, triggered by rule 2. The evidence posture is **strong within the lab; conditional outside it**. This solution verdict coexists with the motion conclusion: Formal RFP is a poor target motion, while the category-level hypothesis is conditional.
 
 ## 21. Recommended engagement posture
 

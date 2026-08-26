@@ -141,7 +141,7 @@ def assess_alternative(item: SolutionAlternative, third_party_access=True) -> Al
     adequate=is_adequate(econ)
     result="NO DEAL"
     if feasible and econ.first_year_net_recoverable_value >= 0:
-        if not item.custom_ownership_required and adequate: result="BUY / CONFIGURE"
+        if not item.custom_ownership_required and adequate: result="CONFIGURE / BUY"
         elif item.alternative_type is AlternativeType.CUSTOM_EDGE: result="NARROW CUSTOM EDGE"
         elif item.alternative_type is AlternativeType.CUSTOM_INTEGRATION and item.acquisition_viable: result="CUSTOM INTEGRATION"
         else: result="INVESTIGATE"
@@ -157,7 +157,7 @@ def select_result(assessments: tuple[AlternativeAssessment, ...]) -> str:
     # Feasibility → economics → adequacy → support/acquisition; then lower custom ownership.
     native=[x for x in assessments if not x.alternative.custom_ownership_required and x.alternative.alternative_type is not AlternativeType.DO_NOTHING
             and x.feasible and x.economics.first_year_net_recoverable_value>=0 and x.adequate and x.alternative.acquisition_viable]
-    if native: return "BUY / CONFIGURE"
+    if native: return "CONFIGURE / BUY"
     edge=[x for x in assessments if x.alternative.alternative_type is AlternativeType.CUSTOM_EDGE and x.feasible
           and x.economics.first_year_net_recoverable_value>=0 and x.alternative.acquisition_viable]
     if edge: return "NARROW CUSTOM EDGE"

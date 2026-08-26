@@ -4,6 +4,6 @@
   {"name": "Formal RFP", "verdict": "POOR TARGET CUSTOMER", "evidence": "MODELED ASSUMPTION"},
   {"name": "Higher contract value", "verdict": "POOR TARGET CUSTOMER", "evidence": "MODELED ASSUMPTION"},
   {"name": "Closed legacy integration", "verdict": "NO DEAL", "evidence": "MODELED ASSUMPTION"},
-  {"name": "Existing vendor module", "verdict": "BUY / CONFIGURE", "evidence": "MODELED ASSUMPTION"},
+  {"name": "Existing vendor module", "verdict": "CONFIGURE / BUY", "evidence": "MODELED ASSUMPTION"},
   {"name": "Reusable technology + hard sales", "verdict": "POOR TARGET CUSTOMER", "evidence": "MODELED ASSUMPTION"}
 ]

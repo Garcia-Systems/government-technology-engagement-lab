@@ -70,7 +70,7 @@ def test_configuration_reuses_chapter7_and_no_access_is_hard_stop():
     config = assessments()["CONFIGURATION_ONLY"]; chapter7 = assess_configuration_first()
     assert config.selected_fallback.identifier == "NATIVE_CONFIGURATION"
     assert config.economics.value_addressed == chapter7.economics.value_addressed
-    assert config.verdict == "BUY / CONFIGURE"
+    assert config.verdict == "CONFIGURE / BUY"
     no = assessments()["NO_USABLE_ACCESS"]
     assert no.selected_fallback is None and no.economics is None
     assert no.project_viability is GateStatus.FAIL and no.verdict == "NO DEAL"
