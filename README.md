@@ -47,18 +47,18 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–3 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
+This repository currently contains **Chapters 0–4 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology; `formal_rfp.py` implements Chapter 4 motion validation, seller economics, findings, and sensitivities.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
-No seller contribution margin is calculated because Chapter 0 supplies no labor rates. No generic government score, procurement simulation, later experiment, database, or web application is present.
+Chapter 4 calculates a simplified acquisition-adjusted implementation contribution using explicitly fictional fully loaded internal cost rates; it is not company profit. No generic government score, procurement simulation, later experiment, database, or web application is present.
 
 ## Running the lab
 
@@ -79,6 +79,9 @@ python -m government_engagement_lab journey-scenarios
 python -m government_engagement_lab stakeholders
 python -m government_engagement_lab stakeholder-summary
 python -m government_engagement_lab stakeholder-scenarios
+python -m government_engagement_lab formal-rfp
+python -m government_engagement_lab formal-rfp-economics
+python -m government_engagement_lab formal-rfp-scenarios
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -117,4 +120,13 @@ One narrow `SIMPLIFIED_APPROVAL_PATH` sensitivity omits `PROPOSAL`, producing 17
 
 Chapter 3 connects fictional stakeholders directly to Chapter 2 stages. Its typed role vocabulary is `DECISION_MAKER`, `INFLUENCER`, `APPROVER`, `BLOCKER`, `USER`, `TECHNICAL_GATEKEEPER`, and `SPONSOR`; its explicit relationships include reporting, approval, dependency, access control, advice, information supply, and required acceptance. Every stakeholder structure is a `MODELED ASSUMPTION`, not a real-locality fact.
 
-Descriptive summaries count stakeholders, role assignments, stage participation, approvals, blocking paths, and technical-access dependencies without a score. Explicit findings make Chapter 1's `STAKEHOLDER_FRICTION` traceable to visible mechanisms. Authority-only sensitivities cover a strong sponsor, fragmented authority, and no sponsor while leaving legitimate controls or the underlying technical project visible. Chapter 4's formal RFP motion remains unresolved and unimplemented.
+Descriptive summaries count stakeholders, role assignments, stage participation, approvals, blocking paths, and technical-access dependencies without a score. Explicit findings make Chapter 1's `STAKEHOLDER_FRICTION` traceable to visible mechanisms. Authority-only sensitivities cover a strong sponsor, fragmented authority, and no sponsor while leaving legitimate controls or the underlying technical project visible. Chapter 4 reuses these stakeholder identifiers in its formal-RFP stage participation rather than duplicating the topology.
+
+
+## Chapter 4 formal RFP motion
+
+Chapter 4 is the first complete engagement-motion experiment. `FORMAL_RFP` reuses the Chapter 2 journey types and Chapter 3 stakeholder identities while making 18 fictional stages, eight lightweight proposal artifacts, responsibilities, pre-award work, and calendar delay explicit. The baseline preserves **$78,000 implementation**, **$24,000 annual support**, **522 engineering hours**, **192 acquisition hours**, and **nine modeled months**.
+
+Seller rates are `MODELED ASSUMPTION`s for fully loaded internal cost—not wages: sales **$85/hour**, solutions **$125/hour**, and engineering **$110/hour**. Given these inputs, `OBSERVED LAB RESULT`s are **$57,420 delivery labor cost**, **$20,640 acquisition labor cost**, and **-$60 acquisition-adjusted implementation contribution**. A fictional **$10,000 minimum contribution** is a transparent lab sustainability rule, not a business benchmark. Customer economics remain independently positive by **$2,002.80**, so the derived baseline is project `PASS`, target `FAIL`, and `POOR TARGET CUSTOMER`. No weighted RFP score or win-probability expected value is used.
+
+The sensitivities do not mutate the baseline. Halving stage effort produces 96 hours and repairs seller contribution; reducing delay leaves 192 hours and acquisition cost unchanged; increasing price to $90,000 repairs seller contribution but makes first-year customer value negative, yielding `NO DEAL`, not an assumed acceptable price. These are sensitivities, not claims that a buyer would accept them. No Chapter 5 pilot or later motion is implemented.

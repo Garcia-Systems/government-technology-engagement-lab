@@ -12,6 +12,8 @@ from .journey import (
     load_baseline_journey, load_journey_scenarios, longest_elapsed_stage,
 )
 from .stakeholders import load_baseline_topology, load_stakeholder_scenarios, summarize_topology
+from .formal_rfp import (acquisition_effort_by_category, assess_formal_rfp,
+                         formal_rfp_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -211,16 +213,82 @@ def show_stakeholder_scenarios() -> None:
         print(f"{scenario.key}: {scenario.verdict}")
         for change in scenario.changed_assumptions or ("MODELED ASSUMPTION: unchanged baseline topology.",):
             print(f"  - {change}")
-        print("  - controls: " + ", ".join(sorted({x.value for f in scenario.topology.findings for x in (f.reason,)})))
+            print("  - controls: " + ", ".join(sorted({x.value for f in scenario.topology.findings for x in (f.reason,)})))
+
+
+def show_formal_rfp() -> None:
+    result = assess_formal_rfp()
+    motion = result.motion
+    print("CHAPTER 4 — THE FORMAL RFP MOTION\nFICTIONAL EDUCATIONAL MODEL")
+    print("No real procurement law, threshold, schedule, or security rule is represented.\n")
+    print(f"{motion.name} ({motion.identifier}) [{motion.evidence}]")
+    print("\nJOURNEY")
+    for stage in motion.journey.ordered_stages:
+        print(f"  {stage.sequence:2}. {stage.display_name:30} {stage.effort_hours:3} h  {stage.elapsed_days:3} d [{stage.evidence}]")
+    print("\nACTIVE SELLER EFFORT")
+    for category, hours in acquisition_effort_by_category(motion).items():
+        print(f"  {category.value:16} {hours:3} h")
+    print(f"  TOTAL            {motion.journey.total_effort_hours:3} h")
+    print(f"ELAPSED SALES CYCLE  {motion.journey.total_elapsed_days} modeled days = {motion.journey.modeled_months} modeled months")
+    print(f"IMPLEMENTATION EFFORT {motion.engineering_hours} engineering h")
+    print("\nPROPOSAL ARTIFACTS")
+    for artifact in motion.proposal_artifacts:
+        print(f"  {artifact.name} -> {artifact.stage_id}")
+    print("\nSTAKEHOLDER DEPENDENCIES")
+    for link in motion.stakeholder_participation:
+        print(f"  {link.stage_id}: {link.stakeholder_id} ({link.responsibility})")
+    _show_formal_rfp_economics(result)
+    print("\nTARGET FINDINGS")
+    for finding in result.findings: print(f"  - {finding.value}")
+    print(f"\nPROJECT VIABILITY: {result.project_viability.value}")
+    print(f"TARGET VIABILITY:  {result.target_viability.value}")
+    print(f"VERDICT: {result.verdict} [{result.evidence}]")
+
+
+def _show_formal_rfp_economics(result=None) -> None:
+    result = result or assess_formal_rfp()
+    motion, customer, seller = result.motion, result.customer_economics, result.seller_economics
+    print("\nCUSTOMER VIEW")
+    print(f"  Recoverable annual value:        {_money(load_baseline().burden.annual_recoverable_value)}")
+    print(f"  First-year cost:                 {_money(customer.first_year_cost)}")
+    print(f"  Net first-year recoverable value:{_money(customer.first_year_net_recoverable_value):>14}")
+    print(f"  Implementation-only payback:     {customer.implementation_only_payback_months:.2f} months")
+    print("\nSELLER VIEW")
+    for rate in motion.labor_rates:
+        print(f"  [{rate.evidence}] {rate.category.value} fully loaded internal cost: {_money(rate.hourly_cost)}/h")
+    print(f"  Implementation revenue:          {_money(seller.implementation_revenue)}")
+    print(f"  Delivery labor cost:             {_money(seller.delivery_labor_cost)}")
+    print(f"  Acquisition labor cost:          {_money(seller.acquisition_labor_cost)}")
+    print(f"  Other direct costs:              {_money(seller.other_direct_costs)}")
+    print(f"  Acquisition-adjusted contribution: {_money(seller.acquisition_adjusted_contribution)}")
+    print(f"  Contribution margin:             {seller.contribution_margin:.2%}")
+    print(f"  [{motion.evidence}] Lab minimum contribution: {_money(motion.minimum_contribution)}")
+
+
+def show_formal_rfp_economics() -> None:
+    print("CHAPTER 4 — FORMAL RFP ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_formal_rfp_economics()
+
+
+def show_formal_rfp_scenarios() -> None:
+    print("CHAPTER 4 — FORMAL RFP SENSITIVITIES\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':22} {'CUSTOMER':9} {'ACQ H':7} {'CYCLE':8} {'CONTRIB':13} VERDICT")
+    for scenario in formal_rfp_scenarios():
+        a = scenario.assessment
+        customer = "PASS" if a.customer_economics.first_year_net_recoverable_value >= 0 else "FAIL"
+        print(f"{scenario.name:22} {customer:9} {a.motion.journey.total_effort_hours:3} h   {a.motion.journey.modeled_months:5.2f} mo {_money(a.seller_economics.acquisition_adjusted_contribution):13} {a.verdict}")
+    print("\nAll changes are labeled SENSITIVITY ASSUMPTION; baseline data is not mutated.")
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
      "journey-summary": show_journey_summary, "journey-scenarios": show_journey_scenarios,
      "stakeholders": show_stakeholders, "stakeholder-summary": show_stakeholder_summary,
-     "stakeholder-scenarios": show_stakeholder_scenarios}[args.command]()
+     "stakeholder-scenarios": show_stakeholder_scenarios,
+     "formal-rfp": show_formal_rfp, "formal-rfp-economics": show_formal_rfp_economics,
+     "formal-rfp-scenarios": show_formal_rfp_scenarios}[args.command]()
     return 0
