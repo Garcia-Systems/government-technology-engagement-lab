@@ -47,7 +47,7 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–15 only**. Chapter 15 implements acquisition-economics synthesis; Chapter 16 and later experiments remain unimplemented.
+This repository currently contains **Chapters 0–16 only**. Chapter 16 implements throughput and opportunity-cost synthesis; Chapter 17 and later experiments remain unimplemented.
 
 ## Architecture
 
@@ -309,7 +309,7 @@ The fictional adequacy rule requires at least **75%** recoverable-value coverage
 
 The strong and incumbent-only-supported-access sensitivities derive `BUY / CONFIGURE`; the weak-native sensitivity derives `NARROW CUSTOM EDGE`; the expensive-module sensitivity worsens only price and demonstrates that technical safety does not create economic superiority. Unsupported third-party access remains closed under Chapter 13, while Chapter 12 configuration-first governance shifts native control implementation to the incumbent without eliminating customer approval, accessibility acceptance, change authorization, and support planning. `NO DEAL` remains an executable outcome.
 
-Chapter 14 therefore further qualifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: the original custom opportunity may be a poor target because a supported native option already captures adequate value, not only because government acquisition is costly. A material responsible residual can still support a narrow edge, but custom ownership must earn its existence. Chapter 15 now synthesizes won-deal acquisition work; probability-weighted throughput and opportunity cost remain intentionally unresolved for Chapter 16.
+Chapter 14 therefore further qualifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: the original custom opportunity may be a poor target because a supported native option already captures adequate value, not only because government acquisition is costly. A material responsible residual can still support a narrow edge, but custom ownership must earn its existence. Chapter 15 synthesizes won-deal acquisition work; Chapter 16 now tests deterministic throughput and opportunity cost without probability weighting.
 
 ```bash
 python -m government_engagement_lab incumbent
@@ -333,4 +333,21 @@ python -m government_engagement_lab acquisition-scenarios
 python -m government_engagement_lab contribution-waterfall
 ```
 
-Chapter 16 remains unimplemented: throughput, team capacity, probability-weighted pipeline economics, displaced opportunities, and portfolio opportunity cost are unresolved.
+## Chapter 16: throughput and opportunity cost
+
+Chapter 16 adds a fixture-backed **pipeline-capacity model** without changing Chapters 0–15. Its fictional compact seller organization reserves non-acquisition time and makes 128 hours available per modeled 30-day period. This is a `MODELED ASSUMPTION`, **not a recommended staffing ratio or industry benchmark**.
+
+Acquisition effort, elapsed cycle, and concurrent load remain separate. Nonuniform period buckets reconcile to Chapter 15 seller-owned hours; a deterministic FIFO rule gives the oldest active workload bucket capacity first and rolls unfinished work forward. Throughput means successfully completed modeled engagements in the year—not a win-rate forecast. Opportunity cost means contribution from a feasible alternative portfolio that could not be realized because capacity was occupied; calendar months are never priced directly.
+
+With eight identical arrivals in periods 1–8, Formal RFP completes 4 (5 overload periods; -$60/deal; -$240 annualized), cooperative pilot completes 8 ($13,310/deal; $106,480 annualized), partner-led completes 4 ($11,205/deal; $44,820 annualized), and existing path completes 7 ($7,530/deal; $52,710 annualized). A simple mixed portfolio completes all five named opportunities for $41,620. These are `OBSERVED LAB RESULT`s from fictional inputs, not market expectations or accounting profit.
+
+Adding a second fictional solutions resource removes Formal-RFP overload but does not change its four in-year completions or weak per-deal economics. Losing one long-cycle RFP retains its acquisition cost and capacity use with no implementation revenue. Thus `POOR TARGET CUSTOMER` is clarified rather than universally affirmed: capacity belongs to target/commercial attractiveness, while project viability remains independent. A long cycle is not automatically poor when effort is low, contribution high, or capacity ample.
+
+```bash
+python -m government_engagement_lab throughput
+python -m government_engagement_lab throughput-summary
+python -m government_engagement_lab throughput-scenarios
+python -m government_engagement_lab pipeline
+```
+
+Chapter 17 repeatability across departments remains deliberately unimplemented.
