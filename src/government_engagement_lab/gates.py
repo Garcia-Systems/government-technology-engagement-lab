@@ -17,6 +17,7 @@ from .models import (
     GateScenario,
     GateStatus,
 )
+from .journey import load_baseline_journey
 
 PROJECT_DIMENSIONS = (
     GateDimension.PROBLEM_ATTRACTIVENESS,
@@ -119,7 +120,12 @@ def assess_gates(
         target_reasons = (_reason(FindingCode.TARGET_ACCESS_CONDITIONS_IMPROVED, "Hypothetical favorable acquisition conditions replace the baseline target impediments.", sensitivity),)
         target_status = GateStatus.PASS
     else:
-        target_reasons = tuple(_reason(code, text, modeled) for code, text in target_codes)
+        journey = load_baseline_journey()
+        grounded = {
+            FindingCode.LONG_SALES_CYCLE: f"long sales cycle traced to journey.total_elapsed_days = {journey.total_elapsed_days} modeled days ({journey.modeled_months} modeled months)",
+            FindingCode.HIGH_SOLUTIONS_EFFORT: f"high solutions effort traced to journey.total_effort_hours = {journey.total_effort_hours} hours",
+        }
+        target_reasons = tuple(_reason(code, grounded.get(code, text), modeled) for code, text in target_codes)
         target_status = GateStatus.FAIL
     target = DimensionResult(
         GateDimension.TARGET_ATTRACTIVENESS,

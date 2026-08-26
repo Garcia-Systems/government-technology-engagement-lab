@@ -1,0 +1,4 @@
+[
+  {"key":"baseline","journey_identifier":"JAMES_RIVER_BASELINE_JOURNEY","name":"Baseline","description":"The unchanged baseline journey.","omit_stage_ids":[],"assumptions":["No sensitivity change; uses the baseline modeled assumptions."],"evidence":"MODELED ASSUMPTION"},
+  {"key":"simplified_approval_path","journey_identifier":"JAMES_RIVER_SIMPLIFIED_APPROVAL_JOURNEY","name":"Simplified approval path","description":"A sensitivity that omits a separately prepared proposal under a hypothetical generic pre-authorization.","omit_stage_ids":["PROPOSAL"],"assumptions":["SENSITIVITY ASSUMPTION: PROPOSAL is omitted while the underlying project and other stages remain unchanged.","This is generic educational modeling, not an existing contract vehicle or a real procurement procedure."],"evidence":"SENSITIVITY ASSUMPTION"}
+]

@@ -1,0 +1,26 @@
+{
+  "identifier": "JAMES_RIVER_BASELINE_JOURNEY",
+  "name": "Baseline engagement journey",
+  "description": "A sequential fictional decomposition of the inherited 192-hour, nine-month baseline.",
+  "customer_name": "James River County Permitting Department",
+  "engagement_motion": "BASELINE_COOKBOOK_MOTION",
+  "modeled_days_per_month": 30,
+  "evidence": "MODELED ASSUMPTION",
+  "assumptions": [
+    "The stages are sequential, so elapsed days are summed.",
+    "One modeled month equals 30 modeled days; this is an educational convention, not a procurement convention.",
+    "The original cookbook supplied only 192 total hours and nine months, so every stage allocation is a new modeled assumption."
+  ],
+  "stages": [
+    {"identifier":"PROSPECT","display_name":"Prospect","description":"Identify and initially qualify the fictional opportunity.","sequence":1,"required":true,"effort_hours":10,"elapsed_days":14,"responsible_category":"SALES","stage_type":"ACCESS","evidence":"MODELED ASSUMPTION","assumptions":["Initial qualification consumes intermittent work across two modeled weeks."]},
+    {"identifier":"SPONSOR","display_name":"Sponsor","description":"Establish an internal sponsor for continued exploration.","sequence":2,"required":true,"effort_hours":14,"elapsed_days":21,"responsible_category":"CUSTOMER_SPONSOR","stage_type":"ACCESS","evidence":"MODELED ASSUMPTION","assumptions":["Sponsor alignment is modeled without a detailed stakeholder topology."]},
+    {"identifier":"DISCOVERY","display_name":"Discovery","description":"Understand the workflow problem and intervention boundary.","sequence":3,"required":true,"effort_hours":30,"elapsed_days":30,"responsible_category":"SOLUTIONS","stage_type":"DISCOVERY","evidence":"MODELED ASSUMPTION","assumptions":["Workshops and synthesis are active effort within a longer calendar window."]},
+    {"identifier":"TECHNICAL_VALIDATION","display_name":"Technical validation","description":"Validate feasibility of the bounded workflow layer.","sequence":4,"required":true,"effort_hours":28,"elapsed_days":35,"responsible_category":"ENGINEERING","stage_type":"TECHNICAL","evidence":"MODELED ASSUMPTION","assumptions":["Validation does not implement the solution or replace authoritative systems."]},
+    {"identifier":"SECURITY_ACCESS_REVIEW","display_name":"Security / access review","description":"Review modeled access and governance constraints at a high level.","sequence":5,"required":true,"effort_hours":24,"elapsed_days":35,"responsible_category":"SECURITY_GOVERNANCE","stage_type":"GOVERNANCE","evidence":"MODELED ASSUMPTION","assumptions":["This is a stage allocation, not a detailed security governance model."]},
+    {"identifier":"PROCUREMENT_PATH","display_name":"Procurement path","description":"Determine a generic route to authorization and purchase.","sequence":6,"required":true,"effort_hours":18,"elapsed_days":45,"responsible_category":"PROCUREMENT","stage_type":"PROCUREMENT","evidence":"MODELED ASSUMPTION","assumptions":["No real procedure or named contract vehicle is represented."]},
+    {"identifier":"PROPOSAL","display_name":"Proposal","description":"Prepare and revise the fictional commercial proposal.","sequence":7,"required":true,"effort_hours":22,"elapsed_days":25,"responsible_category":"SALES","stage_type":"COMMERCIAL","evidence":"MODELED ASSUMPTION","assumptions":["The proposal is distinct from contract negotiation."]},
+    {"identifier":"CONTRACT","display_name":"Contract","description":"Resolve the fictional agreement and its terms.","sequence":8,"required":true,"effort_hours":26,"elapsed_days":40,"responsible_category":"LEGAL_CONTRACTS","stage_type":"CONTRACTING","evidence":"MODELED ASSUMPTION","assumptions":["Elapsed time includes calendar delay, not continuous legal labor."]},
+    {"identifier":"IMPLEMENTATION_APPROVAL","display_name":"Implementation approval","description":"Obtain authorization to begin the bounded implementation.","sequence":9,"required":true,"effort_hours":12,"elapsed_days":15,"responsible_category":"CUSTOMER_IT","stage_type":"APPROVAL","evidence":"MODELED ASSUMPTION","assumptions":["Approval is kept visible and is not a detailed governance workflow."]},
+    {"identifier":"ACCEPTANCE","display_name":"Acceptance","description":"Confirm engagement closure and readiness for implementation handoff.","sequence":10,"required":true,"effort_hours":8,"elapsed_days":10,"responsible_category":"CUSTOMER_SPONSOR","stage_type":"ACCEPTANCE","evidence":"MODELED ASSUMPTION","assumptions":["Acceptance closes this buying journey; it is not product acceptance testing."]}
+  ]
+}
