@@ -14,6 +14,7 @@ from .journey import (
 from .stakeholders import load_baseline_topology, load_stakeholder_scenarios, summarize_topology
 from .formal_rfp import (acquisition_effort_by_category, assess_formal_rfp,
                          formal_rfp_scenarios)
+from .pilot import assess_pilot, motion_comparison, pilot_scenarios
 
 
 def _money(value: Decimal) -> str:
@@ -280,9 +281,84 @@ def show_formal_rfp_scenarios() -> None:
     print("\nAll changes are labeled SENSITIVITY ASSUMPTION; baseline data is not mutated.")
 
 
+def show_pilot() -> None:
+    result, motion = assess_pilot(), assess_pilot().motion
+    print("CHAPTER 5 — COOPERATIVE PAID PILOT\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"FICTION NOTICE: {motion.fiction_notice}")
+    print(f"\n{motion.name} ({motion.identifier}) — PAID: {motion.paid}; DURATION: {motion.duration_days} days")
+    print("\nINCLUDED SCOPE")
+    for item in motion.scope: print(f"  + [{motion.evidence}] {item}")
+    print("EXCLUSIONS")
+    for item in motion.exclusions: print(f"  - [{motion.evidence}] {item}")
+    print(f"HANDOFF: {motion.handoff}")
+    print("\nPILOT JOURNEY")
+    for stage in motion.journey.ordered_stages:
+        print(f"  {stage.sequence:2}. {stage.display_name:28} {stage.effort_hours:2} h {stage.elapsed_days:3} d")
+    print("\nSTAKEHOLDERS (Chapter 3 identities; sponsor coordinates but does not replace approvers)")
+    for link in motion.stakeholders: print(f"  {link.stakeholder_id}: {link.responsibility}")
+    print("\nACCEPTANCE CRITERIA [MODELED ASSUMPTION]")
+    for c in motion.acceptance_criteria: print(f"  {c.identifier}: {c.metric} {c.operator} {c.threshold}")
+    o = result.operations
+    print("\nSYNTHETIC OPERATIONAL RESULT [OBSERVED LAB RESULT]")
+    for name, value in o.__dict__.items():
+        if name != "evidence": print(f"  {name}: {value}")
+    _show_pilot_economics(result)
+    print(f"\nPROJECT VIABILITY: {result.project_viability.value}")
+    print(f"TARGET VIABILITY:  {result.target_viability.value}")
+    print(f"PILOT ACCEPTANCE:  {result.acceptance.value}")
+    print(f"COMMERCIAL VERDICT: {result.verdict}")
+    print(f"FULL IMPLEMENTATION AUTHORIZED: {result.full_implementation_authorized}")
+    print(f"NEXT STEP: {result.next_step} — expansion still requires a separate decision and broader reviews.")
+
+
+def _show_pilot_economics(result=None) -> None:
+    result = result or assess_pilot()
+    e, m, s = result.economics, result.motion, result.economics.seller
+    print("\nCUSTOMER ECONOMICS")
+    print(f"  Pilot price (includes {_money(m.pilot_period_support)} pilot support): {_money(e.pilot_price)}")
+    print(f"  Annualized opportunity value affected, not captured: {_money(e.annualized_value_potentially_affected)}")
+    print(f"  Expected measurable pilot benefit [MODELED ASSUMPTION]: {_money(e.expected_measurable_benefit)}")
+    print(f"  Customer pilot net benefit [OBSERVED LAB RESULT]: {_money(e.customer_pilot_net_benefit)}")
+    print(f"  Synthetic-action value translation [MODELED ECONOMIC RESULT]: {_money(e.action_value_estimate)}")
+    print("SELLER ECONOMICS [OBSERVED LAB RESULT]")
+    print(f"  Revenue: {_money(s.implementation_revenue)}; delivery cost: {_money(s.delivery_labor_cost)}")
+    print(f"  Acquisition: {e.acquisition_hours} h / {e.authorization_days} days to authorization / {_money(s.acquisition_labor_cost)}")
+    print(f"  Other direct cost: {_money(s.other_direct_costs)}")
+    print(f"  Acquisition-adjusted contribution: {_money(s.acquisition_adjusted_contribution)} ({s.contribution_margin:.2%})")
+    print(f"  Acquisition h / $10k revenue: {Decimal(e.acquisition_hours) / (e.pilot_price / Decimal(10000)):.2f}")
+    print(f"  Delivery h / $10k revenue: {Decimal(m.engineering_hours) / (e.pilot_price / Decimal(10000)):.2f}")
+    print(f"  Acquisition cost / revenue: {s.acquisition_labor_cost / e.pilot_price:.2%}")
+    print(f"  Opportunity value addressed: {e.annualized_value_potentially_affected / load_baseline().burden.annual_recoverable_value:.2%}")
+
+
+def show_pilot_economics() -> None:
+    print("CHAPTER 5 — PILOT ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_pilot_economics()
+
+
+def show_pilot_scenarios() -> None:
+    print("CHAPTER 5 — PILOT SENSITIVITIES\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'SCENARIO':22} {'ACQ H':7} {'AUTH D':8} {'ENG H':7} {'CONTRIB':13} VERDICT")
+    for scenario in pilot_scenarios():
+        a = scenario.assessment
+        print(f"{scenario.name:22} {a.economics.acquisition_hours:3} h   {a.economics.authorization_days:3} d   {a.motion.engineering_hours:3} h   {_money(a.economics.seller.acquisition_adjusted_contribution):13} {a.verdict}")
+        for change in scenario.changed_assumptions: print(f"  [{scenario.evidence}] {change}")
+    print("No weighted pilot score is calculated.")
+
+
+def show_motion_comparison() -> None:
+    print("FORMAL RFP VERSUS COOPERATIVE PAID PILOT\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'MOTION':28} {'ACQ H':7} {'AUTH D':8} {'DEL H':7} {'REVENUE':12} {'CONTRIBUTION':14} TARGET")
+    for row in motion_comparison():
+        print(f"{row['motion']:28} {row['acquisition_hours']:3} h   {row['cycle_days']:3} d   {row['delivery_hours']:3} h   {_money(row['revenue']):12} {_money(row['contribution']):14} {row['target']}")
+        print(f"  value addressed: {_money(row['value_addressed'])}; stakeholders: {row['stakeholders']}; approval stages: {row['approval_stages']}; support: {_money(row['support'])}")
+    print("\n[OBSERVED LAB RESULT] SAME PROBLEM + DIFFERENT ENGAGEMENT MOTION = DIFFERENT TARGET RESULT")
+    print("This result exists only within fictional assumptions; it is not empirical government-market evidence.")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -290,5 +366,7 @@ def main(argv: list[str] | None = None) -> int:
      "stakeholders": show_stakeholders, "stakeholder-summary": show_stakeholder_summary,
      "stakeholder-scenarios": show_stakeholder_scenarios,
      "formal-rfp": show_formal_rfp, "formal-rfp-economics": show_formal_rfp_economics,
-     "formal-rfp-scenarios": show_formal_rfp_scenarios}[args.command]()
+     "formal-rfp-scenarios": show_formal_rfp_scenarios, "pilot": show_pilot,
+     "pilot-economics": show_pilot_economics, "pilot-scenarios": show_pilot_scenarios,
+     "compare-motions": show_motion_comparison}[args.command]()
     return 0
