@@ -47,14 +47,14 @@ MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
-This repository currently contains **Chapters 0–2 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
+This repository currently contains **Chapters 0–3 only**. Historical scenario names and verdicts are preserved as inspectable reference data, not implemented experiments. Chapter 2 decomposes the baseline buying journey; it does not implement the later motions suggested by those historical names.
 
 ## Architecture
 
 - `models.py` contains immutable typed domain records, including reusable engagement stages and journeys.
 - `fixtures/*.json` contains the fictional baseline, journey decomposition, and deliberately small scenario data.
 - `economics.py` performs three transparent customer calculations using `Decimal`.
-- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries.
+- `baseline.py` preserves Chapter 0; `gates.py` evaluates Chapter 1 viability; `journey.py` loads Chapter 2 journeys and calculates unweighted burden summaries; `stakeholders.py` loads, validates, and summarizes Chapter 3 topology.
 - `evidence.py` owns the reusable evidence vocabulary; `cli.py` presents the executable chapter.
 - `chapters/` explains the model as a textbook; `tests/` lock down identity, economics, evidence, and verdict mechanics.
 
@@ -76,6 +76,9 @@ python -m government_engagement_lab gate-scenarios
 python -m government_engagement_lab journey
 python -m government_engagement_lab journey-summary
 python -m government_engagement_lab journey-scenarios
+python -m government_engagement_lab stakeholders
+python -m government_engagement_lab stakeholder-summary
+python -m government_engagement_lab stakeholder-scenarios
 ```
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
@@ -108,4 +111,10 @@ Chapter 2 represents stage existence, active human effort, and elapsed calendar 
 
 The original handoff supplied only the totals. Every stage allocation and the 30-day convention is therefore a new `MODELED ASSUMPTION`, not a real procurement convention. Deterministic summaries expose effort by work category and stage type, plus the highest-effort and longest-elapsed stages; no weighted journey score is used. Chapter 1's `HIGH_SOLUTIONS_EFFORT` and `LONG_SALES_CYCLE` reasons now trace to these totals while its `PASS` project / `FAIL` target / `POOR TARGET CUSTOMER` result remains unchanged.
 
-One narrow `SIMPLIFIED_APPROVAL_PATH` sensitivity omits `PROPOSAL`, producing 170 hours and 245 modeled days. It demonstrates composability only: it is not a contract vehicle, later engagement motion, real procedure, or market verdict. Stakeholder topology remains unresolved for Chapter 3.
+One narrow `SIMPLIFIED_APPROVAL_PATH` sensitivity omits `PROPOSAL`, producing 170 hours and 245 modeled days. It demonstrates composability only: it is not a contract vehicle, later engagement motion, real procedure, or market verdict.
+
+## Chapter 3 stakeholder topology
+
+Chapter 3 connects fictional stakeholders directly to Chapter 2 stages. Its typed role vocabulary is `DECISION_MAKER`, `INFLUENCER`, `APPROVER`, `BLOCKER`, `USER`, `TECHNICAL_GATEKEEPER`, and `SPONSOR`; its explicit relationships include reporting, approval, dependency, access control, advice, information supply, and required acceptance. Every stakeholder structure is a `MODELED ASSUMPTION`, not a real-locality fact.
+
+Descriptive summaries count stakeholders, role assignments, stage participation, approvals, blocking paths, and technical-access dependencies without a score. Explicit findings make Chapter 1's `STAKEHOLDER_FRICTION` traceable to visible mechanisms. Authority-only sensitivities cover a strong sponsor, fragmented authority, and no sponsor while leaving legitimate controls or the underlying technical project visible. Chapter 4's formal RFP motion remains unresolved and unimplemented.

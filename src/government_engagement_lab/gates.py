@@ -121,7 +121,12 @@ def assess_gates(
         target_status = GateStatus.PASS
     else:
         journey = load_baseline_journey()
+        # Lazy import keeps the earlier chapter usable while allowing its
+        # high-level finding to trace to Chapter 3's explicit mechanisms.
+        from .stakeholders import stakeholder_friction_trace
+        friction = ", ".join(code.value for code in stakeholder_friction_trace())
         grounded = {
+            FindingCode.STAKEHOLDER_FRICTION: f"stakeholder friction traced to Chapter 3 mechanisms: {friction}",
             FindingCode.LONG_SALES_CYCLE: f"long sales cycle traced to journey.total_elapsed_days = {journey.total_elapsed_days} modeled days ({journey.modeled_months} modeled months)",
             FindingCode.HIGH_SOLUTIONS_EFFORT: f"high solutions effort traced to journey.total_effort_hours = {journey.total_effort_hours} hours",
         }

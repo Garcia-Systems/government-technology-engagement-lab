@@ -1,0 +1,661 @@
+{
+  "identifier": "JAMES_RIVER_BASELINE_TOPOLOGY",
+  "customer_name": "James River County Permitting Department",
+  "technical_project_identifier": "BOUNDED_PERMITTING_WORKFLOW_LAYER",
+  "sponsor_strength": "LIMITED",
+  "evidence": "MODELED ASSUMPTION",
+  "stakeholders": [
+    {
+      "identifier": "DEPARTMENT_DIRECTOR",
+      "display_name": "Department Director",
+      "organizational_function": "Department leadership",
+      "roles": [
+        "DECISION_MAKER",
+        "APPROVER"
+      ],
+      "journey_stage_ids": [
+        "SPONSOR",
+        "DISCOVERY",
+        "PROPOSAL",
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "approval_authority": [
+        "PROBLEM_OWNER",
+        "PURCHASE_APPROVER"
+      ],
+      "blocking_authority": [],
+      "access_control_domain": null,
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Owns the problem and department decision, but not technical, security, procurement, or contract authority."
+    },
+    {
+      "identifier": "OPERATIONS_MANAGER",
+      "display_name": "Operations Manager / Department Sponsor",
+      "organizational_function": "Operations and internal sponsorship",
+      "roles": [
+        "SPONSOR",
+        "INFLUENCER"
+      ],
+      "journey_stage_ids": [
+        "PROSPECT",
+        "SPONSOR",
+        "DISCOVERY",
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "PROCUREMENT_PATH",
+        "PROPOSAL",
+        "CONTRACT",
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "approval_authority": [
+        "PROBLEM_OWNER"
+      ],
+      "blocking_authority": [],
+      "access_control_domain": null,
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "A LIMITED sponsor who coordinates but cannot authorize every step."
+    },
+    {
+      "identifier": "PERMITTING_STAFF",
+      "display_name": "Permitting Staff",
+      "organizational_function": "Workflow users",
+      "roles": [
+        "USER",
+        "INFLUENCER"
+      ],
+      "journey_stage_ids": [
+        "DISCOVERY",
+        "TECHNICAL_VALIDATION",
+        "ACCEPTANCE"
+      ],
+      "approval_authority": [],
+      "blocking_authority": [],
+      "access_control_domain": null,
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Representative user group; individual users do not approve the purchase."
+    },
+    {
+      "identifier": "IT_REPRESENTATIVE",
+      "display_name": "IT Representative",
+      "organizational_function": "Information technology",
+      "roles": [
+        "TECHNICAL_GATEKEEPER",
+        "APPROVER",
+        "BLOCKER"
+      ],
+      "journey_stage_ids": [
+        "DISCOVERY",
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "approval_authority": [
+        "IMPLEMENTATION_ACCEPTOR"
+      ],
+      "blocking_authority": [
+        "TECHNICAL_ACCESS_OWNER"
+      ],
+      "access_control_domain": "Systems and interface access",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Controls technical access; blocker denotes legitimate control, not hostility."
+    },
+    {
+      "identifier": "SECURITY_REVIEWER",
+      "display_name": "Security / Governance Reviewer",
+      "organizational_function": "Security and governance",
+      "roles": [
+        "APPROVER",
+        "BLOCKER"
+      ],
+      "journey_stage_ids": [
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "approval_authority": [
+        "IMPLEMENTATION_ACCEPTOR"
+      ],
+      "blocking_authority": [
+        "IMPLEMENTATION_ACCEPTOR"
+      ],
+      "access_control_domain": "Security and governance approval",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "May withhold approval until modeled requirements are satisfied."
+    },
+    {
+      "identifier": "ACCESSIBILITY_REVIEWER",
+      "display_name": "Accessibility Reviewer",
+      "organizational_function": "Accessibility review",
+      "roles": [
+        "APPROVER",
+        "INFLUENCER"
+      ],
+      "journey_stage_ids": [
+        "PROPOSAL",
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "approval_authority": [
+        "IMPLEMENTATION_ACCEPTOR"
+      ],
+      "blocking_authority": [
+        "IMPLEMENTATION_ACCEPTOR"
+      ],
+      "access_control_domain": "Accessibility acceptance",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Represents a legitimate acceptance requirement, not a full workload model."
+    },
+    {
+      "identifier": "PROCUREMENT_REPRESENTATIVE",
+      "display_name": "Procurement Representative",
+      "organizational_function": "Purchasing",
+      "roles": [
+        "APPROVER",
+        "BLOCKER"
+      ],
+      "journey_stage_ids": [
+        "PROCUREMENT_PATH",
+        "PROPOSAL",
+        "CONTRACT"
+      ],
+      "approval_authority": [
+        "PURCHASE_APPROVER"
+      ],
+      "blocking_authority": [
+        "PURCHASE_APPROVER"
+      ],
+      "access_control_domain": "Purchasing path",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Controls the fictional purchasing path; no real procedure is asserted."
+    },
+    {
+      "identifier": "FINANCE_REPRESENTATIVE",
+      "display_name": "Finance Representative",
+      "organizational_function": "Budget and finance",
+      "roles": [
+        "APPROVER",
+        "INFLUENCER"
+      ],
+      "journey_stage_ids": [
+        "PROCUREMENT_PATH",
+        "PROPOSAL"
+      ],
+      "approval_authority": [
+        "PURCHASE_APPROVER"
+      ],
+      "blocking_authority": [
+        "PURCHASE_APPROVER"
+      ],
+      "access_control_domain": "Budget confirmation",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Confirms modeled funding availability."
+    },
+    {
+      "identifier": "LEGAL_CONTRACTS_REPRESENTATIVE",
+      "display_name": "Legal / Contracts Representative",
+      "organizational_function": "Legal and contracts",
+      "roles": [
+        "APPROVER",
+        "BLOCKER"
+      ],
+      "journey_stage_ids": [
+        "PROPOSAL",
+        "CONTRACT"
+      ],
+      "approval_authority": [
+        "CONTRACT_APPROVER"
+      ],
+      "blocking_authority": [
+        "CONTRACT_APPROVER"
+      ],
+      "access_control_domain": "Contract terms",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Participates when contract terms require review."
+    },
+    {
+      "identifier": "INCUMBENT_VENDOR_REPRESENTATIVE",
+      "display_name": "Incumbent Vendor Representative",
+      "organizational_function": "External interface support",
+      "roles": [
+        "TECHNICAL_GATEKEEPER"
+      ],
+      "journey_stage_ids": [
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "approval_authority": [],
+      "blocking_authority": [
+        "TECHNICAL_ACCESS_OWNER"
+      ],
+      "access_control_domain": "Supported interface path",
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "May control a supported interface path; no vendor comparison or closed-integration claim is made."
+    },
+    {
+      "identifier": "SOLUTIONS_ENGINEER",
+      "display_name": "Solutions Engineer",
+      "organizational_function": "Seller solutions",
+      "roles": [
+        "INFLUENCER"
+      ],
+      "journey_stage_ids": [
+        "PROSPECT",
+        "DISCOVERY",
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "PROPOSAL",
+        "CONTRACT",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "approval_authority": [],
+      "blocking_authority": [],
+      "access_control_domain": null,
+      "evidence": "MODELED ASSUMPTION",
+      "notes": "Represents the seller side in the inherited journey."
+    }
+  ],
+  "relationships": [
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "DEPARTMENT_DIRECTOR",
+      "relationship_type": "REPORTS_TO",
+      "stage_ids": [
+        "SPONSOR"
+      ],
+      "explanation": "Sponsor reports to department decision authority.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "PROCUREMENT_REPRESENTATIVE",
+      "relationship_type": "REQUIRES_APPROVAL_FROM",
+      "stage_ids": [
+        "PROCUREMENT_PATH",
+        "CONTRACT"
+      ],
+      "explanation": "Purchase requires procurement approval.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "FINANCE_REPRESENTATIVE",
+      "relationship_type": "REQUIRES_APPROVAL_FROM",
+      "stage_ids": [
+        "PROCUREMENT_PATH"
+      ],
+      "explanation": "Purchase requires budget confirmation.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "DEPARTMENT_DIRECTOR",
+      "target_id": "LEGAL_CONTRACTS_REPRESENTATIVE",
+      "relationship_type": "REQUIRES_APPROVAL_FROM",
+      "stage_ids": [
+        "CONTRACT"
+      ],
+      "explanation": "Department desire does not replace contract approval.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "SECURITY_REVIEWER",
+      "relationship_type": "REQUIRES_APPROVAL_FROM",
+      "stage_ids": [
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "explanation": "Implementation requires governance approval.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "ACCESSIBILITY_REVIEWER",
+      "relationship_type": "ACCEPTANCE_REQUIRED_FROM",
+      "stage_ids": [
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "explanation": "Accessibility acceptance is required.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "IT_REPRESENTATIVE",
+      "relationship_type": "ACCEPTANCE_REQUIRED_FROM",
+      "stage_ids": [
+        "IMPLEMENTATION_APPROVAL",
+        "ACCEPTANCE"
+      ],
+      "explanation": "Technical implementation acceptance is required.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "OPERATIONS_MANAGER",
+      "target_id": "IT_REPRESENTATIVE",
+      "relationship_type": "DEPENDS_ON",
+      "stage_ids": [
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW"
+      ],
+      "explanation": "Sponsor depends on IT access.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "IT_REPRESENTATIVE",
+      "target_id": "INCUMBENT_VENDOR_REPRESENTATIVE",
+      "relationship_type": "DEPENDS_ON",
+      "stage_ids": [
+        "TECHNICAL_VALIDATION"
+      ],
+      "explanation": "IT depends on a supported interface path.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "IT_REPRESENTATIVE",
+      "target_id": "SOLUTIONS_ENGINEER",
+      "relationship_type": "CONTROLS_ACCESS_FOR",
+      "stage_ids": [
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "explanation": "IT controls seller technical access.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "INCUMBENT_VENDOR_REPRESENTATIVE",
+      "target_id": "IT_REPRESENTATIVE",
+      "relationship_type": "CONTROLS_ACCESS_FOR",
+      "stage_ids": [
+        "TECHNICAL_VALIDATION"
+      ],
+      "explanation": "Vendor controls its supported interface path.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "PERMITTING_STAFF",
+      "target_id": "OPERATIONS_MANAGER",
+      "relationship_type": "SUPPLIES_INFORMATION_TO",
+      "stage_ids": [
+        "DISCOVERY",
+        "ACCEPTANCE"
+      ],
+      "explanation": "Users supply workflow and acceptance information.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "source_id": "SECURITY_REVIEWER",
+      "target_id": "IT_REPRESENTATIVE",
+      "relationship_type": "ADVISES",
+      "stage_ids": [
+        "SECURITY_ACCESS_REVIEW"
+      ],
+      "explanation": "Governance reviewer advises IT on modeled constraints.",
+      "evidence": "MODELED ASSUMPTION"
+    }
+  ],
+  "stages": [
+    {
+      "stage_id": "PROSPECT",
+      "primary_responsible_id": "SOLUTIONS_ENGINEER",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER"
+      ],
+      "approver_ids": [],
+      "blocker_ids": [],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "SPONSOR",
+      "primary_responsible_id": "OPERATIONS_MANAGER",
+      "participant_ids": [
+        "OPERATIONS_MANAGER",
+        "DEPARTMENT_DIRECTOR"
+      ],
+      "approver_ids": [
+        "DEPARTMENT_DIRECTOR"
+      ],
+      "blocker_ids": [],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "DISCOVERY",
+      "primary_responsible_id": "SOLUTIONS_ENGINEER",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "DEPARTMENT_DIRECTOR",
+        "PERMITTING_STAFF",
+        "IT_REPRESENTATIVE"
+      ],
+      "approver_ids": [],
+      "blocker_ids": [],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "TECHNICAL_VALIDATION",
+      "primary_responsible_id": "SOLUTIONS_ENGINEER",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "PERMITTING_STAFF",
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ],
+      "approver_ids": [],
+      "blocker_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ],
+      "technical_gatekeeper_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ]
+    },
+    {
+      "stage_id": "SECURITY_ACCESS_REVIEW",
+      "primary_responsible_id": "SECURITY_REVIEWER",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "IT_REPRESENTATIVE",
+        "SECURITY_REVIEWER",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ],
+      "approver_ids": [
+        "SECURITY_REVIEWER"
+      ],
+      "blocker_ids": [
+        "SECURITY_REVIEWER",
+        "IT_REPRESENTATIVE"
+      ],
+      "technical_gatekeeper_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ]
+    },
+    {
+      "stage_id": "PROCUREMENT_PATH",
+      "primary_responsible_id": "PROCUREMENT_REPRESENTATIVE",
+      "participant_ids": [
+        "OPERATIONS_MANAGER",
+        "PROCUREMENT_REPRESENTATIVE",
+        "FINANCE_REPRESENTATIVE"
+      ],
+      "approver_ids": [
+        "PROCUREMENT_REPRESENTATIVE",
+        "FINANCE_REPRESENTATIVE"
+      ],
+      "blocker_ids": [
+        "PROCUREMENT_REPRESENTATIVE",
+        "FINANCE_REPRESENTATIVE"
+      ],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "PROPOSAL",
+      "primary_responsible_id": "SOLUTIONS_ENGINEER",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "DEPARTMENT_DIRECTOR",
+        "PROCUREMENT_REPRESENTATIVE",
+        "FINANCE_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE",
+        "ACCESSIBILITY_REVIEWER"
+      ],
+      "approver_ids": [
+        "DEPARTMENT_DIRECTOR"
+      ],
+      "blocker_ids": [],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "CONTRACT",
+      "primary_responsible_id": "LEGAL_CONTRACTS_REPRESENTATIVE",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "PROCUREMENT_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "approver_ids": [
+        "PROCUREMENT_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "blocker_ids": [
+        "PROCUREMENT_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "technical_gatekeeper_ids": []
+    },
+    {
+      "stage_id": "IMPLEMENTATION_APPROVAL",
+      "primary_responsible_id": "IT_REPRESENTATIVE",
+      "participant_ids": [
+        "SOLUTIONS_ENGINEER",
+        "OPERATIONS_MANAGER",
+        "DEPARTMENT_DIRECTOR",
+        "IT_REPRESENTATIVE",
+        "SECURITY_REVIEWER",
+        "ACCESSIBILITY_REVIEWER",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ],
+      "approver_ids": [
+        "DEPARTMENT_DIRECTOR",
+        "IT_REPRESENTATIVE",
+        "SECURITY_REVIEWER",
+        "ACCESSIBILITY_REVIEWER"
+      ],
+      "blocker_ids": [
+        "IT_REPRESENTATIVE",
+        "SECURITY_REVIEWER",
+        "ACCESSIBILITY_REVIEWER"
+      ],
+      "technical_gatekeeper_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ]
+    },
+    {
+      "stage_id": "ACCEPTANCE",
+      "primary_responsible_id": "OPERATIONS_MANAGER",
+      "participant_ids": [
+        "OPERATIONS_MANAGER",
+        "DEPARTMENT_DIRECTOR",
+        "PERMITTING_STAFF",
+        "IT_REPRESENTATIVE",
+        "ACCESSIBILITY_REVIEWER"
+      ],
+      "approver_ids": [
+        "IT_REPRESENTATIVE",
+        "ACCESSIBILITY_REVIEWER"
+      ],
+      "blocker_ids": [],
+      "technical_gatekeeper_ids": [
+        "IT_REPRESENTATIVE"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "reason": "MULTIPLE_REQUIRED_APPROVALS",
+      "stakeholder_ids": [
+        "DEPARTMENT_DIRECTOR",
+        "PROCUREMENT_REPRESENTATIVE",
+        "FINANCE_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "stage_ids": [
+        "PROCUREMENT_PATH",
+        "CONTRACT"
+      ],
+      "explanation": "Purchase and contract authority resides across functions.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "reason": "ACCESS_CONTROL_DEPENDENCY",
+      "stakeholder_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE",
+        "SOLUTIONS_ENGINEER"
+      ],
+      "stage_ids": [
+        "TECHNICAL_VALIDATION",
+        "SECURITY_ACCESS_REVIEW",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "explanation": "Technical progress depends on access controlled outside the sponsor.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "reason": "SEQUENTIAL_APPROVAL_DEPENDENCY",
+      "stakeholder_ids": [
+        "SECURITY_REVIEWER",
+        "PROCUREMENT_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "stage_ids": [
+        "SECURITY_ACCESS_REVIEW",
+        "PROCUREMENT_PATH",
+        "CONTRACT"
+      ],
+      "explanation": "The Chapter 2 sequence places distinct approvals on the path.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "reason": "INCUMBENT_VENDOR_DEPENDENCY",
+      "stakeholder_ids": [
+        "IT_REPRESENTATIVE",
+        "INCUMBENT_VENDOR_REPRESENTATIVE"
+      ],
+      "stage_ids": [
+        "TECHNICAL_VALIDATION"
+      ],
+      "explanation": "A supported interface path depends on the incumbent representative.",
+      "evidence": "MODELED ASSUMPTION"
+    },
+    {
+      "reason": "CROSS_FUNCTIONAL_COORDINATION",
+      "stakeholder_ids": [
+        "OPERATIONS_MANAGER",
+        "IT_REPRESENTATIVE",
+        "SECURITY_REVIEWER",
+        "PROCUREMENT_REPRESENTATIVE",
+        "LEGAL_CONTRACTS_REPRESENTATIVE"
+      ],
+      "stage_ids": [
+        "SECURITY_ACCESS_REVIEW",
+        "PROCUREMENT_PATH",
+        "CONTRACT",
+        "IMPLEMENTATION_APPROVAL"
+      ],
+      "explanation": "The limited sponsor coordinates functions whose authority remains independent.",
+      "evidence": "MODELED ASSUMPTION"
+    }
+  ]
+}
