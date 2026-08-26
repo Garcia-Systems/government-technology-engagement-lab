@@ -156,4 +156,21 @@ Chapter 6 holds the paid-pilot frame substantially constant and changes technica
 
 The main edge models 55% value capture (**$57,201.54**) and **110 engineering hours**. It narrows—but does not erase—IT and governance work; procurement, contracts, accessibility, sponsor, and users remain. At $36,000 plus $4,000 support, customer net recoverable value is **$17,201.54**. The 240-hour write-capable surface is comparison data only.
 
-The main result is `PILOT-FIRST TARGET`, versus `POOR TARGET CUSTOMER` for the write comparison, further **weakening but not disproving** the cookbook hypothesis. A 15%-capture sensitivity and difficult-access sensitivity both become `NO DEAL`; read-only is neither universally preferred nor automatically easy. Chapter 7 remains unimplemented.
+The main result is `PILOT-FIRST TARGET`, versus `POOR TARGET CUSTOMER` for the write comparison, further **weakening but not disproving** the cookbook hypothesis. A 15%-capture sensitivity and difficult-access sensitivity both become `NO DEAL`; read-only is neither universally preferred nor automatically easy. Chapter 7 tests the configuration-first question next.
+
+## Chapter 7 configuration-first experiment
+
+Chapter 7 introduces the entirely fictional **CivicFlow Permitting Suite** and inventories configurable statuses/workflows, validation, queues, notifications, exports/API, reports/dashboards, roles, warnings, correction tracking, audit history, and rules. Every product capability is a `MODELED ALTERNATIVE ASSUMPTION`; cross-system reconciliation is explicitly unsupported.
+
+The sequence is **inventory → standardize → configure validation/queues → native reporting/automation → process change → measure residual → custom edge only if material**. Configuration has explicit discovery, configuration, engineering, acquisition, training/change, and recurring support work. Native capability, configuration, process change, and custom ownership remain distinct.
+
+The six-category `MODELED ASSUMPTION` decomposition reconciles exactly to the unchanged **$104,002.80** Chapter 0 recoverable value. Sequential capped recovery prevents double counting and reports the residual after every intervention. The baseline result is conditional: configuration removes a meaningful portion, while a measured residual leaves the Chapter 6 read-only reconciliation view as a candidate only. Strong-incumbent, weak-incumbent, and poor-standardization sensitivities show that neither `BUY / CONFIGURE` nor `NARROW CUSTOM EDGE` is hard-coded. This changes the interpretation of `POOR TARGET CUSTOMER`: custom software should not own burden already removable by incumbent capability, while the remaining engagement must still pass project and target gates.
+
+```bash
+python -m government_engagement_lab configure-first
+python -m government_engagement_lab configure-first-economics
+python -m government_engagement_lab configure-first-scenarios
+python -m government_engagement_lab residual
+```
+
+Chapter 8 remains unimplemented.

@@ -1,0 +1,20 @@
+{
+  "system_name": "CivicFlow Permitting Suite (fictional)",
+  "fiction_notice": "Synthetic platform; not a real vendor or statement about any real product.",
+  "evidence": "MODELED ALTERNATIVE ASSUMPTION",
+  "capabilities": [
+    {"id":"status_categories","description":"Configurable status categories","support":"CONFIGURABLE","enabled":false,"effort_hours":18,"categories":["status_reconciliation"],"limitations":"One workflow taxonomy only"},
+    {"id":"workflow_steps","description":"Configurable workflow steps","support":"CONFIGURABLE","enabled":true,"effort_hours":12,"categories":["workflow_rework"],"limitations":"Simple sequential routing"},
+    {"id":"required_fields","description":"Required-field validation","support":"CONFIGURABLE","enabled":false,"effort_hours":14,"categories":["correction_administration"],"limitations":"No external source validation"},
+    {"id":"saved_views","description":"Saved views and filtered work queues","support":"CONFIGURABLE","enabled":false,"effort_hours":12,"categories":["lookup_search"],"limitations":"Platform records only"},
+    {"id":"notifications","description":"Configurable notifications","support":"CONFIGURABLE","enabled":false,"effort_hours":12,"categories":["workflow_rework"],"limitations":"Template and event rules only"},
+    {"id":"exports","description":"Export and API capability","support":"SUPPORTED","enabled":true,"effort_hours":4,"categories":["duplicate_entry"],"limitations":"Approved read-only use; no cross-source reconciliation"},
+    {"id":"scheduled_reports","description":"Scheduled reports and dashboard configuration","support":"CONFIGURABLE","enabled":false,"effort_hours":16,"categories":["report_preparation"],"limitations":"Native fields only"},
+    {"id":"role_permissions","description":"Basic role permissions","support":"CONFIGURABLE","enabled":true,"effort_hours":8,"categories":["workflow_rework"],"limitations":"Coarse roles"},
+    {"id":"duplicate_warnings","description":"Duplicate-warning rules","support":"CONFIGURABLE","enabled":false,"effort_hours":10,"categories":["duplicate_entry"],"limitations":"Within-platform exact matches"},
+    {"id":"correction_tracking","description":"Correction and resubmission tracking","support":"CONFIGURABLE","enabled":false,"effort_hours":14,"categories":["correction_administration"],"limitations":"No external correspondence capture"},
+    {"id":"audit_history","description":"Native audit history","support":"SUPPORTED","enabled":true,"effort_hours":2,"categories":["status_reconciliation"],"limitations":"Platform events only"},
+    {"id":"rule_automation","description":"Simple rule-based automation","support":"CONFIGURABLE","enabled":false,"effort_hours":14,"categories":["workflow_rework"],"limitations":"No consequential decisions"},
+    {"id":"cross_system_reconciliation","description":"Cross-source reconciliation","support":"NOT_SUPPORTED","enabled":false,"effort_hours":0,"categories":["duplicate_entry","status_reconciliation"],"limitations":"Candidate Chapter 6 read-only edge"}
+  ]
+}
