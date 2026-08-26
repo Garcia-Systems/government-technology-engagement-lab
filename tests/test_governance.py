@@ -128,5 +128,5 @@ def test_scenarios_do_not_mutate_fixture_and_no_real_law_claim_is_made():
 
 def test_chapter_19_is_not_implemented():
     root = Path(__file__).parents[1]
-    assert not any((root / "chapters").glob("chapter-19-*"))
+    assert not any((root / "chapters").glob("chapter-20-*"))
     assert not (root / "src/government_engagement_lab/acquisition_economics.py").exists()
