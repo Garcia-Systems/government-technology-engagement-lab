@@ -92,4 +92,4 @@ def test_labor_rates_governance_and_no_unauthorized_routes():
     source = Path("src/government_engagement_lab/closed_integration.py").read_text().lower()
     forbidden = ("screen_scrape", "credential_sharing", "reverse_engineered_endpoint", "hidden_write", "unsupported_mutation")
     assert all(term not in source for term in forbidden)
-    assert not any((Path("chapters")).glob("chapter-16-*"))
+    assert not any((Path("chapters")).glob("chapter-17-*"))

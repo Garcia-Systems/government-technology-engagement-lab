@@ -37,6 +37,9 @@ from .incumbent import (assess_incumbent, compare_alternatives,
                         incumbent_scenarios, load_incumbent_fixture)
 from .acquisition import (acquisition_report, acquisition_reports, focused_scenarios,
                           lost_deal_sensitivity)
+from .throughput import (additional_capacity_sensitivity, load_seller_organization,
+                         lost_opportunity_sensitivity, mixed_portfolio,
+                         opportunity_cost, portfolio_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -908,9 +911,50 @@ def show_contribution_waterfall() -> None:
     for x in acquisition_reports():
         print(f"\n{x.motion}\n  Seller engagement revenue       {_money(x.implementation_revenue):>14}\n  Delivery labor cost            -{_money(x.delivery_labor_cost):>14}\n  DELIVERY CONTRIBUTION           {_money(x.delivery_contribution):>14}\n  Acquisition labor cost         -{_money(x.acquisition_labor_cost):>14}\n  Other direct costs             -{_money(x.other_direct_costs):>14}\n  ACQ.-ADJUSTED CONTRIBUTION      {_money(x.acquisition_adjusted_contribution):>14}")
 
+def _throughput_row(result) -> None:
+    report=acquisition_report(result.opportunities[0].motion) if result.name != "MIXED" else None
+    motion=result.name
+    hours="mixed" if report is None else str(report.seller_acquisition_hours)
+    cycle="mixed" if report is None else str(report.elapsed_days)
+    per_deal="mixed" if report is None else _money(report.acquisition_adjusted_contribution)
+    print(f"{motion:31} {hours:>7} {cycle:>9} {result.completed_per_year:10} {result.average_active:10.2f} {per_deal:>14} {_money(result.annualized_contribution):>15} {result.overloaded_periods:8} {result.deferred_hours:10}")
+
+def show_throughput_summary() -> None:
+    print("CHAPTER 16 — THROUGHPUT AND OPPORTUNITY COST")
+    print("FICTIONAL LAB RESULTS; NOT STAFFING RATIOS OR INDUSTRY BENCHMARKS")
+    print(f"{'MOTION':31} {'ACQ HRS':>7} {'BASE DAYS':>9} {'DONE/YR':>10} {'AVG ACTIVE':>10} {'CONTRIB/DEAL':>14} {'ANNUAL CONTRIB':>15} {'OVERLOAD':>8} {'DEFERRED H':>10}")
+    for result in portfolio_scenarios(): _throughput_row(result)
+    print("\nContribution/deal × completed successful engagements = annualized contribution; this is not accounting profit.")
+
+def show_throughput() -> None:
+    org=load_seller_organization()
+    print("CHAPTER 16 — FICTIONAL SELLER CAPACITY [MODELED ASSUMPTION]")
+    print(org.fiction_notice)
+    for role in org.roles:
+        print(f"  {role.role.value:30} work={role.monthly_work_hours}h acquisition={role.acquisition_capacity_hours}h reserve={role.non_acquisition_reserve_hours}h [{role.evidence}]")
+    print(f"  TOTAL ACQUISITION CAPACITY: {org.monthly_acquisition_capacity} h / modeled 30-day period\n")
+    show_throughput_summary()
+
+def show_pipeline() -> None:
+    print("CHAPTER 16 — SYNTHETIC PERIOD-BY-PERIOD PIPELINE")
+    print("FIFO: oldest due bucket receives capacity first; unfinished work rolls forward and pauses progression.")
+    for result in portfolio_scenarios():
+        print(f"\n{result.name} [OBSERVED LAB RESULT]")
+        print(f"{'PERIOD':>6} {'ACTIVE':>6} {'DEMAND':>7} {'CAPACITY':>8} {'DONE H':>7} {'DEFER H':>7} STATE / COMPLETED")
+        for p in result.periods[:12]: print(f"{p.period:6} {p.active_opportunity_count:6} {p.acquisition_demand:7} {p.available_capacity:8} {p.work_completed:7} {p.deferred_hours:7} {p.state.value} / {','.join(p.completed_identifiers) or '-'}")
+
+def show_throughput_scenarios() -> None:
+    print("CHAPTER 16 — PORTFOLIOS AND SENSITIVITIES")
+    results=portfolio_scenarios();
+    for result in results: _throughput_row(result)
+    mixed=mixed_portfolio(); print("\nMIXED PORTFOLIO"); _throughput_row(mixed)
+    extra=additional_capacity_sensitivity(); print("\nADD SECOND SOLUTIONS RESOURCE [SENSITIVITY ASSUMPTION]"); _throughput_row(extra)
+    lost=lost_opportunity_sensitivity(); print("\nONE FORMAL RFP LOST [SENSITIVITY ASSUMPTION]"); _throughput_row(lost)
+    print(f"\nOpportunity cost of Formal-RFP-heavy versus pilot-first: {_money(opportunity_cost(results[0],results[1]))}; derived from unrealized portfolio contribution, not calendar-time pricing.")
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces", "configure-first", "configure-first-economics", "configure-first-scenarios", "residual", "small-engagement", "small-engagement-economics", "small-engagement-scenarios", "contract-size", "larger-contract", "larger-contract-economics", "larger-contract-scenarios", "contract-size-comparison", "partner", "partner-economics", "partner-scenarios", "direct-vs-partner", "existing-path", "existing-path-economics", "existing-path-scenarios", "rfp-vs-existing-path", "governance", "governance-summary", "governance-scenarios", "governance-surfaces", "closed-integration", "closed-integration-scenarios", "access-matrix", "incumbent", "incumbent-scenarios", "alternatives", "acquisition", "acquisition-summary", "acquisition-scenarios", "contribution-waterfall", "throughput", "throughput-summary", "throughput-scenarios", "pipeline"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -934,5 +978,5 @@ def main(argv: list[str] | None = None) -> int:
      "existing-path": show_existing_path, "existing-path-economics": show_existing_path_economics,
      "existing-path-scenarios": show_existing_path_scenarios, "rfp-vs-existing-path": show_rfp_vs_existing_path,
      "governance": show_governance, "governance-summary": show_governance_summary,
-     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall}[args.command]()
+     "governance-scenarios": show_governance_scenarios, "governance-surfaces": show_governance_surfaces, "closed-integration": show_closed_integration, "closed-integration-scenarios": show_closed_integration_scenarios, "access-matrix": show_access_matrix, "incumbent": show_incumbent, "incumbent-scenarios": show_incumbent_scenarios, "alternatives": show_alternatives, "acquisition": show_acquisition, "acquisition-summary": show_acquisition_summary, "acquisition-scenarios": show_acquisition_scenarios, "contribution-waterfall": show_contribution_waterfall, "throughput": show_throughput, "throughput-summary": show_throughput_summary, "throughput-scenarios": show_throughput_scenarios, "pipeline": show_pipeline}[args.command]()
     return 0

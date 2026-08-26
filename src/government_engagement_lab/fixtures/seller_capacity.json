@@ -1,0 +1,16 @@
+{
+  "fiction_notice": "Wholly fictional seller-capacity assumptions for this educational laboratory; not a staffing recommendation or industry benchmark.",
+  "modeled_period_days": 30,
+  "roles": [
+    {"role": "SOLUTIONS_ENGINEER", "monthly_work_hours": 160, "acquisition_capacity_percent": "0.45", "non_acquisition_reserve_hours": 88, "evidence": "MODELED ASSUMPTION"},
+    {"role": "SELLER_ACCOUNT_LEAD", "monthly_work_hours": 160, "acquisition_capacity_percent": "0.25", "non_acquisition_reserve_hours": 120, "evidence": "MODELED ASSUMPTION"},
+    {"role": "SHARED_ENGINEERING_SUPPORT", "monthly_work_hours": 160, "acquisition_capacity_percent": "0.10", "non_acquisition_reserve_hours": 144, "evidence": "MODELED ASSUMPTION"}
+  ],
+  "workload_profiles": {
+    "FORMAL_RFP": [24, 28, 30, 26, 20, 18, 18, 16, 12],
+    "COOPERATIVE_PAID_PILOT": [24, 22, 12],
+    "PARTNER_LED": [16, 15, 14, 12, 10, 9, 7, 5, 3],
+    "EXISTING_PURCHASING_PATH": [22, 24, 22, 18, 16, 12]
+  },
+  "arrival_periods": [1, 2, 3, 4, 5, 6, 7, 8]
+}
