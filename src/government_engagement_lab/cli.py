@@ -15,6 +15,8 @@ from .stakeholders import load_baseline_topology, load_stakeholder_scenarios, su
 from .formal_rfp import (acquisition_effort_by_category, assess_formal_rfp,
                          formal_rfp_scenarios)
 from .pilot import assess_pilot, motion_comparison, pilot_scenarios
+from .read_only import (assess_technical_scenario, read_only_scenarios,
+                        technical_scenarios)
 
 
 def _money(value: Decimal) -> str:
@@ -356,9 +358,58 @@ def show_motion_comparison() -> None:
     print("This result exists only within fictional assumptions; it is not empirical government-market evidence.")
 
 
+def _show_read_only_economics(result) -> None:
+    e, s = result.economics, result.economics.seller
+    print(f"  Value addressed [MODELED ASSUMPTION]: {_money(e.value_addressed)}")
+    print(f"  Engagement price: {_money(e.engagement_price)}; support: {_money(e.support)}")
+    print(f"  First-year customer cost: {_money(e.first_year_customer_cost)}")
+    print(f"  Net recoverable value: {_money(e.modeled_net_recoverable_value)}; bounded payback: {e.payback_months:.2f} months")
+    print(f"  Engineering: {result.scenario.engineering_hours} h; acquisition: {e.acquisition_hours} h; cycle: {e.elapsed_days} d")
+    print(f"  Delivery labor: {_money(s.delivery_labor_cost)}; acquisition labor: {_money(s.acquisition_labor_cost)}")
+    print(f"  Support obligation: {_money(e.support)}; acquisition-adjusted contribution: {_money(s.acquisition_adjusted_contribution)}")
+
+
+def show_read_only() -> None:
+    result = assess_technical_scenario(technical_scenarios()[1]); s = result.scenario
+    print("CHAPTER 6 — READ-ONLY BEFORE WRITE ACCESS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"FICTION NOTICE: {load_baseline().customer.fiction_notice}")
+    a = s.authority
+    print(f"\nTECHNICAL AUTHORITY [{a.evidence}]: {a.source_access_mode.value}")
+    print(f"  write capability={a.write_capability}; authoritative mutation={a.authoritative_system_mutation_allowed}; consequential action={a.consequential_action_allowed}")
+    print(f"  authentication: {a.authentication_assumptions}\n  source/deployment boundary: {a.deployment_boundary}\n  retention: {a.data_retention_assumptions}; audit logging required={a.audit_logging_required}")
+    print("ALLOWED OPERATIONS: " + ", ".join(s.allowed_operations)); print("PROHIBITED OPERATIONS: " + ", ".join(s.prohibited_operations))
+    p = result.processing
+    print(f"\nSYNTHETIC PROCESSING [OBSERVED LAB RESULT]: ingested={p.records_ingested}; normalized={len(p.normalized_records)}; exceptions={len(p.exceptions)}; duplicates={len(p.duplicates)}; source unchanged={p.source_unchanged}")
+    print("REPORT: " + ", ".join(f"{k}={v}" for k, v in p.status_summary))
+    print("PROVENANCE")
+    for row in p.normalized_records: print(f"  {row.provenance.source_record_identifier}: {row.provenance.source_status} -> {row.provenance.normalized_status}; {row.provenance.reason}; exception={row.provenance.exception_flag}")
+    print("\nGOVERNANCE FINDINGS (unweighted): " + ", ".join(x.value for x in s.risk_findings))
+    print("STAKEHOLDER EFFECTS: IT and Security/Governance participation narrows; Sponsor, users, Procurement, Legal/Contracts, and Accessibility remain.")
+    print("JOURNEY EFFECTS: technical validation and security/access review explicitly shrink; commercial authorization stages remain.")
+    print("ENGINEERING WORK [MODELED ASSUMPTION]: " + ", ".join(f"{x.category}={x.hours}h" for x in s.engineering_work))
+    _show_read_only_economics(result)
+    print(f"ACCEPTANCE: {result.acceptance_passed}; PROJECT VIABILITY: {result.project_viability.value}; TARGET VIABILITY: {result.target_viability.value}; VERDICT: {result.verdict}")
+    print("EVIDENCE: inputs=MODELED ASSUMPTION; processing=OBSERVED LAB RESULT; no write path=OBSERVED IMPLEMENTATION STRUCTURE")
+
+
+def show_read_only_economics() -> None:
+    print("CHAPTER 6 — READ-ONLY ECONOMICS\nFICTIONAL EDUCATIONAL MODEL")
+    _show_read_only_economics(assess_technical_scenario(technical_scenarios()[1]))
+
+
+def show_read_only_scenarios() -> None:
+    print("CHAPTER 6 — TECHNICAL-SURFACE SCENARIOS\nFICTIONAL EDUCATIONAL MODEL")
+    print(f"{'TECHNICAL SURFACE':31} {'VALUE':12} {'ENG H':6} {'ACQ H':6} {'CYCLE':7} {'GOVERNANCE':11} VERDICT")
+    for a in read_only_scenarios():
+        governance = "broader" if a.scenario.authority.write_capability else "narrower"
+        print(f"{a.scenario.name:31} {_money(a.economics.value_addressed):12} {a.scenario.engineering_hours:4}h {a.economics.acquisition_hours:4}h {a.economics.elapsed_days:4}d {governance:11} {a.verdict}")
+        print(f"  AUTHORITATIVE WRITES? {a.scenario.authority.authoritative_system_mutation_allowed}; CONSEQUENTIAL ACTIONS? {a.scenario.authority.consequential_action_allowed}; PROVENANCE? {a.processing is not None}; ROLLBACK REQUIRED? {a.scenario.governance.rollback_planning}")
+        for change in a.scenario.changed_assumptions: print(f"  [{a.scenario.evidence}] {change}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the fictional government engagement laboratory")
-    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions"))
+    parser.add_argument("command", choices=("baseline", "scenarios", "gates", "gate-scenarios", "journey", "journey-summary", "journey-scenarios", "stakeholders", "stakeholder-summary", "stakeholder-scenarios", "formal-rfp", "formal-rfp-economics", "formal-rfp-scenarios", "pilot", "pilot-economics", "pilot-scenarios", "compare-motions", "read-only", "read-only-economics", "read-only-scenarios", "compare-technical-surfaces"))
     args = parser.parse_args(argv)
     {"baseline": show_baseline, "scenarios": show_scenarios, "gates": show_gates,
      "gate-scenarios": show_gate_scenarios, "journey": show_journey,
@@ -368,5 +419,7 @@ def main(argv: list[str] | None = None) -> int:
      "formal-rfp": show_formal_rfp, "formal-rfp-economics": show_formal_rfp_economics,
      "formal-rfp-scenarios": show_formal_rfp_scenarios, "pilot": show_pilot,
      "pilot-economics": show_pilot_economics, "pilot-scenarios": show_pilot_scenarios,
-     "compare-motions": show_motion_comparison}[args.command]()
+     "compare-motions": show_motion_comparison, "read-only": show_read_only,
+     "read-only-economics": show_read_only_economics, "read-only-scenarios": show_read_only_scenarios,
+     "compare-technical-surfaces": show_read_only_scenarios}[args.command]()
     return 0

@@ -116,7 +116,7 @@ def test_direct_comparison_preserves_rfp_and_exposes_context():
     assert assess_formal_rfp().motion == before
 
 
-def test_chapter_six_is_not_implemented():
+def test_chapter_seven_is_not_implemented():
     root = Path(__file__).parents[1]
-    assert not (root / "chapters/chapter-06-read-only-before-write.md").exists()
-    assert not (root / "src/government_engagement_lab/read_only.py").exists()
+    assert not (root / "chapters/chapter-07-configuration-first.md").exists()
+    assert not (root / "src/government_engagement_lab/configuration_first.py").exists()
