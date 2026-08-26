@@ -110,7 +110,7 @@ Chapter 19 does not claim strict dominance. The qualitative access, ownership, s
 ## 19. Which motions are conditional?
 
 * Weak buyer access can favor partner-led acquisition, subject to channel cost and technical access.
-* High incumbent coverage can favor buy/configure, subject to residual and vendor dependency.
+* High incumbent coverage can favor configure/buy, subject to residual and vendor dependency.
 * Strong sponsorship plus bounded scope can favor pilot-first.
 * An existing path improves procurement mechanics without guaranteeing buyer or technical access.
 * Closed access makes broad custom infeasible.

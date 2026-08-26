@@ -53,6 +53,6 @@ def test_historical_scenario_verdicts_load() -> None:
         "Formal RFP": "POOR TARGET CUSTOMER",
         "Higher contract value": "POOR TARGET CUSTOMER",
         "Closed legacy integration": "NO DEAL",
-        "Existing vendor module": "BUY / CONFIGURE",
+        "Existing vendor module": "CONFIGURE / BUY",
         "Reusable technology + hard sales": "POOR TARGET CUSTOMER",
     }

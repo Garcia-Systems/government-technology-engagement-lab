@@ -72,7 +72,7 @@ A read-only Chapter 6 edge remains available for duplicate-entry/status-reconcil
 
 ## 14. Strong-incumbent sensitivity
 
-The strong scenario covers all six categories, lowers modeled implementation price to $24,000, and shortens duration to 40 days. It derives `BUY / CONFIGURE`.
+The strong scenario covers all six categories, lowers modeled implementation price to $24,000, and shortens duration to 40 days. It derives `CONFIGURE / BUY`.
 
 ## 15. Weak-incumbent sensitivity
 
@@ -84,9 +84,9 @@ Capability stays unchanged while module implementation rises to $95,000 and recu
 
 ## 17. Incumbent-only-supported-access sensitivity
 
-Third-party supported access is unavailable under Chapter 13 semantics while strong native access remains. Custom alternatives are infeasible rather than permitted to bypass controls; the adequate native module derives `BUY / CONFIGURE`.
+Third-party supported access is unavailable under Chapter 13 semantics while strong native access remains. Custom alternatives are infeasible rather than permitted to bypass controls; the adequate native module derives `CONFIGURE / BUY`.
 
-## 18. When BUY / CONFIGURE wins
+## 18. When CONFIGURE / BUY wins
 
 The transparent fictional adequacy rule requires **at least 75% coverage and no more than $25,000 residual**. Selection precedence is: (1) feasible, (2) nonnegative customer economics, (3) adequate coverage, (4) supportable, (5) acquisition viable, then (6) prefer lower custom ownership for adequate outcomes. This is a **MODELED ASSUMPTION**, not a buyer standard.
 
@@ -132,7 +132,7 @@ RESPONSIBLE RESIDUAL
 
 ## 20. What Chapter 14 demonstrates
 
-The credible baseline module addresses five categories, leaving duplicate entry as an $18,000 residual; 82.69% coverage, $50,000 first-year cost, and $36,002.80 net are deterministic lab results. The adequacy rule therefore selects `BUY / CONFIGURE`. Strong, weak, expensive, and closed-access changes show the result is derived.
+The credible baseline module addresses five categories, leaving duplicate entry as an $18,000 residual; 82.69% coverage, $50,000 first-year cost, and $36,002.80 net are deterministic lab results. The adequacy rule therefore selects `CONFIGURE / BUY`. Strong, weak, expensive, and closed-access changes show the result is derived.
 
 ## 21. What Chapter 14 does not prove
 

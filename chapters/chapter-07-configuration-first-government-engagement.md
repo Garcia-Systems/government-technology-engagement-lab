@@ -53,7 +53,7 @@ Removing native reports/notifications decreases coverage (`SENSITIVITY ASSUMPTIO
 ## 17. Sensitivity: poor standardization
 Capability remains available while fragmented process raises standardization effectiveness and effort.
 
-## 18. Does BUY / CONFIGURE win?
+## 18. Does CONFIGURE / BUY win?
 Only if customer and seller gates pass and the measured residual is immaterial. The result is derived, not hard-coded.
 
 ## 19. Does custom still deserve to exist?

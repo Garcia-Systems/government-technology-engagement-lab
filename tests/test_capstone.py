@@ -19,7 +19,7 @@ def test_assessment_loads_every_chapter_and_preserves_baseline():
  assert r.project_viability is GateStatus.PASS and r.target_viability is GateStatus.FAIL
 
 def test_vocabulary_and_semantics_are_complete():
- assert {x.value for x in FinalVerdict}=={"NO DEAL","BUY / CONFIGURE","NARROW CUSTOM EDGE","PARTNER-LED TARGET","PILOT-FIRST TARGET","REPEATABLE PROJECT","PROMISING — VALIDATE IN DISCOVERY","POOR TARGET CUSTOMER","INVESTIGATE"}
+ assert {x.value for x in FinalVerdict}=={"NO DEAL","CONFIGURE / BUY","NARROW CUSTOM EDGE","PARTNER-LED TARGET","PILOT-FIRST TARGET","REPEATABLE PROJECT","PROMISING — VALIDATE IN DISCOVERY","POOR TARGET CUSTOMER","INVESTIGATE"}
  assert set(VERDICT_SEMANTICS)==set(FinalVerdict)
 
 def test_precedence_is_deterministic_and_foundation_dominates():

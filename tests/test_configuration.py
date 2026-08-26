@@ -60,6 +60,6 @@ def test_scenarios_are_transparent_isolated_and_verdicts_derived():
     assert poor.capabilities == base.capabilities and poor.operational_recommendation == "STANDARDIZE FIRST"
     assert strong.assumption_evidence is EvidenceLabel.MODELED_ALTERNATIVE_ASSUMPTION
     assert weak.assumption_evidence is poor.assumption_evidence is EvidenceLabel.SENSITIVITY_ASSUMPTION
-    assert all(x.verdict in {"BUY / CONFIGURE","NARROW CUSTOM EDGE","INVESTIGATE","POOR TARGET CUSTOMER","NO DEAL"} for x in (base,strong,weak,poor))
+    assert all(x.verdict in {"CONFIGURE / BUY","NARROW CUSTOM EDGE","INVESTIGATE","POOR TARGET CUSTOMER","NO DEAL"} for x in (base,strong,weak,poor))
     assert base.custom_residual_candidate and "Chapter 6" in base.custom_residual_candidate
     assert "SMALL" not in " ".join(x.key for x in configuration_scenarios())

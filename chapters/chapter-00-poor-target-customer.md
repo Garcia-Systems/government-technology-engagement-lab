@@ -120,7 +120,7 @@ The fixture preserves these inherited `MODELED ASSUMPTION`s:
 | Formal RFP | `POOR TARGET CUSTOMER` |
 | Higher contract value | `POOR TARGET CUSTOMER` |
 | Closed legacy integration | `NO DEAL` |
-| Existing vendor module | `BUY / CONFIGURE` |
+| Existing vendor module | `CONFIGURE / BUY` |
 | Reusable technology + hard sales | `POOR TARGET CUSTOMER` |
 
 These are reference points, not fresh conclusions. Chapter 0 implements none of the experiments suggested by their names.

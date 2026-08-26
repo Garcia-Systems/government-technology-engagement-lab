@@ -60,7 +60,7 @@ STAFF REVIEWS EXCEPTIONS
 
 ## 10. Fallback: configuration only
 
-When external access is unavailable but native configuration is modeled as available, Chapter 7's capability assessment and economics are reused rather than recreated. The responsible posture is `BUY / CONFIGURE`.
+When external access is unavailable but native configuration is modeled as available, Chapter 7's capability assessment and economics are reused rather than recreated. The responsible posture is `CONFIGURE / BUY`.
 
 ## 11. Hard stop: no usable access
 

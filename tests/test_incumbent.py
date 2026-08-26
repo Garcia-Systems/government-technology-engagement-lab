@@ -55,9 +55,9 @@ def test_sensitivities_change_only_disclosed_dimensions_and_do_not_mutate_fixtur
     assert costly.alternative.value_categories == base.alternative.value_categories
     assert costly.economics.first_year_customer_cost > base.economics.first_year_customer_cost
     assert load_incumbent_fixture() == before
-    assert strong.selected_result == "BUY / CONFIGURE"
+    assert strong.selected_result == "CONFIGURE / BUY"
     assert weak.selected_result == "NARROW CUSTOM EDGE"
-    assert access.selected_result == "BUY / CONFIGURE"
+    assert access.selected_result == "CONFIGURE / BUY"
 
 
 def test_closed_access_cannot_be_bypassed_but_native_access_remains():
@@ -69,7 +69,7 @@ def test_closed_access_cannot_be_bypassed_but_native_access_remains():
 
 def test_results_are_derived_and_no_deal_remains_possible():
     items = load_alternatives()
-    assert select_result(compare_alternatives()) == "BUY / CONFIGURE"
+    assert select_result(compare_alternatives()) == "CONFIGURE / BUY"
     native_failed = tuple(replace(x, supportable=False) if not x.custom_ownership_required else
                           replace(x, supportable=False, acquisition_viable=False) for x in items)
     assessed = compare_alternatives(native_failed, third_party_access=False)

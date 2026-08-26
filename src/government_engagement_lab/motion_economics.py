@@ -178,7 +178,7 @@ def motion_comparisons() -> tuple[MotionComparison, ...]:
 
 def conditional_findings() -> tuple[str, ...]:
     return ("WEAK_BUYER_ACCESS: partner-led may improve direct acquisition, but channel cost and access remain.",
-      "HIGH_INCUMBENT_COVERAGE: buy/configure may avoid custom ownership.",
+      "HIGH_INCUMBENT_COVERAGE: configure/buy may avoid custom ownership.",
       "STRONG_SPONSOR_AND_BOUNDED_SCOPE: pilot-first may improve on a formal RFP.",
       "EXISTING_PURCHASING_PATH: procurement work falls; buyer access and technical governance remain.",
       "CLOSED_ACCESS: broad custom motions are infeasible before economics.",

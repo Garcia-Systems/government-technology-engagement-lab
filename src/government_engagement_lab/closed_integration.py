@@ -202,7 +202,7 @@ def assess_closed_scenario(scenario: ClosedScenario) -> ClosedAssessment:
         econ = ClosedEconomics(ce.value_addressed, ce.residual_value, ce.first_year_cost,
             ce.net_first_year_recoverable_value, ce.seller.delivery_labor_cost,
             ce.seller.acquisition_labor_cost, Decimal(), ce.seller.acquisition_adjusted_contribution, Decimal())
-        project, target, verdict = config.project_viability, config.target_viability, "BUY / CONFIGURE"
+        project, target, verdict = config.project_viability, config.target_viability, "CONFIGURE / BUY"
         surface = "CONFIGURATION_FIRST"
     else:
         econ = _economics(scenario)

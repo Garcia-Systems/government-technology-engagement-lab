@@ -20,7 +20,7 @@ ORIGINAL_HYPOTHESIS = "LOCAL GOVERNMENT → POOR TARGET CUSTOMER"
 
 
 class FinalVerdict(StrEnum):
-    NO_DEAL="NO DEAL"; CONFIGURE_BUY="BUY / CONFIGURE"; NARROW_CUSTOM_EDGE="NARROW CUSTOM EDGE"
+    NO_DEAL="NO DEAL"; CONFIGURE_BUY="CONFIGURE / BUY"; NARROW_CUSTOM_EDGE="NARROW CUSTOM EDGE"
     PARTNER_LED_TARGET="PARTNER-LED TARGET"; PILOT_FIRST_TARGET="PILOT-FIRST TARGET"
     REPEATABLE_PROJECT="REPEATABLE PROJECT"
     PROMISING="PROMISING — VALIDATE IN DISCOVERY"; POOR_TARGET_CUSTOMER="POOR TARGET CUSTOMER"
@@ -104,7 +104,7 @@ def evidence_inventory() -> tuple[EvidenceFinding,...]:
     """A trace inventory only: values remain in the reusable prior outputs."""
     return (
       EvidenceFinding("ORIGINAL","Baseline hypothesis and non-technical rejection mechanisms.",( "CHAPTER_0","CHAPTER_1","CHAPTER_2","CHAPTER_3"),EvidenceLabel.MODELED_ASSUMPTION),
-      EvidenceFinding("FORMAL_RFP","Formal RFP fails target viability while its project/customer value gates pass.",( "CHAPTER_4","CHAPTER_15","CHAPTER_16","CHAPTER_19"),EvidenceLabel.OBSERVED_LAB_RESULT),
+      EvidenceFinding("FORMAL_RFP","Chapter 4 Formal RFP fails target viability while its baseline project/customer value gates pass; Chapter 19 separately applies Chapter 13 closed-access feasibility.",( "CHAPTER_4","CHAPTER_15","CHAPTER_16","CHAPTER_19"),EvidenceLabel.OBSERVED_LAB_RESULT),
       EvidenceFinding("PILOT","Bounded paid pilot passes modeled target viability but requires a strong sponsor.",( "CHAPTER_5","CHAPTER_15","CHAPTER_16","CHAPTER_19"),EvidenceLabel.OBSERVED_LAB_RESULT),
       EvidenceFinding("READ_ONLY_CONFIGURATION","Read-only and configuration reduce authority and custom surface while leaving residual value.",( "CHAPTER_6","CHAPTER_7","CHAPTER_12","CHAPTER_19"),EvidenceLabel.OBSERVED_LAB_RESULT),
       EvidenceFinding("SCALE_PARTNER_PATH","Contract size, partner, and existing-path experiments separate access and acquisition mechanisms.",( "CHAPTER_8","CHAPTER_9","CHAPTER_10","CHAPTER_11","CHAPTER_19"),EvidenceLabel.OBSERVED_LAB_RESULT),
@@ -142,7 +142,7 @@ def assess_capstone() -> CapstoneAssessment:
       verdict,"STRONG WITHIN LAB; CONDITIONAL OUTSIDE IT",rule,rows,
       GateSynthesis("PASS","CONDITIONAL BY SUPPORTED ACCESS / INTERVENTION","PASS FOR SOME MOTIONS; FAIL FOR OTHERS",
        "PASS FOR BOUNDED MOTIONS; CONDITIONAL FOR BROAD CUSTOM","PASS / CONDITIONAL BY OWNERSHIP",
-       "FAIL FOR FORMAL RFP; BETTER FOR PILOT / PARTNER / EXISTING PATH","REPEATABLE PROJECT",
+       "FAIL FOR FORMAL RFP; ACQUISITION IMPROVES FOR PILOT / PARTNER / EXISTING PATH, BUT ACCESS STILL GOVERNS PROJECT","REPEATABLE PROJECT",
        f"{cross.verdict}; COMMERCIAL AND APPROVAL RESET REMAINS"),evidence_for,evidence_against,
       tuple(x.finding for x in evidence_against),tuple(x.finding for x in evidence_for),unresolved,posture,
       tuple(f"CHAPTER_{n}" for n in range(21)))

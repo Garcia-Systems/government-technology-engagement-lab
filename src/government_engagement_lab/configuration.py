@@ -153,7 +153,7 @@ def _assessment(key="BASELINE", name="Configuration-first baseline", caps=None, 
     rc=classify_residual(residual)
     if project is GateStatus.FAIL: verdict="NO DEAL"
     elif target is GateStatus.FAIL: verdict="POOR TARGET CUSTOMER"
-    elif rc is ResidualClass.IMMATERIAL: verdict="BUY / CONFIGURE"
+    elif rc is ResidualClass.IMMATERIAL: verdict="CONFIGURE / BUY"
     elif rc in (ResidualClass.NARROW, ResidualClass.MATERIAL): verdict="NARROW CUSTOM EDGE"
     else: verdict="INVESTIGATE"
     candidate="READ-ONLY CROSS-SOURCE RECONCILIATION VIEW (Chapter 6 candidate only)" if rc in (ResidualClass.NARROW,ResidualClass.MATERIAL) else None

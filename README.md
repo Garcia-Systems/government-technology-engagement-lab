@@ -43,7 +43,7 @@ Executable labs challenge earlier modeled verdicts rather than arranging evidenc
 ```text
 MULTI-LOCATION RESTAURANT  PROMISING      → executable investigation → INVESTIGATE
 CONSTRUCTION / TRADES      PROMISING      → executable investigation → REPEATABLE PROJECT / VALIDATE
-MULTI-LOCATION RETAIL      BUY / CONFIGURE → executable investigation → INVESTIGATE
+MULTI-LOCATION RETAIL      CONFIGURE / BUY → executable investigation → INVESTIGATE
 LOCAL GOVERNMENT           POOR TARGET CUSTOMER → executable engagement experiment → ???
 ```
 
@@ -136,16 +136,6 @@ python -m government_engagement_lab repeatability-matrix
 
 The baseline command shows the modeled inputs, derived customer economics, acquisition findings, independent gates, and inherited verdict. The scenarios command shows only historical modeled cookbook outcomes. `gates` shows the Chapter 1 baseline with separate project and target viability. `gate-scenarios` compares four compact gate substitutions and then prints their mechanisms.
 
-## Chapter 13 closed integration
-
-Chapter 13 compares each intervention's explicit required access with modeled available access. Its capability vocabulary records access mode, reliability, freshness, write authority, field completeness, automation compatibility, support status, limitations, and evidence. The fictional CivicFlow baseline offers no supported write path or direct database access; an approved daily export can preserve a separate read-only edge.
-
-The repository decision rule evaluates **native configuration → approved read-only access → approved automated export → approved manual export → human-assisted workflow → no deal**. This precedence is a fictional lab rule, not universal advice. Unsupported capability is never invented: protected-system scraping, credential sharing, reverse-engineered endpoints, unauthorized database access, bypass automation, and hidden or unsupported writes are excluded.
-
-The modeled scenario results are: closed broad write integration `NOT_FEASIBLE`; approved scheduled export `NARROW CUSTOM EDGE`; manual weekly export `NO DEAL` after explicit value/support economics; configuration-only `BUY / CONFIGURE` by reuse of Chapter 7; and no usable access `NO DEAL` with economics not applicable. Daily versus weekly freshness and explicit required fields can constrain value or feasibility. Chapter 12 read-only governance remains, while manual handling adds transfer, retention, and provenance assumptions.
-
-This result **clarifies** rather than simply strengthens or weakens `POOR TARGET CUSTOMER`: acquisition attractiveness cannot rescue a technically impossible project, while a materially different feasible fallback must earn its own customer, seller, support, and target verdict.
-
 ## Chapter 0 calculation boundary
 
 Given the fictional assumptions, the executable computes:
@@ -216,7 +206,7 @@ Chapter 7 introduces the entirely fictional **CivicFlow Permitting Suite** and i
 
 The sequence is **inventory → standardize → configure validation/queues → native reporting/automation → process change → measure residual → custom edge only if material**. Configuration has explicit discovery, configuration, engineering, acquisition, training/change, and recurring support work. Native capability, configuration, process change, and custom ownership remain distinct.
 
-The six-category `MODELED ASSUMPTION` decomposition reconciles exactly to the unchanged **$104,002.80** Chapter 0 recoverable value. Sequential capped recovery prevents double counting and reports the residual after every intervention. The baseline result is conditional: configuration removes a meaningful portion, while a measured residual leaves the Chapter 6 read-only reconciliation view as a candidate only. Strong-incumbent, weak-incumbent, and poor-standardization sensitivities show that neither `BUY / CONFIGURE` nor `NARROW CUSTOM EDGE` is hard-coded. This changes the interpretation of `POOR TARGET CUSTOMER`: custom software should not own burden already removable by incumbent capability, while the remaining engagement must still pass project and target gates.
+The six-category `MODELED ASSUMPTION` decomposition reconciles exactly to the unchanged **$104,002.80** Chapter 0 recoverable value. Sequential capped recovery prevents double counting and reports the residual after every intervention. The baseline result is conditional: configuration removes a meaningful portion, while a measured residual leaves the Chapter 6 read-only reconciliation view as a candidate only. Strong-incumbent, weak-incumbent, and poor-standardization sensitivities show that neither `CONFIGURE / BUY` nor `NARROW CUSTOM EDGE` is hard-coded. This changes the interpretation of `POOR TARGET CUSTOMER`: custom software should not own burden already removable by incumbent capability, while the remaining engagement must still pass project and target gates.
 
 ```bash
 python -m government_engagement_lab configure-first
@@ -305,7 +295,18 @@ Chapter 12 rejects “government bureaucracy” as an adequate economic bucket. 
 
 The write-capable scenario attributes **205 seller delivery hours**, **49 seller acquisition/approval hours**, **28 customer-only review hours**, and **42 elapsed review days**. Read-only removes only six write-authority items and retains substantial security, accessibility, data, deployment, and approval work: **151 / 49 / 23 hours** and **35 days** respectively. Configuration-first shifts five requirements to fictional incumbent capability rather than declaring them eliminated, reducing seller delivery governance to **100 hours** while approval remains **49 hours**.
 
-The documentation-heavy `SENSITIVITY ASSUMPTION` keeps the write-capable delivery control set unchanged but raises seller approval work from **49 to 98 hours** and elapsed review from **42 to 57 days**. Under explicit fictional gate thresholds, project viability remains `PASS` while target attractiveness becomes `FAIL`. Thus Chapter 12 **clarifies** the cookbook's `POOR TARGET CUSTOMER` hypothesis: legitimate security/accessibility/governance implementation can remain economically supportable while approval mechanics independently make the target unattractive. This is a deterministic lab result from fictional allocations, not evidence about real governments. Chapter 13's closed-integration boundary remains unresolved and unimplemented.
+The documentation-heavy `SENSITIVITY ASSUMPTION` keeps the write-capable delivery control set unchanged but raises seller approval work from **49 to 98 hours** and elapsed review from **42 to 57 days**. Under explicit fictional gate thresholds, project viability remains `PASS` while target attractiveness becomes `FAIL`. Thus Chapter 12 **clarifies** the cookbook's `POOR TARGET CUSTOMER` hypothesis: legitimate security/accessibility/governance implementation can remain economically supportable while approval mechanics independently make the target unattractive. This is a deterministic lab result from fictional allocations, not evidence about real governments. Chapter 13 applies the resulting governance surface to explicit required-versus-available access constraints.
+
+## Chapter 13 closed integration
+
+Chapter 13 compares each intervention's explicit required access with modeled available access. Its capability vocabulary records access mode, reliability, freshness, write authority, field completeness, automation compatibility, support status, limitations, and evidence. The fictional CivicFlow baseline offers no supported write path or direct database access; an approved daily export can preserve a separate read-only edge.
+
+The repository decision rule evaluates **native configuration → approved read-only access → approved automated export → approved manual export → human-assisted workflow → no deal**. This precedence is a fictional lab rule, not universal advice. Unsupported capability is never invented: protected-system scraping, credential sharing, reverse-engineered endpoints, unauthorized database access, bypass automation, and hidden or unsupported writes are excluded.
+
+The modeled scenario results are: closed broad write integration `NOT_FEASIBLE`; approved scheduled export `NARROW CUSTOM EDGE`; manual weekly export `NO DEAL` after explicit value/support economics; configuration-only `CONFIGURE / BUY` by reuse of Chapter 7; and no usable access `NO DEAL` with economics not applicable. Daily versus weekly freshness and explicit required fields can constrain value or feasibility. Chapter 12 read-only governance remains, while manual handling adds transfer, retention, and provenance assumptions.
+
+This result **clarifies** rather than simply strengthens or weakens `POOR TARGET CUSTOMER`: acquisition attractiveness cannot rescue a technically impossible project, while a materially different feasible fallback must earn its own customer, seller, support, and target verdict.
+
 
 ## Chapter 14 incumbent vendor alternative
 
@@ -313,9 +314,9 @@ Chapter 14 asks whether custom software deserves to exist after a serious suppor
 
 The reusable alternative model compares `DO NOTHING`, Chapter 7-style `CONFIGURATION`, `INCUMBENT MODULE`, separately priced `INCUMBENT SERVICES`, Chapter 6/13-style `NARROW CUSTOM EDGE`, and the unchanged broad custom reference. It maps each option to the same six Chapter 7 burden categories, counts each category once, and reports value addressed, residual, coverage, implementation cost, recurring cost, first-year total/net, payback, access, governance, support ownership, limitations, and—only for custom alternatives—seller economics. This normalizes customer totals without pretending module license/services and custom implementation line items are identical.
 
-The fictional adequacy rule requires at least **75%** recoverable-value coverage and no more than **$25,000** residual. Selection tests feasibility, customer economics, adequacy, support, and acquisition viability before preferring lower custom ownership for an adequate outcome. It is not a real buyer standard and no weighted score exists. The credible baseline module covers five categories (**82.69% / $86,002.80**), leaves duplicate entry (**$18,000**) as residual, costs **$32,000 implementation + $18,000 recurring**, and derives **`BUY / CONFIGURE`**. Its limitations—cross-source reconciliation, custom reporting/exception logic, external orchestration, historical normalization, fixed experience, and vendor roadmap dependency—remain explicit.
+The fictional adequacy rule requires at least **75%** recoverable-value coverage and no more than **$25,000** residual. Selection tests feasibility, customer economics, adequacy, support, and acquisition viability before preferring lower custom ownership for an adequate outcome. It is not a real buyer standard and no weighted score exists. The credible baseline module covers five categories (**82.69% / $86,002.80**), leaves duplicate entry (**$18,000**) as residual, costs **$32,000 implementation + $18,000 recurring**, and derives **`CONFIGURE / BUY`**. Its limitations—cross-source reconciliation, custom reporting/exception logic, external orchestration, historical normalization, fixed experience, and vendor roadmap dependency—remain explicit.
 
-The strong and incumbent-only-supported-access sensitivities derive `BUY / CONFIGURE`; the weak-native sensitivity derives `NARROW CUSTOM EDGE`; the expensive-module sensitivity worsens only price and demonstrates that technical safety does not create economic superiority. Unsupported third-party access remains closed under Chapter 13, while Chapter 12 configuration-first governance shifts native control implementation to the incumbent without eliminating customer approval, accessibility acceptance, change authorization, and support planning. `NO DEAL` remains an executable outcome.
+The strong and incumbent-only-supported-access sensitivities derive `CONFIGURE / BUY`; the weak-native sensitivity derives `NARROW CUSTOM EDGE`; the expensive-module sensitivity worsens only price and demonstrates that technical safety does not create economic superiority. Unsupported third-party access remains closed under Chapter 13, while Chapter 12 configuration-first governance shifts native control implementation to the incumbent without eliminating customer approval, accessibility acceptance, change authorization, and support planning. `NO DEAL` remains an executable outcome.
 
 Chapter 14 therefore further qualifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: the original custom opportunity may be a poor target because a supported native option already captures adequate value, not only because government acquisition is costly. A material responsible residual can still support a narrow edge, but custom ownership must earn its existence. Chapter 15 synthesizes won-deal acquisition work; Chapter 16 now tests deterministic throughput and opportunity cost without probability weighting.
 
@@ -383,7 +384,7 @@ This clarifies the cookbook's `POOR TARGET CUSTOMER` hypothesis: Chapter 17's sa
 
 ## Chapter 19 engagement-motion economics
 
-Chapter 19 loads and normalizes Chapters 4–18 into one reusable comparison record covering Formal RFP, cooperative paid pilot, read-only edge, configuration-first, small departmental, justified larger contract, partner/channel, existing purchasing path, incumbent buy/configure, and no engagement. Separate **customer**, **seller**, and **structural** views keep price, value addressed, residual, acquisition, delivery, cycle, throughput, access, governance, support, relationship ownership, and repeatability visible.
+Chapter 19 loads and normalizes Chapters 4–18 into one reusable comparison record covering Formal RFP, cooperative paid pilot, read-only edge, configuration-first, small departmental, justified larger contract, partner/channel, existing purchasing path, incumbent configure/buy, and no engagement. Separate **customer**, **seller**, and **structural** views keep price, value addressed, residual, acquisition, delivery, cycle, throughput, access, governance, support, relationship ownership, and repeatability visible.
 
 ```bash
 python -m government_engagement_lab motions
@@ -397,21 +398,29 @@ The Chapter 19 hypothesis status is a conditional synthesis of motion evidence. 
 
 ## Chapter 20 capstone and complete roadmap
 
-```text
-0  Hypothesis                         11 Existing purchasing path
-1  Project vs customer                12 Security / accessibility / governance
-2  Buying journey                     13 Closed integration
-3  Stakeholder topology               14 Incumbent alternative
-4  Formal RFP                         15 Acquisition economics
-5  Cooperative paid pilot             16 Throughput / opportunity cost
-6  Read-only                          17 Repeatability across departments
-7  Configuration-first                18 Repeatability across governments
-8  Small engagement                   19 Engagement motion economics
-9  Larger contract                    20 Capstone
-10 Partner / prime
-```
+- [Chapter 0 — The POOR TARGET CUSTOMER Hypothesis](chapters/chapter-00-poor-target-customer.md)
+- [Chapter 1 — Separate the Project from the Customer](chapters/chapter-01-separate-project-from-customer.md)
+- [Chapter 2 — Map the Government Buying Journey](chapters/chapter-02-map-government-buying-journey.md)
+- [Chapter 3 — Stakeholder Topology](chapters/chapter-03-stakeholder-topology.md)
+- [Chapter 4 — The Formal RFP Motion](chapters/chapter-04-formal-rfp-motion.md)
+- [Chapter 5 — Cooperative Paid Pilot](chapters/chapter-05-cooperative-paid-pilot.md)
+- [Chapter 6 — Read-Only Before Write Access](chapters/chapter-06-read-only-before-write-access.md)
+- [Chapter 7 — Configuration-First Government Engagement](chapters/chapter-07-configuration-first-government-engagement.md)
+- [Chapter 8 — Small Departmental Engagement](chapters/chapter-08-small-departmental-engagement.md)
+- [Chapter 9 — Larger Contract Experiment](chapters/chapter-09-larger-contract-experiment.md)
+- [Chapter 10 — Partner / Prime-Contractor Motion](chapters/chapter-10-partner-prime-contractor-motion.md)
+- [Chapter 11 — Existing Contract Vehicle Scenario](chapters/chapter-11-existing-contract-vehicle-scenario.md)
+- [Chapter 12 — Security, Accessibility, and Governance Surface](chapters/chapter-12-security-accessibility-governance-surface.md)
+- [Chapter 13 — Closed Integration Scenario](chapters/chapter-13-closed-integration-scenario.md)
+- [Chapter 14 — Incumbent Vendor Alternative](chapters/chapter-14-incumbent-vendor-alternative.md)
+- [Chapter 15 — Acquisition Economics](chapters/chapter-15-acquisition-economics.md)
+- [Chapter 16 — Throughput and Opportunity Cost](chapters/chapter-16-throughput-opportunity-cost.md)
+- [Chapter 17 — Repeatability Across Departments](chapters/chapter-17-repeatability-across-departments.md)
+- [Chapter 18 — Repeatability Across Governments](chapters/chapter-18-repeatability-across-governments.md)
+- [Chapter 19 — Engagement Motion Economics](chapters/chapter-19-engagement-motion-economics.md)
+- [Chapter 20 — Capstone: Poor Customer or Poor Motion?](chapters/chapter-20-capstone-poor-customer-or-poor-motion.md)
 
-The baseline Formal RFP remains `POOR TARGET CUSTOMER`, so the cookbook was correct **for its baseline engagement motion**. Across all tested motions the hypothesis is **`CONDITIONAL`**, not a category-wide conclusion. The final solution verdict is **`BUY / CONFIGURE`** because the fictional supported incumbent adequately addresses the modeled problem and precedence does not permit attractive custom economics to override adequate lower-ownership capability.
+The baseline Formal RFP remains `POOR TARGET CUSTOMER`, so the cookbook was correct **for its baseline engagement motion**. Across all tested motions the hypothesis is **`CONDITIONAL`**, not a category-wide conclusion. The final solution verdict is **`CONFIGURE / BUY`** because the fictional supported incumbent adequately addresses the modeled problem and precedence does not permit attractive custom economics to override adequate lower-ownership capability.
 
 Recommended posture: do not target generic Formal RFPs; prefer supported incumbent configuration. Only validate a sponsored paid/read-only bounded edge, partner, or existing path if real discovery establishes a material residual. Reject closed access and unsupported writes. These are fictional lab conclusions, not claims about government buyers, laws, vendors, or markets.
 
